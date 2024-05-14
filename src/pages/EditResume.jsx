@@ -1,7 +1,34 @@
 import React, { useState } from "react";
-import ModernResume from "../components/ModernResume";
-import { Box, Button, Flex, Input, Text, Textarea } from "@chakra-ui/react";
-import { AiFillDelete } from "react-icons/ai";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Collapse,
+  Flex,
+  Icon,
+  IconButton,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spacer,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import { AiFillDelete, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
+import CustomSliderMark from "../components/CustomSliderMark";
+import PDFConverter from "./PDFConverter";
+import { chakraToHtml } from "../utils/chakraToHtml";
+import { compile } from "@onedoc/react-print";
+import ModernResume from "../components/Resumes/ModernResume/ModernResume";
+import { AnimatePresence } from "framer-motion";
+
+import { MdAdd } from 'react-icons/md';
+import { FiDelete } from "react-icons/fi";
 const EditResume = () => {
   const [data, setData] = useState({
     name: "John Doe",
@@ -16,22 +43,22 @@ const EditResume = () => {
     },
     skills: [
       {
-        title: "frontEndDevelopment",
+        title: "Front-end Development",
         content:
           "Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.",
       },
       {
-        title: "backEndDevelopment",
+        title: "Back-end Development",
         content:
           "Skilled in server-side languages such as Node.js and frameworks like Express.js. Knowledge of RESTful API design.",
       },
       {
-        title: "databaseManagement",
+        title: "Database Management",
         content:
-          "amiliarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.",
+          "Familiarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.",
       },
       {
-        title: "versionControl",
+        title: "Version Control",
         content:
           "Proficient in using Git and GitHub for version control and collaboration with other developers.",
       },
@@ -48,7 +75,91 @@ const EditResume = () => {
           "Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.",
       },
     ],
+    education: [
+      {
+        institution: "University XYZ",
+        degree: "Bachelor of Science in Computer Science",
+        graduationYear: "201X",
+      },
+      {
+        institution: "ABC College",
+        degree: "Master of Science in Software Engineering",
+        graduationYear: "201Y",
+      },
+    ],
   });
+
+  const [state, setState] = useState({
+    Image:true,
+    Education: true,
+    Profile: true,
+    Contact: true,
+    Experience: true,
+    Skills: true,
+    Header: true,
+    customKeys: [], // Initialize custom keys array
+  });
+
+  const [customKey, setCustomKey] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const handleCheckboxChange = (key) => {
+    setState((prevState) => {
+      if (key in prevState) {
+        return {
+          ...prevState,
+          [key]: !prevState[key],
+        };
+      } else {
+        // If key is a custom key, toggle its value
+        const customKeys = prevState.customKeys.map((custom) => {
+          if (custom.key === key) {
+            return {
+              ...custom,
+              value: !custom.value,
+            };
+          }
+          return custom;
+        });
+        return {
+          ...prevState,
+          customKeys,
+        };
+      }
+    });
+  };
+
+  const handleAddCustomKey = () => {
+    if (customKey && !state.customKeys.find((item) => item.key === customKey)) {
+      setState((prevState) => ({
+        ...prevState,
+        customKeys: [...prevState.customKeys, { key: customKey, value: true }],
+      }));
+      setCustomKey("");
+      setIsOpen(false);
+    }
+  };
+
+  const [heightVal, setHeightVal] = useState(25);
+  const [isSkillsExpanded, setIsSkillsExpanded] = useState(true);
+  const [isExperienceExpanded, setIsExperienceExpanded] = useState(true);
+  const [isContactExpanded, setIsContactExpanded] = useState(true);
+  const [isEducationExpanded, setIsEducationExpanded] = useState(true);
+
+  const toggleSkillsExpand = () => {
+    setIsSkillsExpanded(!isSkillsExpanded);
+  };
+
+  const toggleExperienceExpand = () => {
+    setIsExperienceExpanded(!isExperienceExpanded);
+  };
+
+  const toggleContactExpand = () => {
+    setIsContactExpanded(!isContactExpanded);
+  };
+
+  const toggleEducationExpand = () => {
+    setIsEducationExpanded(!isEducationExpanded);
+  };
 
   const deleteSkill = (i) => {
     data.skills.splice(i, 1);
@@ -56,164 +167,526 @@ const EditResume = () => {
   };
 
   const addSkill = () => {
-    setData({...data,skills:[...data.skills,{title:'',content:''}]});
-  }
+    setData({ ...data, skills: [...data.skills, { title: "", content: "" }] });
+  };
+ const setDataSkills = (skills)=>{
+ 
+  setData({...data,skills:[...skills]})
+ }
 
+ const setEducation = (edu)=>{
+    setData({...data,education:edu})
+ }
+
+ const setExperience = (experience)=>{
+  setData({...data,experience:experience})
+ }
   return (
-    <Flex w={"100%"}>
-      <Box w={"40%"}>
-        <Text fontSize={{ sm: "", md: "2rem" }} as={"h2"}>
-          Edit Your Resume
-        </Text>
-        <Box>
-          <Input
-            value={data.name}
-            placeholder="Name"
-            onChange={(e) => {
-              setData({ ...data, name: e.target.value });
-            }}
+    <Box>
+      <Box p={"0.5rem"}  backgroundColor={"gray"}>
+        <Flex direction="column" alignItems="center" justifyContent={"center"}>
+          <Flex alignItems="center" justifyContent={"center"} flexWrap={"wrap"} gap={'0.2rem'}>
+            {Object.keys(state).map((key,index) => {
+              if (key !== "customKeys") {
+                return (
+                  <Flex
+                  border={'1px solid #ccc'}
+                  boxShadow={
+                    "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+                  }
+                  borderRadius={"0.75rem"}
+                  paddingY={"0.05rem"}
+                  paddingX={"1rem"}
+                  key={index}
+                  alignItems="center"
+                  transition="all 0.3s"
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)"
+                  }}
+                
+                  >
+                    <Checkbox
+                      isChecked={state[key]}
+                      onChange={() => handleCheckboxChange(key)}
+                      colorScheme="teal"
+                      size="lg"
+                    />
+                    <Text ml={2} fontWeight={state[key] ? "bold" : "normal"}>
+                      {key}
+                    </Text>
+                  </Flex>
+                );
+              }
+              return null;
+            })}
+            {state.customKeys.map((item, index) => (
+          <Flex
+          border={'1px solid #ccc'}
+          boxShadow={
+            "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+          }
+          borderRadius={"0.75rem"}
+          paddingY={"0.05rem"}
+          paddingX={"1rem"}
+          key={index}
+          alignItems="center"
+          transition="all 0.3s"
+          _hover={{
+            transform: 'translateY(-2px)',
+            boxShadow: "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)"
+          }}
+        >
+          <Checkbox
+            isChecked={item.value}
+            onChange={() => handleCheckboxChange(item.key)}
+            colorScheme="teal"
+            size="lg"
           />
-        </Box>
+          <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
+            {item.key}
+          </Text>
+        </Flex>
+        
+          
+            ))}
+          </Flex>
 
-        <Box>
-          <Input
-            value={data.role}
-            placeholder="Role"
-            onChange={(e) => {
-              setData({ ...data, role: e.target.value });
-            }}
+          <Flex alignItems="center" mt={4}>
+  <Button
+    onClick={() => setIsOpen(true)}
+    bgGradient="linear(to-r, teal.500, teal.600)"
+    color="white"
+    borderRadius="full"
+    px={6}
+    py={3}
+    boxShadow="xl"
+    _hover={{
+      bgGradient: 'linear(to-r, teal.600, teal.700)',
+    }}
+    _active={{
+      transform: 'scale(0.95)',
+    }}
+  >
+    <Flex alignItems="center">
+      <Icon as={MdAdd} boxSize={6} mr={2} />
+      Add Custom Section
+    </Flex>
+  </Button>
+</Flex>
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Add Custom Key</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Input
+                  value={customKey}
+                  onChange={(e) => setCustomKey(e.target.value)}
+                  placeholder="Enter custom key"
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button onClick={handleAddCustomKey} colorScheme="teal">
+                  Add
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </Flex>
+      </Box>
+      <Flex
+        w="full"
+        display={"flex"}
+        flexDirection={{ sm: "column", md: "column", lg: "row" }}
+      >
+        <Box p={"16px"} w={"40%"}>
+          <Text fontSize={{ base: "", md: "2rem" }} as="h2" mb="2rem">
+            Edit Your Resume
+          </Text>
+
+          <Box>
+            <Box as="h3">Adjust Header Height</Box>
+            {/* Your Slider component goes here */}
+          </Box>
+
+          <Box mb="2rem">
+            <Input
+              value={data.name}
+              placeholder="Name"
+              onChange={(e) => setData({ ...data, name: e.target.value })}
+            />
+          </Box>
+
+          <Box mb="2rem">
+            <Input
+              value={data.role}
+              placeholder="Role"
+              onChange={(e) => setData({ ...data, role: e.target.value })}
+            />
+          </Box>
+
+          <Text as="h3" mb="1rem">
+            Profile Description
+          </Text>
+          <Textarea
+            onChange={(e) =>
+              setData({ ...data, profileDescription: e.target.value })
+            }
+            value={data.profileDescription}
+            mb="2rem"
           />
-        </Box>
-        {/* {profile info feild} */}
-        <Text as={"h3"}>Profile Description</Text>
-        <Textarea onChange={(e)=>setData({...data,profileDescription:e.target.value})} value={data.profileDescription}/>
-        <Text as={"h3"}>Skills</Text>
-        {data.skills.map((item, index) => {
-          return (
-            <Box w={"full"} key={index}>
-              <Box key={index} w={"100%"}>
-                <Flex
-                  gap={"0.5rem"}
-                  flexDirection={"column"}
-                  border={"1px solid gray"}
-                  p={"1rem"}
-                >
+
+          <Flex
+            cursor={"pointer"}
+            p={"8px"}
+            borderRadius={"10px"}
+            border={"1px solid gray"}
+            w={"full"}
+            justify={"space-between"}
+            align="center"
+            mb="1rem"
+            onClick={toggleSkillsExpand}
+          >
+            <Text as="h3" mr="1rem">
+              Skills
+            </Text>
+            {isSkillsExpanded ? (
+              <AiOutlineUp onClick={toggleSkillsExpand} cursor="pointer" />
+            ) : (
+              <AiOutlineDown onClick={toggleSkillsExpand} cursor="pointer" />
+            )}
+          </Flex>
+          {isSkillsExpanded && (
+            <Box>
+              {data.skills.map((item, index) => (
+                <Flex key={index} mb="1rem" alignItems="center">
+                  {/* Input for skill title */}
                   <Input
+                    w={"30%"}
+                    value={item.title}
                     onChange={(e) =>
                       setData({
                         ...data,
-                        skills: data.skills.map((skill, i) => {
-                          if (i === index) {
-                            return {
-                              title: e.target.value,
-                              content: skill.content,
-                            };
-                          }
-                          return skill;
-                        }),
+                        skills: data.skills.map((skill, i) =>
+                          i === index
+                            ? { ...skill, title: e.target.value }
+                            : skill
+                        ),
                       })
                     }
-                    value={item.title}
+                    placeholder="Skill"
+                    mr="1rem"
                   />
+                  {/* Input for skill description */}
                   <Input
                     value={item.content}
                     onChange={(e) =>
                       setData({
                         ...data,
-                        skills: data.skills.map((skill, i) => {
-                          if (i === index) {
-                            return {
-                              title: skill.title,
-                              content: e.target.value,
-                            };
-                          }
-                          return skill;
-                        }),
+                        skills: data.skills.map((skill, i) =>
+                          i === index
+                            ? { ...skill, content: e.target.value }
+                            : skill
+                        ),
                       })
                     }
+                    placeholder="Description"
+                    mr="1rem"
                   />
-                  <Box cursor={"pointer"} onClick={() => deleteSkill(index)}>
-                    <AiFillDelete />
+                  {/* Delete button for skill */}
+                  <Box>
+                    <AiFillDelete
+                      size={24}
+                      onClick={() => deleteSkill(index)}
+                      cursor="pointer"
+                    />
                   </Box>
                 </Flex>
-              </Box>
+              ))}
+              <Button onClick={addSkill} mb="2rem">
+                Add New Skill
+              </Button>
             </Box>
-          );
-        })}
+          )}
 
-        <Button onClick={addSkill}>Add New Skill</Button>
-
-        <Text as={'h3'}>Experience</Text>
-        {data.experience.map((item, index) => {
-          return (
-            <Box w={"full"} key={index}>
-              <Box key={index} w={"100%"}>
-                <Flex
-                  gap={"0.5rem"}
-                  flexDirection={"column"}
-                  border={"1px solid gray"}
-                  p={"1rem"}
-                >
+          <Flex
+            cursor={"pointer"}
+            p={"8px"}
+            borderRadius={"10px"}
+            border={"1px solid gray"}
+            w={"full"}
+            justify={"space-between"}
+            align="center"
+            mb="1rem"
+            onClick={toggleExperienceExpand}
+          >
+            <Text as="h3" mr="1rem">
+              Experience
+            </Text>
+            {isExperienceExpanded ? (
+              <AiOutlineUp onClick={toggleExperienceExpand} cursor="pointer" />
+            ) : (
+              <AiOutlineDown
+                onClick={toggleExperienceExpand}
+                cursor="pointer"
+              />
+            )}
+          </Flex>
+          {isExperienceExpanded && (
+            <Box>
+              {data.experience.map((item, index) => (
+                <Flex key={index} mb="1rem" alignItems="center">
+                  {/* Input for experience role */}
                   <Input
+                    value={item.role}
                     onChange={(e) =>
                       setData({
                         ...data,
-                        experience: data.experience.map((exp, i) => {
-                          if (i === index) {
-                            return {
-                              role: e.target.value,
-                              description: exp.description,
-                            };
-                          }
-                          return exp;
-                        }),
+                        experience: data.experience.map((exp, i) =>
+                          i === index ? { ...exp, role: e.target.value } : exp
+                        ),
                       })
                     }
-                    value={item.role}
+                    placeholder="Role"
+                    mr="1rem"
                   />
+                  {/* Input for experience description */}
                   <Input
                     value={item.description}
                     onChange={(e) =>
                       setData({
                         ...data,
-                        experience: data.experience.map((exp, i) => {
-                          if (i === index) {
-                            return {
-                              role: exp.role,
-                              description: e.target.value,
-                            };
-                          }
-                          return exp;
-                        }),
+                        experience: data.experience.map((exp, i) =>
+                          i === index
+                            ? { ...exp, description: e.target.value }
+                            : exp
+                        ),
                       })
                     }
+                    placeholder="Description"
+                    mr="1rem"
                   />
-                  <Box cursor={"pointer"} onClick={() => {
-                    data.experience.splice(index,1);
-                    setData({...data})
-                  }}>
-                    <AiFillDelete />
+                  {/* Delete button for experience */}
+                  <Box>
+                    <AiFillDelete
+                      size={24}
+                      onClick={() => {
+                        const updatedExperience = [...data.experience];
+                        updatedExperience.splice(index, 1);
+                        setData({ ...data, experience: updatedExperience });
+                      }}
+                      cursor="pointer"
+                    />
                   </Box>
-
                 </Flex>
-              </Box>
+              ))}
+
+              <Button
+                onClick={() =>
+                  setData({
+                    ...data,
+                    experience: [
+                      ...data.experience,
+                      { role: "", description: "" },
+                    ],
+                  })
+                }
+                mb="2rem"
+              >
+                Add New Experience
+              </Button>
             </Box>
-          );
-        })}
+          )}
 
-<Button onClick={()=>{
-        setData({...data,experience:[...data.experience,{role:'',description:''}]});
+          <Flex
+            cursor={"pointer"}
+            p={"8px"}
+            borderRadius={"10px"}
+            border={"1px solid gray"}
+            w={"full"}
+            justify={"space-between"}
+            align="center"
+            mb="1rem"
+            onClick={toggleContactExpand}
+          >
+            <Text as="h3" mr="1rem">
+              Contact
+            </Text>
+            {isContactExpanded ? (
+              <AiOutlineUp onClick={toggleContactExpand} cursor="pointer" />
+            ) : (
+              <AiOutlineDown onClick={toggleContactExpand} cursor="pointer" />
+            )}
+          </Flex>
+          <AnimatePresence>
+            {isContactExpanded && (
+              <Collapse in={isContactExpanded} key="contact">
+                <>
+                  <Input
+                    w="full"
+                    value={data.contact.address}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        contact: { ...data.contact, address: e.target.value },
+                      })
+                    }
+                    placeholder="Address"
+                    mb="1rem"
+                  />
+                  <Input
+                    w="full"
+                    value={data.contact.email}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        contact: { ...data.contact, email: e.target.value },
+                      })
+                    }
+                    placeholder="Email"
+                    mb="1rem"
+                  />
+                  <Input
+                    w="full"
+                    value={data.contact.phone}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        contact: { ...data.contact, phone: e.target.value },
+                      })
+                    }
+                    placeholder="Phone"
+                    mb="1rem"
+                  />
+                  <Input
+                    w="full"
+                    value={data.contact.linkedin}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        contact: { ...data.contact, linkedin: e.target.value },
+                      })
+                    }
+                    placeholder="LinkedIn"
+                  />
+                </>
+              </Collapse>
+            )}
+          </AnimatePresence>
 
-}}>Add New Experience</Button>
+          <Flex
+            cursor={"pointer"}
+            p={"8px"}
+            borderRadius={"10px"}
+            border={"1px solid gray"}
+            w={"full"}
+            justify={"space-between"}
+            align="center"
+            mb="1rem"
+            onClick={toggleEducationExpand}
+          >
+            <Text as="h3" mr="1rem">
+              Education
+            </Text>
+            {isEducationExpanded ? (
+              <AiOutlineUp onClick={toggleEducationExpand} cursor="pointer" />
+            ) : (
+              <AiOutlineDown onClick={toggleEducationExpand} cursor="pointer" />
+            )}
+          </Flex>
+          {isEducationExpanded && (
+            <Box>
+              {data.education.map((item, index) => (
+                <Flex key={index} mb="1rem" alignItems="center">
+                  {/* Input for education institution */}
+                  <Input
+                    value={item.institution}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        education: data.education.map((edu, i) =>
+                          i === index
+                            ? { ...edu, institution: e.target.value }
+                            : edu
+                        ),
+                      })
+                    }
+                    placeholder="Institution"
+                    mr="1rem"
+                  />
+                  {/* Input for education degree */}
+                  <Input
+                    value={item.degree}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        education: data.education.map((edu, i) =>
+                          i === index ? { ...edu, degree: e.target.value } : edu
+                        ),
+                      })
+                    }
+                    placeholder="Degree"
+                    mr="1rem"
+                  />
+                  {/* Input for education graduation year */}
+                  <Input
+                    value={item.graduationYear}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        education: data.education.map((edu, i) =>
+                          i === index
+                            ? { ...edu, graduationYear: e.target.value }
+                            : edu
+                        ),
+                      })
+                    }
+                    placeholder="Graduation Year"
+                    mr="1rem"
+                  />
+                  {/* Delete button for education */}
+                  <Box>
+                    <AiFillDelete
+                      size={24}
+                      onClick={() => {
+                        const updatedEducation = [...data.education];
+                        updatedEducation.splice(index, 1);
+                        setData({ ...data, education: updatedEducation });
+                      }}
+                      cursor="pointer"
+                    />
+                  </Box>
+                </Flex>
+              ))}
+              <Button
+                onClick={() =>
+                  setData({
+                    ...data,
+                    education: [
+                      ...data.education,
+                      { institution: "", degree: "", graduationYear: "" },
+                    ],
+                  })
+                }
+                mb="2rem"
+              >
+                Add New Education
+              </Button>
+            </Box>
+          )}
 
-{/* Contact */}
+          {/* Input fields for contact details */}
+        </Box>
 
-
-      </Box>
-      <Box w={"60%"}>
-        <ModernResume data={data} />
-      </Box>
-    </Flex>
+        <Box overflow={"auto"}>
+          {/* <Resume data={data}/> */}
+          <Box overflow={"auto"}>
+            <ModernResume state={state} setExperience={setExperience} data={data} headerLength={heightVal} setDataSkills={setDataSkills} setEducation={setEducation} />
+          </Box>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 

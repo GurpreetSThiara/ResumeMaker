@@ -1,0 +1,172 @@
+body {
+    margin-top: 20px;
+    margin-bottom: 20px; 
+    font-family: Arial, sans-serif;
+  }
+
+.flex{
+    display: flex;
+}
+.center{align-items: center;justify-content: center;}
+.col{flex-direction: column;}
+.textjustify{
+    text-align: justify;
+}
+.textsmall{
+    font-size: 14px
+}
+.ucase{
+    text-transform: uppercase;
+}
+.bold{
+    font-weight: 700;
+}
+.start{
+    justify-content: start;
+}
+.gap{
+    gap: 10px;
+}
+.mingap{
+    gap:0px
+}
+.textcolor{
+    color: #656565;
+}
+.auto{
+    overflow: auto;
+}
+
+.border{
+    border: 1px solid;
+    padding-left: 0px;
+}
+.pl-0{
+    padding-left: 0px;
+}
+
+.ml-0{
+    margin-left: 0;
+}
+
+/* css for all headings */
+.heading-text {
+    color: #323232;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.15rem;
+    white-space: pre-line;
+  }
+/* SubHeading */
+.sub-heading {
+    color: black; /* Font color */
+    font-weight: bold; /* Font weight */
+    /* Add any additional styles here */
+  }
+  /* divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: #e0e0e0; /* Change color as desired */
+    margin: 0.4rem 0; /* Adjust margin as needed */
+  }
+
+  /* contact item component */
+
+  ul {
+    list-style-type: none;
+    width: 100%;
+}
+  .contact-item {
+    width: 100%;
+   
+    margin-bottom: 10px; /* Adjust margin as needed */
+  }
+  
+  .icon {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
+  .text {
+    font-size: 16px; /* Adjust font size as needed */
+  }
+  
+  
+  
+
+.resumee{
+    width: 210mm;
+    background-color: white;
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+.left-section{
+    gap:1rem;
+    padding: 1rem;
+    width: 35%;
+  
+   
+    background-color:  rgb(149, 154, 136);
+
+    
+}
+.profile-description{
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
+  
+}
+
+.profile-image-container{
+     width: 12rem;
+
+     margin: 2rem;
+ 
+     border-radius: 50%;
+     
+}
+
+.profile-image{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.education-container{
+    width: 100%;
+}
+
+
+.header{
+    width: 100%;
+    margin-top: 2rem;
+    background-color: #E6E5DB;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-right: 20px;
+    
+
+}
+
+.right-section{
+    align-items: center;
+    justify-content: start;
+    width: 65%;
+
+ 
+}
+
+.right-section-content{
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 10px;
+}
+
+.link-color{
+    color: #333333;
+}

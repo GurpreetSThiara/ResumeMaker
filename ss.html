@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Resume</title>
+  <style>
+    /* Internal CSS styles */
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 210mm;
+      height: 297mm;
+      border: 1px solid gray;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: url("https://img.freepik.com/free-vector/v915_53876-174949.jpg?t=st=1714915412~exp=1714919012~hmac=4b9c2aeb3e1c41dd9768244dd875844912108679c457af7df5f13fbdf4c835b9&w=1060");
+      background-color: gray;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 20px;
+    }
+
+    .avatar {
+      height: 10rem;
+      width: 10rem;
+      border-radius: 50%;
+    }
+
+    .profile-info {
+      margin-left: 20px;
+    }
+
+    .name {
+      font-weight: 800;
+      color: black;
+      font-size: 3rem;
+    }
+
+    .role {
+      color: black;
+      font-size: 1.5rem;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .section {
+      width: 34%;
+    }
+
+    .section-content {
+      padding: 20px;
+    }
+
+    .skills,
+    .experience {
+      width: 66%;
+      background-color: #f2f4f7;
+      padding: 20px;
+    }
+
+    .section-heading {
+      color: #aab0b1;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.3rem;
+      white-space: pre-line;
+    }
+
+    .divider {
+      width: 35%;
+      height: 0.5rem;
+      background-color: gray;
+      margin: 0.4rem 0;
+    }
+
+    .sub-heading {
+      font-weight: bold;
+      color: black;
+    }
+
+    .description {
+      color: #656565;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .contact-icon {
+      background-color: black;
+      border-radius: 50%;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img class="avatar" src="https://img.freepik.com/free-photo/cheerful-indian-businessman-smiling-closeup-portrait-jobs-career-campaign_53876-129417.jpg?t=st=1714915681~exp=1714919281~hmac=b729b711ae6017314dd8b875cbd6574a883b78066d5c954945f431bae840e3e4&w=1060" alt="Avatar">
+      <div class="profile-info">
+        <h1 class="name">John Doe</h1>
+        <p class="role">Full Stack Developer</p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="section">
+        <div class="section-content">
+          <h2 class="section-heading">PROFILE</h2>
+          <div class="divider"></div>
+          <p class="description">Results-driven Full Stack Developer with [X years] of experience in designing, developing, and implementing scalable web applications. Proficient in both front-end and back-end technologies, with a strong focus on delivering high-quality code and intuitive user experiences.</p>
+        </div>
+      </div>
+      <div class="skills">
+        <h2 class="section-heading">SKILLS</h2>
+        <div class="divider"></div>
+        <ul class="skills-list">
+          <li>
+            <p class="sub-heading">frontEndDevelopment</p>
+            <p class="description">Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.</p>
+          </li>
+          <li>
+            <p class="sub-heading">backEndDevelopment</p>
+            <p class="description">Skilled in server-side languages such as Node.js and frameworks like Express.js. Knowledge of RESTful API design.</p>
+          </li>
+          <li>
+            <p class="sub-heading">databaseManagement</p>
+            <p class="description">Familiarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.</p>
+          </li>
+          <li>
+            <p class="sub-heading">versionControl</p>
+            <p class="description">Proficient in using Git and GitHub for version control and collaboration with other developers.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="experience">
+      <h2 class="section-heading">EXPERIENCE</h2>
+      <div class="divider"></div>
+      <ul class="experience-list">
+        <li>
+          <p class="sub-heading">Front-end Developer at Company X</p>
+          <p class="description">Developed user interfaces using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs. Utilized React.js to create interactive and dynamic web applications.</p>
+        </li>
+        <li>
+          <p class="sub-heading">Back-end Developer at Company Y</p>
+          <p class="description">Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

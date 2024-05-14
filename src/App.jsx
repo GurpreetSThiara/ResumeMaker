@@ -1,10 +1,15 @@
-import React from 'react';
-import Resume from './components/Resume';
+
 import ModernResume from './components/ModernResume';
 import { Box } from '@chakra-ui/react';
 import HomePage from './pages/HomePage/HomePage';
 import { Route, Routes } from 'react-router';
 import EditResume from './pages/EditResume';
+import Res from './components/res/Res';
+import DL from './exp/dl';
+
+
+
+
 
 const App = () => {
   
@@ -18,6 +23,11 @@ const App = () => {
 
     <Route path='/modern' element={<ModernResume/>}/>
     <Route path='/modern/create' element={<EditResume/>}/>
+    <Route path='/res' element={<DL/>}/>
+   
+
+  
+ 
     </Routes>
    
   );
