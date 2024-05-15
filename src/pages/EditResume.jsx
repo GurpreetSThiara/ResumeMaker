@@ -27,7 +27,7 @@ import { compile } from "@onedoc/react-print";
 import ModernResume from "../components/Resumes/ModernResume/ModernResume";
 import { AnimatePresence } from "framer-motion";
 
-import { MdAdd } from 'react-icons/md';
+import { MdAdd } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
 const EditResume = () => {
   const [data, setData] = useState({
@@ -87,10 +87,11 @@ const EditResume = () => {
         graduationYear: "201Y",
       },
     ],
+    custom: [],
   });
 
   const [state, setState] = useState({
-    Image:true,
+    Image: true,
     Education: true,
     Profile: true,
     Contact: true,
@@ -134,16 +135,26 @@ const EditResume = () => {
         ...prevState,
         customKeys: [...prevState.customKeys, { key: customKey, value: true }],
       }));
+      setData({
+        ...data,
+        custom: [
+          ...data.custom,
+          {
+            key: customKey,
+            values: [{ subheading: "", description: "" }],
+          },
+        ],
+      });
       setCustomKey("");
       setIsOpen(false);
     }
   };
 
   const [heightVal, setHeightVal] = useState(25);
-  const [isSkillsExpanded, setIsSkillsExpanded] = useState(true);
-  const [isExperienceExpanded, setIsExperienceExpanded] = useState(true);
-  const [isContactExpanded, setIsContactExpanded] = useState(true);
-  const [isEducationExpanded, setIsEducationExpanded] = useState(true);
+  const [isSkillsExpanded, setIsSkillsExpanded] = useState(false);
+  const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
+  const [isContactExpanded, setIsContactExpanded] = useState(false);
+  const [isEducationExpanded, setIsEducationExpanded] = useState(false);
 
   const toggleSkillsExpand = () => {
     setIsSkillsExpanded(!isSkillsExpanded);
@@ -169,42 +180,47 @@ const EditResume = () => {
   const addSkill = () => {
     setData({ ...data, skills: [...data.skills, { title: "", content: "" }] });
   };
- const setDataSkills = (skills)=>{
- 
-  setData({...data,skills:[...skills]})
- }
+  const setDataSkills = (skills) => {
+    setData({ ...data, skills: [...skills] });
+  };
 
- const setEducation = (edu)=>{
-    setData({...data,education:edu})
- }
+  const setEducation = (edu) => {
+    setData({ ...data, education: edu });
+  };
 
- const setExperience = (experience)=>{
-  setData({...data,experience:experience})
- }
+  const setExperience = (experience) => {
+    setData({ ...data, experience: experience });
+  };
+
   return (
-    <Box>
-      <Box p={"0.5rem"}  backgroundColor={"gray"}>
+    <Box  >
+      <Box p={"0.5rem"}backgroundColor={"gray"}>
         <Flex direction="column" alignItems="center" justifyContent={"center"}>
-          <Flex alignItems="center" justifyContent={"center"} flexWrap={"wrap"} gap={'0.2rem'}>
-            {Object.keys(state).map((key,index) => {
+          <Flex
+            alignItems="center"
+            justifyContent={"center"}
+            flexWrap={"wrap"}
+            gap={"0.2rem"}
+          >
+            {Object.keys(state).map((key, index) => {
               if (key !== "customKeys") {
                 return (
                   <Flex
-                  border={'1px solid #ccc'}
-                  boxShadow={
-                    "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
-                  }
-                  borderRadius={"0.75rem"}
-                  paddingY={"0.05rem"}
-                  paddingX={"1rem"}
-                  key={index}
-                  alignItems="center"
-                  transition="all 0.3s"
-                  _hover={{
-                    transform: 'translateY(-2px)',
-                    boxShadow: "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)"
-                  }}
-                
+                    border={"1px solid #ccc"}
+                    boxShadow={
+                      "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+                    }
+                    borderRadius={"0.75rem"}
+                    paddingY={"0.05rem"}
+                    paddingX={"1rem"}
+                    key={index}
+                    alignItems="center"
+                    transition="all 0.3s"
+                    _hover={{
+                      transform: "translateY(-2px)",
+                      boxShadow:
+                        "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
+                    }}
                   >
                     <Checkbox
                       isChecked={state[key]}
@@ -221,59 +237,58 @@ const EditResume = () => {
               return null;
             })}
             {state.customKeys.map((item, index) => (
-          <Flex
-          border={'1px solid #ccc'}
-          boxShadow={
-            "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
-          }
-          borderRadius={"0.75rem"}
-          paddingY={"0.05rem"}
-          paddingX={"1rem"}
-          key={index}
-          alignItems="center"
-          transition="all 0.3s"
-          _hover={{
-            transform: 'translateY(-2px)',
-            boxShadow: "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)"
-          }}
-        >
-          <Checkbox
-            isChecked={item.value}
-            onChange={() => handleCheckboxChange(item.key)}
-            colorScheme="teal"
-            size="lg"
-          />
-          <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
-            {item.key}
-          </Text>
-        </Flex>
-        
-          
+              <Flex
+                border={"1px solid #ccc"}
+                boxShadow={
+                  "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+                }
+                borderRadius={"0.75rem"}
+                paddingY={"0.05rem"}
+                paddingX={"1rem"}
+                key={index}
+                alignItems="center"
+                transition="all 0.3s"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow:
+                    "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Checkbox
+                  isChecked={item.value}
+                  onChange={() => handleCheckboxChange(item.key)}
+                  colorScheme="teal"
+                  size="lg"
+                />
+                <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
+                  {item.key}
+                </Text>
+              </Flex>
             ))}
           </Flex>
 
           <Flex alignItems="center" mt={4}>
-  <Button
-    onClick={() => setIsOpen(true)}
-    bgGradient="linear(to-r, teal.500, teal.600)"
-    color="white"
-    borderRadius="full"
-    px={6}
-    py={3}
-    boxShadow="xl"
-    _hover={{
-      bgGradient: 'linear(to-r, teal.600, teal.700)',
-    }}
-    _active={{
-      transform: 'scale(0.95)',
-    }}
-  >
-    <Flex alignItems="center">
-      <Icon as={MdAdd} boxSize={6} mr={2} />
-      Add Custom Section
-    </Flex>
-  </Button>
-</Flex>
+            <Button
+              onClick={() => setIsOpen(true)}
+              bgGradient="linear(to-r, teal.500, teal.600)"
+              color="white"
+              borderRadius="full"
+              px={6}
+              py={3}
+              boxShadow="xl"
+              _hover={{
+                bgGradient: "linear(to-r, teal.600, teal.700)",
+              }}
+              _active={{
+                transform: "scale(0.95)",
+              }}
+            >
+              <Flex alignItems="center">
+                <Icon as={MdAdd} boxSize={6} mr={2} />
+                Add Custom Section
+              </Flex>
+            </Button>
+          </Flex>
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <ModalOverlay />
             <ModalContent>
@@ -296,7 +311,8 @@ const EditResume = () => {
         </Flex>
       </Box>
       <Flex
-        w="full"
+  
+        
         display={"flex"}
         flexDirection={{ sm: "column", md: "column", lg: "row" }}
       >
@@ -306,7 +322,6 @@ const EditResume = () => {
           </Text>
 
           <Box>
-            <Box as="h3">Adjust Header Height</Box>
             {/* Your Slider component goes here */}
           </Box>
 
@@ -676,13 +691,71 @@ const EditResume = () => {
             </Box>
           )}
 
+          {/* custom section */}
+          {data.custom.map((customItem, customIndex) => (
+  <Box key={customIndex} mb="2rem">
+    <Input
+      value={customItem.key}
+      onChange={(e) => {
+        const updatedCustom = [...data.custom];
+        updatedCustom[customIndex].key = e.target.value;
+        setData({ ...data, custom: updatedCustom });
+      }}
+      placeholder="Custom Section Title"
+      mb="1rem"
+    />
+    {customItem.values.map((valueItem, valueIndex) => (
+      <Box key={valueIndex} mb="1rem">
+        <Input
+          value={valueItem.subheading}
+          onChange={(e) => {
+            const updatedCustom = [...data.custom];
+            updatedCustom[customIndex].values[valueIndex].subheading = e.target.value;
+            setData({ ...data, custom: updatedCustom });
+          }}
+          placeholder="Subheading"
+          mb="0.5rem"
+        />
+        <Textarea
+          value={valueItem.description}
+          onChange={(e) => {
+            const updatedCustom = [...data.custom];
+            updatedCustom[customIndex].values[valueIndex].description = e.target.value;
+            setData({ ...data, custom: updatedCustom });
+          }}
+          placeholder="Description"
+        />
+      </Box>
+    ))}
+    {/* Button to add a new record within a custom section */}
+    <Button
+      onClick={() => {
+        const updatedCustom = [...data.custom];
+        updatedCustom[customIndex].values.push({ subheading: "", description: "" });
+        setData({ ...data, custom: updatedCustom });
+      }}
+      mb="2rem"
+    >
+      Add New Record
+    </Button>
+  </Box>
+))}
+          {/* Button to add new record within custom key */}
+      
           {/* Input fields for contact details */}
         </Box>
 
-        <Box overflow={"auto"}>
+        <Box  w={'50%'} border={'1px solid red'} p={'1rem'}>
           {/* <Resume data={data}/> */}
           <Box overflow={"auto"}>
-            <ModernResume state={state} setExperience={setExperience} data={data} headerLength={heightVal} setDataSkills={setDataSkills} setEducation={setEducation} />
+            <ModernResume
+              state={state}
+              setExperience={setExperience}
+              data={data}
+              headerLength={heightVal}
+              setDataSkills={setDataSkills}
+              setEducation={setEducation}
+            />
           </Box>
         </Box>
       </Flex>

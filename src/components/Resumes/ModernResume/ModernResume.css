@@ -48,7 +48,9 @@ body {
 .ml-0{
     margin-left: 0;
 }
-
+.header-name{
+    font-size: 2rem;
+}
 /* css for all headings */
 .heading-text {
     color: #323232;
