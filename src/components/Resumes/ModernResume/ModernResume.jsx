@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Button, Flex, Select } from '@chakra-ui/react';
 import { Reorder } from "framer-motion";
 import { Center, ChakraProvider, List, ListItem } from "@chakra-ui/react";
+import ResumeControls from '../../ResumeControls/ResumeControls';
 
 const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => {
 
@@ -300,12 +301,13 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
   return (
    <Flex padding={'0.5rem'} flexDirection={'column'} gap={'0.5rem'} className="">
      <Flex justifyContent={'end'} gap={'0.5rem'}>
-     <Select w={'50%'} value={selectedFont} onChange={handleFontChange} placeholder="Select Font Family">
+      <ResumeControls save={save} selectedFont={selectedFont} setSelectedFont={setSelectedFont}/>
+     {/* <Select w={'50%'} value={selectedFont} onChange={handleFontChange} placeholder="Select Font Family">
         {fontOptions.map((font, index) => (
           <option key={index} value={font.value}>{font.label}</option>
         ))}
       </Select>
-    <Button onClick={save}>Save as pdf</Button>
+    <Button onClick={save}>Save as pdf</Button> */}
      </Flex>
      <div style={{fontFamily:selectedFont?selectedFont:''}} id="modern_resume" className="resumee flex ">
       <div className="left-section"  >

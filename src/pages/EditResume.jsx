@@ -5,6 +5,7 @@ import {
   Checkbox,
   Collapse,
   Flex,
+  Heading,
   Icon,
   IconButton,
   Input,
@@ -18,6 +19,7 @@ import {
   Spacer,
   Text,
   Textarea,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { AiFillDelete, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import CustomSliderMark from "../components/CustomSliderMark";
@@ -29,14 +31,22 @@ import { AnimatePresence } from "framer-motion";
 
 import { MdAdd } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
+import { useLocation } from "react-router";
+import { jsPDF } from 'jspdf';
+import ATSBold from "../components/Resumes/ATSBold/ATSBold";
 const EditResume = () => {
+  const gradientColor = useColorModeValue('linear(to-r, black, blue.900)', 'linear(to-r, black, blue.900)');
+
+  const location = useLocation();
+  const passedState = location.state;
+  const { component } = passedState || {};
   const [data, setData] = useState({
     name: "John Doe",
     role: "Full Stack Developer",
     profileDescription:
       "Results-driven Full Stack Developer with [X years] of experience in designing, developing, and implementing scalable web applications. Proficient in both front-end and back-end technologies, with a strong focus on delivering high-quality code and intuitive user experiences.",
     contact: {
-      address: "512 Moore Street, Indigo Valley, San Diego, California",
+      address: "512 Moore Street, Indigo Valley, California",
       email: "johndoe@email.com",
       phone: "872-234-3355",
       linkedin: "linkedin of johndoe",
@@ -65,11 +75,15 @@ const EditResume = () => {
     ],
     experience: [
       {
+        from:'xxxx',
+        to:'yyyy',
         role: "Front-end Developer at Company X",
         description:
           "Developed user interfaces using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs. Utilized React.js to create interactive and dynamic web applications.",
       },
       {
+        from:'xxxx',
+        to:'yyyy',
         role: "Back-end Developer at Company Y",
         description:
           "Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.",
@@ -80,17 +94,32 @@ const EditResume = () => {
         institution: "University XYZ",
         degree: "Bachelor of Science in Computer Science",
         graduationYear: "201X",
+        gpa: "3.8/4.0"
       },
       {
         institution: "ABC College",
         degree: "Master of Science in Software Engineering",
         graduationYear: "201Y",
+        gpa: "3.8/4.0"
       },
     ],
+    projects: [
+        {
+          title: "AI Chatbot",
+          description: "Developed an AI-based chatbot for a capstone project, resulting in a 15% increase in customer satisfaction.",
+          technologies: ["Python", "TensorFlow", "NLTK"],
+          link: "https://github.com/johndoe/aichatbot"
+        },
+        {
+          title: "E-commerce Platform",
+          description: "Designed and implemented a scalable e-commerce platform using MERN stack.",
+          technologies: ["MongoDB", "Express.js", "React.js", "Node.js"],
+          link: "https://github.com/johndoe/ecommerce-platform"
+        }
+      ],
     custom: [],
     customLeft:[]
   });
-
   const [state, setState] = useState({
     Image: true,
     Education: true,
@@ -217,8 +246,8 @@ const EditResume = () => {
   };
 
   return (
-    <Box  >
-      <Box p={"0.5rem"}backgroundColor={"gray"}>
+    <Box bgGradient={gradientColor}  >
+      <Box p={"0.5rem"}>
         <Flex direction={{ base: "column", lg: "row" }} alignItems="center" justifyContent={"center"}>
           <Flex
             alignItems="center"
@@ -291,7 +320,7 @@ const EditResume = () => {
             ))}
           </Flex>
 
-          <Flex alignItems="center" mt={4}>
+          <Flex alignItems="center" >
      
             <Button
               onClick={() => setIsOpen(true)}
@@ -317,7 +346,7 @@ const EditResume = () => {
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Add Custom Key</ModalHeader>
+              <ModalHeader>Add Custom Section</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Input
@@ -328,10 +357,10 @@ const EditResume = () => {
               </ModalBody>
               <ModalFooter>
                 <Button onClick={handleAddCustomKeyL} colorScheme="teal">
-                  Add to L
+                  Add to Left
                 </Button>
                 <Button onClick={handleAddCustomKey} colorScheme="teal">
-                  Add to R
+                  Add to Right
                 </Button>
               </ModalFooter>
             </ModalContent>
@@ -344,10 +373,10 @@ const EditResume = () => {
     
         flexDirection={{ base:"column", md: "column", lg: "row" }}
       >
-        <Box flex="1" pr={{ base: 0, lg: "2rem" }} mb={{ base: "1rem", lg: 0 }}>
-          <Text fontSize={{ base: "", md: "2rem" }} as="h2" mb="2rem">
+        <Box minW={'40%'} border={'1px solid #616161'}m="1rem" p={'2rem'} borderRadius={'1rem'} flex="1" pr={{ base: 0, lg: "2rem" }} mb={{ base: "1rem", lg: 0 }}>
+          <Heading fontSize={{ base: "", md: "2rem" }} as="h2" mb="2rem">
             Edit Your Resume
-          </Text>
+          </Heading>
 
           <Box>
             {/* Your Slider component goes here */}
@@ -789,19 +818,34 @@ const EditResume = () => {
           {/* Input fields for contact details */}
         </Box>
 
-        <Box flex={'1'}  overflow={"auto"}>
+      <Box overflow={"auto"} >
+      <Box   mx={'2rem'}  overflow={"auto"}>
           {/* <Resume data={data}/> */}
           
-            <ModernResume
-              state={state}
-              setExperience={setExperience}
-              data={data}
-              headerLength={heightVal}
-              setDataSkills={setDataSkills}
-              setEducation={setEducation}
-            />
+         {JSON.stringify(component)===JSON.stringify("ATSBold") &&
+             <ATSBold
+             state={state}
+             setExperience={setExperience}
+             data={data}
+             headerLength={heightVal}
+             setDataSkills={setDataSkills}
+             setEducation={setEducation}
+           />
+         }
+
+{JSON.stringify(component)===JSON.stringify("ModernResume") &&
+             <ModernResume
+             state={state}
+             setExperience={setExperience}
+             data={data}
+             headerLength={heightVal}
+             setDataSkills={setDataSkills}
+             setEducation={setEducation}
+           />
+         }
    
         </Box>
+      </Box>
       </Flex>
     </Box>
   );
