@@ -88,6 +88,7 @@ const EditResume = () => {
       },
     ],
     custom: [],
+    customLeft:[]
   });
 
   const [state, setState] = useState({
@@ -100,6 +101,7 @@ const EditResume = () => {
     Header: true,
     customKeys: [], // Initialize custom keys array
   });
+  console.log(state)
 
   const [customKey, setCustomKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -129,6 +131,27 @@ const EditResume = () => {
     });
   };
 
+  const handleAddCustomKeyL = () => {
+    if (customKey && !state.customKeys.find((item) => item.key === customKey)) {
+      setState((prevState) => ({
+        ...prevState,
+        customKeys: [...prevState.customKeys, { key: customKey, value: true }],
+      }));
+      setData({
+        ...data,
+        custom: [
+          ...data.custom,
+          {
+            key: customKey,
+            values: [{ subheading: "", description: ""}],
+            side:"L" 
+          },
+        ],
+      });
+      setCustomKey("");
+      setIsOpen(false);
+    }
+  };
   const handleAddCustomKey = () => {
     if (customKey && !state.customKeys.find((item) => item.key === customKey)) {
       setState((prevState) => ({
@@ -141,7 +164,9 @@ const EditResume = () => {
           ...data.custom,
           {
             key: customKey,
-            values: [{ subheading: "", description: "" }],
+            side:"R",
+            values: [{ subheading: "", description: ""
+             }],
           },
         ],
       });
@@ -149,7 +174,6 @@ const EditResume = () => {
       setIsOpen(false);
     }
   };
-
   const [heightVal, setHeightVal] = useState(25);
   const [isSkillsExpanded, setIsSkillsExpanded] = useState(false);
   const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
@@ -195,7 +219,7 @@ const EditResume = () => {
   return (
     <Box  >
       <Box p={"0.5rem"}backgroundColor={"gray"}>
-        <Flex direction="column" alignItems="center" justifyContent={"center"}>
+        <Flex direction={{ base: "column", lg: "row" }} alignItems="center" justifyContent={"center"}>
           <Flex
             alignItems="center"
             justifyContent={"center"}
@@ -268,6 +292,7 @@ const EditResume = () => {
           </Flex>
 
           <Flex alignItems="center" mt={4}>
+     
             <Button
               onClick={() => setIsOpen(true)}
               bgGradient="linear(to-r, teal.500, teal.600)"
@@ -302,8 +327,11 @@ const EditResume = () => {
                 />
               </ModalBody>
               <ModalFooter>
+                <Button onClick={handleAddCustomKeyL} colorScheme="teal">
+                  Add to L
+                </Button>
                 <Button onClick={handleAddCustomKey} colorScheme="teal">
-                  Add
+                  Add to R
                 </Button>
               </ModalFooter>
             </ModalContent>
@@ -313,10 +341,10 @@ const EditResume = () => {
       <Flex
   
         
-        display={"flex"}
-        flexDirection={{ sm: "column", md: "column", lg: "row" }}
+    
+        flexDirection={{ base:"column", md: "column", lg: "row" }}
       >
-        <Box p={"16px"} w={"40%"}>
+        <Box flex="1" pr={{ base: 0, lg: "2rem" }} mb={{ base: "1rem", lg: 0 }}>
           <Text fontSize={{ base: "", md: "2rem" }} as="h2" mb="2rem">
             Edit Your Resume
           </Text>
@@ -699,7 +727,20 @@ const EditResume = () => {
       onChange={(e) => {
         const updatedCustom = [...data.custom];
         updatedCustom[customIndex].key = e.target.value;
+
+        const updatedCustomKeys = [...state.customKeys];
+        updatedCustomKeys[customIndex] = {
+          key: e.target.value,
+          value: state.customKeys[customIndex].value,
+        };
+
+        setState({
+          ...state,
+          customKeys: updatedCustomKeys,
+        });
+
         setData({ ...data, custom: updatedCustom });
+      
       }}
       placeholder="Custom Section Title"
       mb="1rem"
@@ -739,15 +780,18 @@ const EditResume = () => {
       Add New Record
     </Button>
   </Box>
+
+  
 ))}
+   
           {/* Button to add new record within custom key */}
       
           {/* Input fields for contact details */}
         </Box>
 
-        <Box  w={'50%'} border={'1px solid red'} p={'1rem'}>
+        <Box flex={'1'}  overflow={"auto"}>
           {/* <Resume data={data}/> */}
-          <Box overflow={"auto"}>
+          
             <ModernResume
               state={state}
               setExperience={setExperience}
@@ -756,7 +800,7 @@ const EditResume = () => {
               setDataSkills={setDataSkills}
               setEducation={setEducation}
             />
-          </Box>
+   
         </Box>
       </Flex>
     </Box>

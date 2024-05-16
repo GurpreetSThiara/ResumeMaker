@@ -383,7 +383,30 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
       </div>
 
     </div>}
- 
+    {data.custom.map((section, index) => (
+              <div key={index} className="custom-section">
+                {state.customKeys.map((item)=>{
+                  if(JSON.stringify(item.key) === JSON.stringify(section.key)){
+                    if(item.value && JSON.stringify("L") === JSON.stringify(section.side)){
+                      return   <div key={index} className="">porn
+                      <HeadingText text={section.key || 'Custom Section'} />
+                       <Divider />
+                       {
+                         section.values.map((item,index)=>{
+                           return <div key={index}>
+                             <SubHeading text={item.subheading}/>
+                             <p  className=''>{item.description}</p>
+                           </div>
+                         })
+                       }
+                       
+                      </div>
+                    }
+                  }
+                })}
+             
+              </div>
+            ))}
        
       </div>
 
@@ -485,17 +508,26 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
 
 {data.custom.map((section, index) => (
               <div key={index} className="custom-section">
-                <HeadingText text={section.key || 'Custom Section'} />
-                <Divider />
-                {
-                  section.values.map((item,index)=>{
-                    return <div key={index}>
-                      <SubHeading text={item.subheading}/>
-                      <p  className='textcolor'>{item.description}</p>
-                    </div>
-                  })
-                }
-                
+                {state.customKeys.map((item)=>{
+                  if(JSON.stringify(item.key) === JSON.stringify(section.key)){
+                    if(item.value && JSON.stringify("R") === JSON.stringify(section.side)){
+                      return   <div key={index} className="">
+                      <HeadingText text={section.key || 'Custom Section'} />
+                       <Divider />
+                       {
+                         section.values.map((item,index)=>{
+                           return <div key={index}>
+                             <SubHeading text={item.subheading}/>
+                             <p  className='textcolor'>{item.description}</p>
+                           </div>
+                         })
+                       }
+                       
+                      </div>
+                    }
+                  }
+                })}
+             
               </div>
             ))}
         </div>

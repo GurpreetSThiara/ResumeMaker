@@ -6,6 +6,9 @@ import { Route, Routes } from 'react-router';
 import EditResume from './pages/EditResume';
 import Res from './components/res/Res';
 import DL from './exp/dl';
+import Navbar from './components/Navbar/Navbar';
+import About from './pages/About/About';
+import Templates from './pages/Templates/Templates';
 
 
 
@@ -15,7 +18,9 @@ const App = () => {
   
 
   return (
-    <Routes>
+   <Box className="">
+    <Navbar/>
+     <Routes>
       <Route path='/' element={<Box backgroundColor={'white'}  >
       <HomePage/>
       {/* <ModernResume h={3.78} w={3.78}/> */}
@@ -24,11 +29,14 @@ const App = () => {
     <Route path='/modern' element={<ModernResume/>}/>
     <Route path='/modern/create' element={<EditResume/>}/>
     <Route path='/res' element={<DL/>}/>
+    <Route path='/about' element={<About/>}/>
+    <Route path='/templates' element={<Templates/>}/>
    
 
   
  
     </Routes>
+   </Box>
    
   );
 };
