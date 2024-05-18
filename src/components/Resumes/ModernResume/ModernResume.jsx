@@ -7,7 +7,7 @@ import { Reorder } from "framer-motion";
 import { Center, ChakraProvider, List, ListItem } from "@chakra-ui/react";
 import ResumeControls from '../../ResumeControls/ResumeControls';
 
-const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => {
+const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontSizes}) => {
 
     const [resHtml , setResHtml] = useState();
     const [selectedFont, setSelectedFont] = useState('Arial, sans-serif');
@@ -15,7 +15,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
   
 
   const HeadingText = ({ text }) => {
-    return <h2 className="heading-text">{text.toUpperCase()}</h2>;
+    return <h2 style={{fontSize:fontSizes.header}} className="heading-text">{text.toUpperCase()}</h2>;
   };
 
   const Divider = () => {
@@ -26,14 +26,14 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
     return (
       <div className="contact-item flex ml-0">
         <div className="icon">{icon}</div>
-        <div className="textsmall">{text}</div>
+        <div style={{fontSize:fontSizes.description}} className="textsmall"><p style={{fontSize:fontSizes.description}}>{text}</p></div>
       </div>
     );
   };
 
   const SubHeading = ({ text }) => {
     return (
-      <div className="sub-heading">
+      <div style={{fontSize:fontSizes.subheading}} className="sub-heading">
         {text}
       </div>
     );
@@ -50,7 +50,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
     <ContactItem
     key={2}
       icon={<MdEmail size={24} />}
-      text={<a className='link-color' rel="noopener noreferrer" href={data.contact.email}>{data.contact.email}</a>}
+      text={<a  className='link-color' rel="noopener noreferrer" href={data.contact.email}>{data.contact.email}</a>}
     />,
 
     <ContactItem
@@ -68,35 +68,6 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
   )
 
 
-  const Experience = ()=>{
-    
-  }
-
-  const resumeItems = []
-  
-  const fontOptions = [
-    { label: 'Arial', value: 'Arial, sans-serif' },
-    { label: 'Calibri', value: 'Calibri, sans-serif' },
-    { label: 'Helvetica', value: 'Helvetica, sans-serif' },
-    { label: 'Times New Roman', value: 'Times New Roman, serif' },
-    { label: 'Georgia', value: 'Georgia, serif' },
-    { label: 'Cambria', value: 'Cambria, serif' },
-    { label: 'Garamond', value: 'Garamond, serif' },
-    { label: 'Verdana', value: 'Verdana, sans-serif' },
-    { label: 'Trebuchet MS', value: 'Trebuchet MS, sans-serif' },
-    { label: 'Lato', value: 'Lato, sans-serif' },
-    { label: 'Roboto', value: 'Roboto, sans-serif' },
-    { label: 'Open Sans', value: 'Open Sans, sans-serif' },
-    { label: 'Montserrat', value: 'Montserrat, sans-serif' },
-    { label: 'Noto Sans', value: 'Noto Sans, sans-serif' },
-    { label: 'Roboto Slab', value: 'Roboto Slab, serif' }
-  ];
-
-
-
-  const handleFontChange = (event) => {
-    setSelectedFont(event.target.value);
-  };
 
 
   const save =async ()=>{
@@ -301,13 +272,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
   return (
    <Flex padding={'0.5rem'} flexDirection={'column'} gap={'0.5rem'} className="">
      <Flex justifyContent={'end'} gap={'0.5rem'}>
-      <ResumeControls save={save} selectedFont={selectedFont} setSelectedFont={setSelectedFont}/>
-     {/* <Select w={'50%'} value={selectedFont} onChange={handleFontChange} placeholder="Select Font Family">
-        {fontOptions.map((font, index) => (
-          <option key={index} value={font.value}>{font.label}</option>
-        ))}
-      </Select>
-    <Button onClick={save}>Save as pdf</Button> */}
+   
      </Flex>
      <div style={{fontFamily:selectedFont?selectedFont:''}} id="modern_resume" className="resumee flex ">
       <div className="left-section"  >
@@ -318,7 +283,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
         {/* profile description */}
         {state.Profile && <div className="">
         
-        <p className='profile-description textjustify '>{data.profileDescription}</p>
+        <p style={{fontSize:fontSizes.description}} className='profile-description textjustify '>{data.profileDescription}</p>
       </div>}
   
        {/* Contact Section */}
@@ -329,7 +294,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
         <div className="pl-0" >
         <Reorder.Group className='pl-0' axis="y" values={ContactItems} onReorder={setContactItems}>
       {ContactItems.map((item) => (
-        <Reorder.Item className='' key={item.phone} value={item}>
+        <Reorder.Item  className='' key={item.phone} value={item}>
           {item}
         </Reorder.Item>
       ))}
@@ -368,8 +333,8 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
           
             <div key={edu.graduationYear} className="">
                 <SubHeading className='textsmall' text={edu.degree}/>
-                <p className='textsmall'>{edu.institution}</p>
-                <p className='textsmall'>passing year: {edu.graduationYear}</p>
+                <p style={{fontSize:fontSizes.description}} className='textsmall'>{edu.institution}</p>
+                <p style={{fontSize:fontSizes.description}} className='textsmall'>passing year: {edu.graduationYear}</p>
             </div>
             </ListItem>
           ))}
@@ -397,7 +362,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
                          section.values.map((item,index)=>{
                            return <div key={index}>
                              <SubHeading text={item.subheading}/>
-                             <p  className=''>{item.description}</p>
+                             <p style={{fontSize:fontSizes.description}}  className=''>{item.description}</p>
                            </div>
                          })
                        }
@@ -415,8 +380,8 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
       {/* header name role */}
       <div className="right-section flex col">
         <div className="header">
-            <h1 className='header-name ucase bold'>{data.name}</h1>
-            <p>{data.role}</p>
+            <h1 style={{fontSize:fontSizes.name}} className='header-name ucase bold'>{data.name}</h1>
+            <p style={{fontSize:fontSizes.description}}>{data.role}</p>
         </div>
 
 
@@ -448,7 +413,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
          >
            <div key={index} className="flex col experience-item mingap">
               <SubHeading text={exp.role}/>
-              <p className='textcolor'>{exp.description}</p>
+              <p style={{fontSize:fontSizes.description}} className='textcolor'>{exp.description}</p>
             </div>
     
             </ListItem>
@@ -490,7 +455,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
        
               <SubHeading text={skill.title}/>
 
-              <p  className='textcolor'>{skill.content}</p>
+              <p style={{fontSize:fontSizes.description}}  className='textcolor'>{skill.content}</p>
             </div>
             </ListItem>
           ))}
@@ -520,7 +485,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience}) => 
                          section.values.map((item,index)=>{
                            return <div key={index}>
                              <SubHeading text={item.subheading}/>
-                             <p  className='textcolor'>{item.description}</p>
+                             <p style={{fontSize:fontSizes.description}}  className='textcolor'>{item.description}</p>
                            </div>
                          })
                        }

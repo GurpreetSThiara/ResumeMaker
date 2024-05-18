@@ -31,15 +31,18 @@ import { AnimatePresence } from "framer-motion";
 
 import { MdAdd } from "react-icons/md";
 import { FiDelete } from "react-icons/fi";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { jsPDF } from 'jspdf';
 import ATSBold from "../components/Resumes/ATSBold/ATSBold";
+import ResumeControls from "../components/ResumeControls/ResumeControls";
+import { IoAdd } from "react-icons/io5";
+
+
 const EditResume = () => {
   const gradientColor = useColorModeValue('linear(to-r, black, blue.900)', 'linear(to-r, black, blue.900)');
+  const params = useParams();
+  const {type} = params;
 
-  const location = useLocation();
-  const passedState = location.state;
-  const { component } = passedState || {};
   const [data, setData] = useState({
     name: "John Doe",
     role: "Full Stack Developer",
@@ -53,21 +56,25 @@ const EditResume = () => {
     },
     skills: [
       {
+        more:["sdsdsd","sdascfa"],
         title: "Front-end Development",
         content:
           "Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.",
       },
       {
+        more:[],
         title: "Back-end Development",
         content:
           "Skilled in server-side languages such as Node.js and frameworks like Express.js. Knowledge of RESTful API design.",
       },
       {
+        more:[],
         title: "Database Management",
         content:
           "Familiarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.",
       },
       {
+        more:[],
         title: "Version Control",
         content:
           "Proficient in using Git and GitHub for version control and collaboration with other developers.",
@@ -120,6 +127,7 @@ const EditResume = () => {
     custom: [],
     customLeft:[]
   });
+  //console.log(data)
   const [state, setState] = useState({
     Image: true,
     Education: true,
@@ -127,10 +135,11 @@ const EditResume = () => {
     Contact: true,
     Experience: true,
     Skills: true,
-    Header: true,
+    // Header: true,
+    Projects:true,
     customKeys: [], // Initialize custom keys array
   });
-  console.log(state)
+  //console.log(state)
 
   const [customKey, setCustomKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -208,6 +217,14 @@ const EditResume = () => {
   const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
   const [isContactExpanded, setIsContactExpanded] = useState(false);
   const [isEducationExpanded, setIsEducationExpanded] = useState(false);
+  const [selectedFont, setSelectedFont] = useState('Arial, sans-serif');
+  const [fontSizes,setFontSizes] = useState({
+    heading:'',
+    description:'',
+    subheading:'',
+    name:''
+
+  });
 
   const toggleSkillsExpand = () => {
     setIsSkillsExpanded(!isSkillsExpanded);
@@ -244,6 +261,10 @@ const EditResume = () => {
   const setExperience = (experience) => {
     setData({ ...data, experience: experience });
   };
+
+  const setProjects = (projects)=>{
+    setData({...data,projects:projects})
+  }
 
   return (
     <Box bgGradient={gradientColor}  >
@@ -366,6 +387,8 @@ const EditResume = () => {
             </ModalContent>
           </Modal>
         </Flex>
+
+        <ResumeControls setFontSizes={setFontSizes} selectedFont={selectedFont} setSelectedFont={setSelectedFont} save={()=>{}}/>
       </Box>
       <Flex
   
@@ -409,7 +432,8 @@ const EditResume = () => {
             mb="2rem"
           />
 
-          <Flex
+          <Box border={'1px solid #616161'} p={'0.5rem'} borderRadius={'1rem'}>
+          <Flex 
             cursor={"pointer"}
             p={"8px"}
             borderRadius={"10px"}
@@ -430,12 +454,13 @@ const EditResume = () => {
             )}
           </Flex>
           {isSkillsExpanded && (
-            <Box>
+            <Box  >
               {data.skills.map((item, index) => (
-                <Flex key={index} mb="1rem" alignItems="center">
-                  {/* Input for skill title */}
+                <Flex key={index} mb="1rem"  justifyContent={'space-between'}>
+                     <Flex flexDirection={'column'} gap={'0.3rem'} >
+                            {/* Input for skill title */}
                   <Input
-                    w={"30%"}
+                
                     value={item.title}
                     onChange={(e) =>
                       setData({
@@ -466,6 +491,49 @@ const EditResume = () => {
                     placeholder="Description"
                     mr="1rem"
                   />
+             {item.more.map((field, fieldIndex) => (
+          <Input
+            key={fieldIndex}
+            value={field}
+            placeholder="More info"
+            onChange={(e) =>
+              setData((prevData) => ({
+                ...prevData,
+                skills: prevData.skills.map((sk, j) =>
+                  j === index
+                    ? {
+                        ...sk,
+                        more: sk.more.map((more, k) =>
+                          k === fieldIndex ? e.target.value : more
+                        ),
+                      }
+                    : sk
+                ),
+              }))
+            }
+          />
+        ))}
+               <Flex
+          onClick={() =>
+            setData((prevData) => ({
+              ...prevData,
+              skills: prevData.skills.map((skill, i) =>
+                i === index
+                  ? { ...skill, more: [...skill.more, ""] }
+                  : skill
+              ),
+            }))
+          }
+          cursor={'pointer'}
+          justifyContent={'center'}
+          borderRadius={'1rem'}
+          backgroundColor={'gray.600'}
+          alignItems={'center'}
+          gap={'0.2rem'}
+        >
+          <Text>Add More</Text> <IoAdd />
+        </Flex>
+        </Flex>
                   {/* Delete button for skill */}
                   <Box>
                     <AiFillDelete
@@ -482,6 +550,7 @@ const EditResume = () => {
             </Box>
           )}
 
+          </Box>
           <Flex
             cursor={"pointer"}
             p={"8px"}
@@ -822,7 +891,7 @@ const EditResume = () => {
       <Box   mx={'2rem'}  overflow={"auto"}>
           {/* <Resume data={data}/> */}
           
-         {JSON.stringify(component)===JSON.stringify("ATSBold") &&
+         {JSON.stringify(type)===JSON.stringify("atsbold") &&
              <ATSBold
              state={state}
              setExperience={setExperience}
@@ -830,17 +899,24 @@ const EditResume = () => {
              headerLength={heightVal}
              setDataSkills={setDataSkills}
              setEducation={setEducation}
+             setProjects = {setProjects}
+             fontSizes={fontSizes}
+             selectedFont={selectedFont}
+
            />
          }
 
-{JSON.stringify(component)===JSON.stringify("ModernResume") &&
+{JSON.stringify(type)===JSON.stringify("modern") &&
              <ModernResume
+             fontSizes={fontSizes}
              state={state}
              setExperience={setExperience}
              data={data}
              headerLength={heightVal}
              setDataSkills={setDataSkills}
              setEducation={setEducation}
+             setProjects = {setProjects}
+             selectedFont={selectedFont}
            />
          }
    

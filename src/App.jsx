@@ -27,7 +27,7 @@ const App = () => {
     </Box>}/>
 
     <Route path='/modern' element={<ModernResume/>}/>
-    <Route path='/modern/create' element={<EditResume/>}/>
+    <Route path='/:type/create' element={<EditResume/>}/>
     <Route path='/res' element={<DL/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/templates' element={<Templates/>}/>
