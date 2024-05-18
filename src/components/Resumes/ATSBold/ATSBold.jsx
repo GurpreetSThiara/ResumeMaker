@@ -3,7 +3,12 @@ import "./ATSBold.css";
 import axios from "axios";
 import ResumeControls from "../../ResumeControls/ResumeControls";
 import { Reorder, motion } from "framer-motion";
-import { List, ListIcon, ListItem } from "@chakra-ui/react";
+import { Box, Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
+import Profile from "./SubComponents/Profile";
+import Experience from "./SubComponents/Experience";
+import Education from "./SubComponents/Education";
+import Skill from "./SubComponents/Skill";
+import Projects from "./SubComponents/Projects";
 
 const ATSBold = ({
   data,
@@ -13,9 +18,9 @@ const ATSBold = ({
   setExperience,
   setProjects,
   selectedFont,
-  fontSizes
+  fontSizes,
 }) => {
- // const [selectedFont, setSelectedFont] = useState("Arial, sans-serif");
+  // const [selectedFont, setSelectedFont] = useState("Arial, sans-serif");
   // This easy-to-scan but visually pleasing premium accounting resume template is the key to making a great impression. This accessible and ATS friendly accounting resume template is organized thoughtfully and a breeze to read through. Your name is prominently displayed at the top of this accounting resume template to make a lasting impression on hiring managers.
 
   // 100% fully customizable template
@@ -36,6 +41,59 @@ const ATSBold = ({
 
     setEducation(items);
   };
+
+  const [sections, setSections] = useState([
+    { component: <Profile data={data} state={state} />, key: 1 },
+    {
+      component: (
+        <Experience
+          key={2}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setExperience={setExperience}
+        />
+      ),
+      key: 2,
+    },
+    {
+      component: (
+        <Education
+          key={3}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setEducation={setEducation}
+        />
+      ),
+      key: 3,
+    },
+    {
+      component: (
+        <Skill
+          key={4}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setDataSkills={setDataSkills}
+        />
+      ),
+      key: 4,
+    },
+    {
+      component: (
+        <Projects
+          key={5}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setProjects={setProjects}
+        />
+      ),
+      key: 5,
+    },
+  ]);
+  const [reorderSections, setReorderSections] = useState(true);
 
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
@@ -216,22 +274,94 @@ const ATSBold = ({
       >
         <div className="ATSBold">
           <div className="ATSBold-header">
-            <h1 className="" style={{fontSize:fontSizes.name}}>{data.name.toUpperCase()}</h1>
+            <h1 className="" style={{ fontSize: fontSizes.name }}>
+              {data.name.toUpperCase()}
+            </h1>
             <h3>{data.role}</h3>
             {state.Contact && (
               <div className="ATSBold-header-contact-section">
-                <div className="address"><p  style={{fontSize:fontSizes.description}}>{data.contact.address}</p></div>
+                <div className="address">
+                  <p style={{ fontSize: fontSizes.description }}>
+                    {data.contact.address}
+                  </p>
+                </div>
                 <div className="seperator" />
-                <div className="contact"><p  style={{fontSize:fontSizes.description}}>{data.contact.phone}</p></div>
+                <div className="contact">
+                  <p style={{ fontSize: fontSizes.description }}>
+                    {data.contact.phone}
+                  </p>
+                </div>
                 <div className="seperator" />
-                <div className="email"><p style={{fontSize:fontSizes.description}}>{data.contact.email}</p></div>
+                <div className="email">
+                  <p style={{ fontSize: fontSizes.description }}>
+                    {data.contact.email}
+                  </p>
+                </div>
                 <div className="seperator" />
-                <div className="linkedin"><p style={{fontSize:fontSizes.description}}>{data.contact.linkedin}</p></div>
+                <div className="linkedin">
+                  <p style={{ fontSize: fontSizes.description }}>
+                    {data.contact.linkedin}
+                  </p>
+                </div>
               </div>
             )}
           </div>
 
-          {state.Profile && (
+          <Box
+         
+       
+          >
+            {reorderSections && (
+              <Reorder.Group values={sections} onReorder={setSections}>
+                {sections.map((item, index) => (
+                  <Reorder.Item key={item.key} value={item} style={{}}>
+                    <Box p={4} color="white" borderRadius="md" cursor="pointer">
+                      {item.key === 4 ? (
+                        <Skill
+                          data={data}
+                          state={state}
+                          fontSizes={fontSizes}
+                          setDataSkills={setDataSkills}
+                        />
+                      ) : item.key === 5 ? (
+                        <Projects
+                          key={5}
+                          data={data}
+                          state={state}
+                          fontSizes={fontSizes}
+                          setProjects={setProjects}
+                        />
+                      ) : item.key === 2 ? (
+                        <Experience
+                          key={2}
+                          data={data}
+                          state={state}
+                          fontSizes={fontSizes}
+                          setExperience={setExperience}
+                        />
+                      ) : (
+                        item.component
+                      )}
+                    </Box>
+                  </Reorder.Item>
+                ))}
+              </Reorder.Group>
+            )}
+
+            {!reorderSections && (
+              <>
+                {sections.map((item) => {
+                  return (
+                    <div key={item.key} className="">
+                      {item.component}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </Box>
+
+          {/* {state.Profile && (
             <div className="ATSBold-profile">{data.profileDescription}</div>
           )}
 
@@ -274,88 +404,17 @@ const ATSBold = ({
                   );
                 })}
               </List>
-                  {/* {data.experience.map((experience, i) => {
-                    return (
-                      <div key={i} className="">
-                        <div className="">
-                          <h4>{experience.role}</h4>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>
-                            from {experience.from} to {experience.to}
-                          </p>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>{experience.description}</p>
-                        </div>
-                      </div>
-                    );
-                  })} */}
+                 
                 </div>
               </div>
             )
-            //   <List
-            //   className='pl-0'
-            //   as={Reorder.Group}
-
-            //   values={data.education}
-            //   onReorder={(education)=>{
-            //     console.log("reorder");
-            //     setEducation(education)
-            //   }}
-
-            // >
-            //    {data.education.map((edu, index) => (
-            //        <ListItem
-            //        as={Reorder.Item}
-            //        key={edu.graduationYear}
-            //        value={edu}
-            //        className=''
-
-            //      >
-
-            //         <div key={edu.graduationYear} className="">
-            //             <SubHeading className='textsmall' text={edu.degree}/>
-            //             <p style={{fontSize:fontSizes.description}} className='textsmall'>{edu.institution}</p>
-            //             <p style={{fontSize:fontSizes.description}} className='textsmall'>passing year: {edu.graduationYear}</p>
-            //         </div>
-            //         </ListItem>
-            //       ))}
-
-            // </List>
+       
           }
           {state.Education && (
             <div className="ATSBold-education">
               <div className="ATSBold-subheading " style={{fontSize:fontSizes.header}}>Education</div>
               <div className="ATSBold-education-content ">
-                {/* <List
-            className='ATSBold-education-content'
-                  as={Reorder.Group}
-               
-                  values={data.education}
-                  onReorder={(education)=>{
-                    console.log("reorder");
-                    setEducation(education);
-                  
-                  }}>
-                    {
-                           data.education.map((education,i)=>{
-                            return <ListItem
-                            as={Reorder.Item}
-                                   key={education.graduationYear}
-                                   value={education}
-                                   className=''
-                            >
-                                <div className=""><h4>{education.institution}</h4></div>
-                        <div className=""><p style={{fontSize:fontSizes.description}}>{education.degree}</p></div>
-                        <div className=""><p style={{fontSize:fontSizes.description}}>Graduation year:{' '}{education.graduationYear}</p></div>
-                        <div className=""><p style={{fontSize:fontSizes.description}}>gpa:{' '}{education.gpa}</p></div>
-
-                            </ListItem>
-                        })
-                    }
-
-                </List> */}
+           
 
                 {data.education.map((education, i) => {
                   return (
@@ -421,7 +480,7 @@ const ATSBold = ({
        
                     </li>
                 })
-            }</ul> */}
+            }</ul> 
             </div>
           )}
           {state.Projects && (
@@ -476,9 +535,10 @@ const ATSBold = ({
                 <div className=""><a href={project.link} target="_blank" rel="noopener noreferrer">Project Link</a></div>
               </div>
             ))
-          }</div> */}
+          }</div> 
             </div>
           )}
+           */}
 
           {data.custom.map((section, index) => (
             <div key={index} className="custom-section">
@@ -490,16 +550,28 @@ const ATSBold = ({
                   ) {
                     return (
                       <div key={index} className="">
-                        <div style={{fontSize:fontSizes.header}} className="ATSBold-subheading">{section.key}</div>
+                        <div
+                          style={{ fontSize: fontSizes.header }}
+                          className="ATSBold-subheading"
+                        >
+                          {section.key}
+                        </div>
 
                         {section.values.map((item, index) => {
                           return (
                             <div key={index}>
                               <div className="">
-                                <h4 style={{fontSize:fontSizes.subheading}}>{item.subheading}</h4>
+                                <h4 style={{ fontSize: fontSizes.subheading }}>
+                                  {item.subheading}
+                                </h4>
                               </div>
 
-                              <p style={{fontSize:fontSizes.description}} className="">{item.description}</p>
+                              <p
+                                style={{ fontSize: fontSizes.description }}
+                                className=""
+                              >
+                                {item.description}
+                              </p>
                             </div>
                           );
                         })}

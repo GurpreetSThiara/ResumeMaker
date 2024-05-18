@@ -36,7 +36,7 @@ import { jsPDF } from 'jspdf';
 import ATSBold from "../components/Resumes/ATSBold/ATSBold";
 import ResumeControls from "../components/ResumeControls/ResumeControls";
 import { IoAdd } from "react-icons/io5";
-
+import { CgReorder } from "react-icons/cg";
 
 const EditResume = () => {
   const gradientColor = useColorModeValue('linear(to-r, black, blue.900)', 'linear(to-r, black, blue.900)');
@@ -139,10 +139,13 @@ const EditResume = () => {
     Projects:true,
     customKeys: [], // Initialize custom keys array
   });
+
+ // const sections = [{image:true},{education:true}]
   //console.log(state)
 
   const [customKey, setCustomKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isReordering, setIsReordering] = useState(false);
   const handleCheckboxChange = (key) => {
     setState((prevState) => {
       if (key in prevState) {
@@ -224,7 +227,7 @@ const EditResume = () => {
     subheading:'',
     name:''
 
-  });
+  }); 
 
   const toggleSkillsExpand = () => {
     setIsSkillsExpanded(!isSkillsExpanded);
@@ -363,6 +366,7 @@ const EditResume = () => {
                 Add Custom Section
               </Flex>
             </Button>
+            <Button onClick={()=>setIsReordering(true)} borderRadius={'1.5rem'}> <Flex alignItems={'center'} gap={'0.4rem'}><Text>Reorder</Text><CgReorder/></Flex></Button>
           </Flex>
           <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <ModalOverlay />
@@ -375,6 +379,97 @@ const EditResume = () => {
                   onChange={(e) => setCustomKey(e.target.value)}
                   placeholder="Enter custom key"
                 />
+              </ModalBody>
+              <ModalFooter>
+                <Button onClick={handleAddCustomKeyL} colorScheme="teal">
+                  Add to Left
+                </Button>
+                <Button onClick={handleAddCustomKey} colorScheme="teal">
+                  Add to Right
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+
+          <Modal isOpen={isReordering} onClose={() => setIsReordering(false)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Reorder sections</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+              <Flex
+                     flexDirection={'column'}
+            alignItems="center"
+            justifyContent={"center"}
+            flexWrap={"wrap"}
+            gap={"0.6rem"}
+          >
+            {Object.keys(state).map((key, index) => {
+              if (key !== "customKeys") {
+                return (
+                  <Flex
+           
+                    border={"1px solid #ccc"}
+                    boxShadow={
+                      "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+                    }
+                    borderRadius={"0.75rem"}
+                    paddingY={"0.05rem"}
+                    paddingX={"1rem"}
+                    key={index}
+                    alignItems="center"
+                    transition="all 0.3s"
+                    _hover={{
+                      transform: "translateY(-2px)",
+                      boxShadow:
+                        "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
+                    }}
+                  >
+                    <Checkbox
+                      isChecked={state[key]}
+                      onChange={() => handleCheckboxChange(key)}
+                      colorScheme="teal"
+                      size="lg"
+                    />
+                    <Text ml={2} fontWeight={state[key] ? "bold" : "normal"}>
+                      {key}
+                    </Text>
+                  </Flex>
+                );
+              }
+              return null;
+            })}
+            {state.customKeys.map((item, index) => (
+              <Flex
+     
+                border={"1px solid #ccc"}
+                boxShadow={
+                  "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+                }
+                borderRadius={"0.75rem"}
+                paddingY={"0.05rem"}
+                paddingX={"1rem"}
+                key={index}
+                alignItems="center"
+                transition="all 0.3s"
+                _hover={{
+                  transform: "translateY(-2px)",
+                  boxShadow:
+                    "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Checkbox
+                  isChecked={item.value}
+                  onChange={() => handleCheckboxChange(item.key)}
+                  colorScheme="teal"
+                  size="lg"
+                />
+                <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
+                  {item.key}
+                </Text>
+              </Flex>
+            ))}
+          </Flex>
               </ModalBody>
               <ModalFooter>
                 <Button onClick={handleAddCustomKeyL} colorScheme="teal">
