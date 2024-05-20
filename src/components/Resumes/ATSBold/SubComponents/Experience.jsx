@@ -38,6 +38,12 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                         <div className="">
                           <p style={{fontSize:fontSizes.description}}>{experience.description}</p>
                         </div>
+
+                        <div style={{ fontSize: fontSizes.description }} className="">
+                    {experience.more.map((more, index) => (
+                      <div key={more} className="">{more}</div>
+                    ))}
+                  </div>
                       </div>
                     </ListItem>
                   );

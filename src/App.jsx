@@ -9,6 +9,7 @@ import DL from './exp/dl';
 import Navbar from './components/Navbar/Navbar';
 import About from './pages/About/About';
 import Templates from './pages/Templates/Templates';
+import TemplateInfo from './pages/Templates/TemplateInfo';
 
 
 
@@ -27,10 +28,11 @@ const App = () => {
     </Box>}/>
 
     <Route path='/modern' element={<ModernResume/>}/>
-    <Route path='/:type/create' element={<EditResume/>}/>
+    <Route path='templates/:type/create' element={<EditResume/>}/>
     <Route path='/res' element={<DL/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/templates' element={<Templates/>}/>
+    <Route path='templates/:type' element={<TemplateInfo/>}/>
    
 
   

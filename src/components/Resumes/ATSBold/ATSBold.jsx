@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ATSBold.css";
 import axios from "axios";
 import ResumeControls from "../../ResumeControls/ResumeControls";
 import { Reorder, motion } from "framer-motion";
-import { Box, Flex, List, ListIcon, ListItem } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, List, ListIcon, ListItem, Stack } from "@chakra-ui/react";
 import Profile from "./SubComponents/Profile";
 import Experience from "./SubComponents/Experience";
 import Education from "./SubComponents/Education";
 import Skill from "./SubComponents/Skill";
 import Projects from "./SubComponents/Projects";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { reorderSections } from "../../../redux/features/resumeSectionsSlice";
 
 const ATSBold = ({
   data,
@@ -19,19 +22,14 @@ const ATSBold = ({
   setProjects,
   selectedFont,
   fontSizes,
+  order
 }) => {
-  // const [selectedFont, setSelectedFont] = useState("Arial, sans-serif");
-  // This easy-to-scan but visually pleasing premium accounting resume template is the key to making a great impression. This accessible and ATS friendly accounting resume template is organized thoughtfully and a breeze to read through. Your name is prominently displayed at the top of this accounting resume template to make a lasting impression on hiring managers.
+  console.log("orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+  console.log(order)
+  console.log("orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+  const secs = useSelector((state)=>state.resumeSections.sections);
+  const dispatch = useDispatch();
 
-  // 100% fully customizable template
-
-  // Easily change the text, images, and more
-
-  // Get creative with thousands of photos, graphics, and fonts
-
-  // Dazzle followers with animations, transitions, or videos
-
-  // Quickly share and publish anywhere
   const handleDragEnd = (result) => {
     if (!result.destination) return; // Drop outside the list
 
@@ -41,6 +39,86 @@ const ATSBold = ({
 
     setEducation(items);
   };
+
+  const z = [
+    { component: <Profile data={data} state={state} />, key: 1 },
+    {
+      component: (
+        <Experience
+          key={2}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setExperience={setExperience}
+        />
+      ),
+      key: 2,
+    },
+    {
+      component: (
+        <Education
+          key={3}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setEducation={setEducation}
+        />
+      ),
+      key: 3,
+    },
+    {
+      component: (
+        <Skill
+          key={4}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setDataSkills={setDataSkills}
+        />
+      ),
+      key: 4,
+    },
+    {
+      component:  <div className="">
+        <Projects
+      key={5}
+      data={data}
+      state={state}
+      fontSizes={fontSizes}
+      setProjects={setProjects}
+    />
+      </div>,
+      key: 5,
+    },
+  ]
+const keys = [1,2,3,4,5,6,7,8,9,10]
+  const [x , setX] = useState([
+    <Profile key={1} data={data} state={state} />,
+    <Projects
+    key={5}
+    data={data}
+    state={state}
+    fontSizes={fontSizes}
+    setProjects={setProjects}
+  />,  <Skill
+  key={4}
+  data={data}
+  state={state}
+  fontSizes={fontSizes}
+  setDataSkills={setDataSkills}
+/>,<Education
+          key={3}
+          data={data}
+          state={state}
+          fontSizes={fontSizes}
+          setEducation={setEducation}
+        />,  <Experience
+        key={2}
+        data={data}
+        state={state}
+        fontSizes={fontSizes}
+        setExperience={setExperience}
+      />,])
 
   const [sections, setSections] = useState([
     { component: <Profile data={data} state={state} />, key: 1 },
@@ -81,19 +159,28 @@ const ATSBold = ({
       key: 4,
     },
     {
-      component: (
+      component:  <div className="">
         <Projects
-          key={5}
-          data={data}
-          state={state}
-          fontSizes={fontSizes}
-          setProjects={setProjects}
-        />
-      ),
+      key={5}
+      data={data}
+      state={state}
+      fontSizes={fontSizes}
+      setProjects={setProjects}
+    />
+      </div>,
       key: 5,
     },
   ]);
-  const [reorderSections, setReorderSections] = useState(true);
+  const buttonNames = ['First', 'Second', 'Third', 'Fourth'];
+  const [checkedStates, setCheckedStates] = useState([false, false, false, false]);
+
+  const handleCheckboxChange = (index) => (event) => {
+    const newCheckedStates = [...checkedStates];
+    newCheckedStates[index] = event.target.checked;
+    setCheckedStates(newCheckedStates);
+  };
+
+ // const [reorderSections, setReorderSections] = useState(true);
 
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
@@ -259,8 +346,31 @@ const ATSBold = ({
     }
   };
 
+  const reOrder = (list)=>{
+    dispatch(reorderSections(list));
+  }
+
+useEffect(()=>{
+  dispatch(reorderSections(z));
+},[])
   return (
     <div className="">
+    <Flex wrap={'wrap'} gap={'0.5rem'} py={'0.5rem'} justifyContent={'end'}>
+    {/* {buttonNames.map((name, index) => (
+          <Button key={index} colorScheme="teal" >
+            <Checkbox
+              isChecked={checkedStates[index]}
+              onChange={handleCheckboxChange(index)}
+              size="lg"
+              colorScheme="teal"
+              mr={2}
+            />
+            {checkedStates[index] ? `${name}` : `${name}`}
+          </Button>
+        ))} */}
+         <Button onClick={save}>Save as PDF</Button>
+      </Flex>
+     
       {/* <ResumeControls
         save={save}
         selectedFont={selectedFont}
@@ -306,15 +416,26 @@ const ATSBold = ({
               </div>
             )}
           </div>
-
+{/* 
+          <Box>
+            <Reorder.Group axis="y" values={z} onReorder={(list)=>{reOrder(list)}}>
+              {secs.map((item) => (
+                <Reorder.Item key={item.key} value={item}>
+                  <Box p={4} color="white" borderRadius="md" cursor="pointer">
+                  {item.component}
+                  </Box>
+                </Reorder.Item>
+              ))}
+            </Reorder.Group>
+          </Box> */}
           <Box
          
        
           >
-            {reorderSections && (
-              <Reorder.Group values={sections} onReorder={setSections}>
-                {sections.map((item, index) => (
-                  <Reorder.Item key={item.key} value={item} style={{}}>
+            {/* {reorderSections && (
+              <Reorder.Group values={x} onReorder={setX}>
+                {x.map((item, index) => (
+                  <Reorder.Item key={item} value={item} style={{}}>
                     <Box p={4} color="white" borderRadius="md" cursor="pointer">
                       {item.key === 4 ? (
                         <Skill
@@ -323,7 +444,7 @@ const ATSBold = ({
                           fontSizes={fontSizes}
                           setDataSkills={setDataSkills}
                         />
-                      ) : item.key === 5 ? (
+                      ) : item.key === 555 ? (
                         <Projects
                           key={5}
                           data={data}
@@ -331,7 +452,7 @@ const ATSBold = ({
                           fontSizes={fontSizes}
                           setProjects={setProjects}
                         />
-                      ) : item.key === 2 ? (
+                      ) : item.key === 435345 ? (
                         <Experience
                           key={2}
                           data={data}
@@ -340,19 +461,19 @@ const ATSBold = ({
                           setExperience={setExperience}
                         />
                       ) : (
-                        item.component
+                        item
                       )}
                     </Box>
                   </Reorder.Item>
                 ))}
               </Reorder.Group>
-            )}
+            )} */}
 
-            {!reorderSections && (
+            {(
               <>
-                {sections.map((item) => {
+                {z.map((item) => {
                   return (
-                    <div key={item.key} className="">
+                    <div key={item} className="">
                       {item.component}
                     </div>
                   );
@@ -360,6 +481,7 @@ const ATSBold = ({
               </>
             )}
           </Box>
+
 
           {/* {state.Profile && (
             <div className="ATSBold-profile">{data.profileDescription}</div>

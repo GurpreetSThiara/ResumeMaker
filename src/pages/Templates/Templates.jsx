@@ -3,12 +3,14 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import ATSBold from '../../components/Resumes/ATSBold/ATSBold'
 import ModernResume from '../../components/Resumes/ModernResume/ModernResume'
+import atsResume from './../../assets/Screenshot 2024-05-17 013214.png';
+
 
 const Templates = () => {
     const gradientColor = useColorModeValue('linear(to-r, black, blue.700)', 'linear(to-r, black, blue.700)');
 
     const paths = [
-        { path: 'src/assets/Screenshot 2024-05-17 013214.png', key: 'atsbold' },
+        { path: atsResume, key: 'atsbold' },
         { path: 'src/assets/modres.png', key: 'modern' },
       ];    const navigate = useNavigate()
   return (
@@ -18,7 +20,7 @@ const Templates = () => {
 
 <Flex justifyContent={{sm:'center',md:'center'}} p={'16px'} flexWrap={'wrap'} gap={'2rem'} w={'full'} h={'full'} >
         {paths.map((item , index)=>{
-            return <Box border={'1px solid #616161'}  borderRadius={'0.5rem'} p={'0.5rem'}  boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"  cursor={'pointer'} onClick={()=>navigate(`/${item.key}/create`,)} w={'200px'} h={'300px'} key={index}>
+            return <Box border={'1px solid #616161'}  borderRadius={'0.5rem'} p={'0.5rem'}  boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"  cursor={'pointer'} onClick={()=>navigate(`/templates/${item.key}`,{state:{imageSrc:item.path}})} w={'200px'} h={'300px'} key={index}>
                   <Image borderRadius="8px"  objectFit={'contain'} h={'full'} w={'full'} src={item.path}/>
             </Box>
         })}

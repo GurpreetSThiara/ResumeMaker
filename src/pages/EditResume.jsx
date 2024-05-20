@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -9,6 +9,8 @@ import {
   Icon,
   IconButton,
   Input,
+  List,
+  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -22,21 +24,17 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { AiFillDelete, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
-import CustomSliderMark from "../components/CustomSliderMark";
-import PDFConverter from "./PDFConverter";
-import { chakraToHtml } from "../utils/chakraToHtml";
-import { compile } from "@onedoc/react-print";
+
 import ModernResume from "../components/Resumes/ModernResume/ModernResume";
-import { AnimatePresence } from "framer-motion";
 
 import { MdAdd } from "react-icons/md";
-import { FiDelete } from "react-icons/fi";
-import { useLocation, useParams } from "react-router";
-import { jsPDF } from 'jspdf';
+
 import ATSBold from "../components/Resumes/ATSBold/ATSBold";
 import ResumeControls from "../components/ResumeControls/ResumeControls";
 import { IoAdd } from "react-icons/io5";
 import { CgReorder } from "react-icons/cg";
+import { AnimatePresence, Reorder, motion } from "framer-motion";
+import { useParams } from "react-router";
 
 const EditResume = () => {
   const gradientColor = useColorModeValue('linear(to-r, black, blue.900)', 'linear(to-r, black, blue.900)');
@@ -56,7 +54,7 @@ const EditResume = () => {
     },
     skills: [
       {
-        more:["sdsdsd","sdascfa"],
+        more:[],
         title: "Front-end Development",
         content:
           "Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.",
@@ -82,15 +80,17 @@ const EditResume = () => {
     ],
     experience: [
       {
-        from:'xxxx',
-        to:'yyyy',
+        more:[],
+        from:'12 march 2022',
+        to:'14 march 2024',
         role: "Front-end Developer at Company X",
         description:
           "Developed user interfaces using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs. Utilized React.js to create interactive and dynamic web applications.",
       },
       {
-        from:'xxxx',
-        to:'yyyy',
+        more:[],
+        from:'12 march 2022',
+        to:'14 march 2024',
         role: "Back-end Developer at Company Y",
         description:
           "Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.",
@@ -98,12 +98,14 @@ const EditResume = () => {
     ],
     education: [
       {
+        more:[],
         institution: "University XYZ",
         degree: "Bachelor of Science in Computer Science",
         graduationYear: "201X",
         gpa: "3.8/4.0"
       },
       {
+        more:[],
         institution: "ABC College",
         degree: "Master of Science in Software Engineering",
         graduationYear: "201Y",
@@ -112,12 +114,14 @@ const EditResume = () => {
     ],
     projects: [
         {
+          more:[],
           title: "AI Chatbot",
           description: "Developed an AI-based chatbot for a capstone project, resulting in a 15% increase in customer satisfaction.",
           technologies: ["Python", "TensorFlow", "NLTK"],
           link: "https://github.com/johndoe/aichatbot"
         },
         {
+          more:[],
           title: "E-commerce Platform",
           description: "Designed and implemented a scalable e-commerce platform using MERN stack.",
           technologies: ["MongoDB", "Express.js", "React.js", "Node.js"],
@@ -146,6 +150,23 @@ const EditResume = () => {
   const [customKey, setCustomKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isReordering, setIsReordering] = useState(false);
+
+  const [heightVal, setHeightVal] = useState(25);
+  const [isSkillsExpanded, setIsSkillsExpanded] = useState(false);
+  const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
+  const [isContactExpanded, setIsContactExpanded] = useState(false);
+  const [isEducationExpanded, setIsEducationExpanded] = useState(false);
+  const [selectedFont, setSelectedFont] = useState('Arial, sans-serif');
+  const [fontSizes,setFontSizes] = useState({
+    heading:'',
+    description:'',
+    subheading:'',
+    name:''
+
+  }); 
+
+  const[sections ,setSections] = useState([]);
+  const [order, setOrder] = useState([])
   const handleCheckboxChange = (key) => {
     setState((prevState) => {
       if (key in prevState) {
@@ -211,23 +232,38 @@ const EditResume = () => {
           },
         ],
       });
+      setSections([...sections,{key:sections.length,value:customKey}])
       setCustomKey("");
+
       setIsOpen(false);
     }
   };
-  const [heightVal, setHeightVal] = useState(25);
-  const [isSkillsExpanded, setIsSkillsExpanded] = useState(false);
-  const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
-  const [isContactExpanded, setIsContactExpanded] = useState(false);
-  const [isEducationExpanded, setIsEducationExpanded] = useState(false);
-  const [selectedFont, setSelectedFont] = useState('Arial, sans-serif');
-  const [fontSizes,setFontSizes] = useState({
-    heading:'',
-    description:'',
-    subheading:'',
-    name:''
 
-  }); 
+  useEffect(()=>{
+    const a = [];
+  const res =  Object.keys(state).map((key, index) => {
+      if (key !== "customKeys") {
+        a.push(index);
+      return {key:index,value:key}
+
+      }
+ //  return {key:"key",value:"value"}
+    });
+    setSections(res);
+  },[]);
+
+  useEffect(()=>{
+    const a = [];
+    sections.map((item)=>{
+      if(item)
+      a.push(item.key);
+    })
+    setOrder(a);
+  },[sections])
+
+  const addSection = (sec)=>{
+    setSections({...sections,sec})
+  }
 
   const toggleSkillsExpand = () => {
     setIsSkillsExpanded(!isSkillsExpanded);
@@ -404,7 +440,54 @@ const EditResume = () => {
             flexWrap={"wrap"}
             gap={"0.6rem"}
           >
-            {Object.keys(state).map((key, index) => {
+            <List
+               as={Reorder.Group}
+            values={sections}
+            onReorder={(s)=>{
+              setSections(s);
+
+            }}
+
+            >
+               {sections.map((key, index) => {
+              if (key ) {
+                return (
+                 <ListItem key={key?.key} as={Reorder.Item} value={key}>
+                   <Flex
+           
+           border={"1px solid #ccc"}
+           boxShadow={
+             "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
+           }
+           borderRadius={"0.75rem"}
+           paddingY={"0.05rem"}
+           paddingX={"1rem"}
+           key={index}
+           alignItems="center"
+           transition="all 0.3s"
+           _hover={{
+             transform: "translateY(-2px)",
+             boxShadow:
+               "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
+           }}
+         >
+           {/* <Checkbox
+             isChecked={state[key]}
+             onChange={() => handleCheckboxChange(key)}
+             colorScheme="teal"
+             size="lg"
+           /> */}
+           <Text ml={2} >
+             {key?.value}
+           </Text>
+         </Flex>
+                 </ListItem>
+                );
+              }
+              return null;
+            })}
+            </List>
+            {sections.map((key, index) => {
               if (key !== "customKeys") {
                 return (
                   <Flex
@@ -425,50 +508,21 @@ const EditResume = () => {
                         "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
                     }}
                   >
-                    <Checkbox
+                    {/* <Checkbox
                       isChecked={state[key]}
                       onChange={() => handleCheckboxChange(key)}
                       colorScheme="teal"
                       size="lg"
-                    />
-                    <Text ml={2} fontWeight={state[key] ? "bold" : "normal"}>
-                      {key}
+                    /> */}
+                    <Text ml={2} >
+                      {key?.value}
                     </Text>
                   </Flex>
                 );
               }
               return null;
             })}
-            {state.customKeys.map((item, index) => (
-              <Flex
-     
-                border={"1px solid #ccc"}
-                boxShadow={
-                  "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
-                }
-                borderRadius={"0.75rem"}
-                paddingY={"0.05rem"}
-                paddingX={"1rem"}
-                key={index}
-                alignItems="center"
-                transition="all 0.3s"
-                _hover={{
-                  transform: "translateY(-2px)",
-                  boxShadow:
-                    "0 12px 20px -4px rgba(0, 0, 0, 0.15), 0 6px 12px -2px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <Checkbox
-                  isChecked={item.value}
-                  onChange={() => handleCheckboxChange(item.key)}
-                  colorScheme="teal"
-                  size="lg"
-                />
-                <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
-                  {item.key}
-                </Text>
-              </Flex>
-            ))}
+           
           </Flex>
               </ModalBody>
               <ModalFooter>
@@ -532,7 +586,7 @@ const EditResume = () => {
             cursor={"pointer"}
             p={"8px"}
             borderRadius={"10px"}
-            border={"1px solid gray"}
+        
             w={"full"}
             justify={"space-between"}
             align="center"
@@ -549,10 +603,10 @@ const EditResume = () => {
             )}
           </Flex>
           {isSkillsExpanded && (
-            <Box  >
+            <Box  w={'full'}>
               {data.skills.map((item, index) => (
-                <Flex key={index} mb="1rem"  justifyContent={'space-between'}>
-                     <Flex flexDirection={'column'} gap={'0.3rem'} >
+                <Flex key={index} mb="1rem"  justifyContent={'space-between'} w={'full'}>
+                     <Flex flexDirection={'column'} gap={'0.3rem'} w={'full'} px={'0.5rem'} >
                             {/* Input for skill title */}
                   <Input
                 
@@ -646,15 +700,16 @@ const EditResume = () => {
           )}
 
           </Box>
-          <Flex
+        <Box border={'1px solid #616161'} p={'0.5rem'} borderRadius={'1rem'}>
+        <Flex
             cursor={"pointer"}
             p={"8px"}
             borderRadius={"10px"}
-            border={"1px solid gray"}
+        
             w={"full"}
             justify={"space-between"}
             align="center"
-            mb="1rem"
+       
             onClick={toggleExperienceExpand}
           >
             <Text as="h3" mr="1rem">
@@ -673,8 +728,9 @@ const EditResume = () => {
             <Box>
               {data.experience.map((item, index) => (
                 <Flex key={index} mb="1rem" alignItems="center">
-                  {/* Input for experience role */}
-                  <Input
+                 <Flex flexDirection={'column'} gap={'0.5rem'} w={'full'}>
+                    {/* Input for experience role */}
+                    <Input
                     value={item.role}
                     onChange={(e) =>
                       setData({
@@ -703,6 +759,60 @@ const EditResume = () => {
                     placeholder="Description"
                     mr="1rem"
                   />
+                  <Input value={item.from}  onChange={(e) => setData(prevData => {
+    const newData = { ...prevData };
+    newData.experience[index].from = e.target.value;
+    return newData;
+  })}/>
+                  <Input value={item.to}   onChange={(e) => setData(prevData => {
+    const newData = { ...prevData };
+    newData.experience[index].to = e.target.value;
+    return newData;
+  })} />
+                   {item.more.map((field, fieldIndex) => (
+          <Input
+            key={fieldIndex}
+            value={field}
+            placeholder="More info"
+            onChange={(e) =>
+              setData((prevData) => ({
+                ...prevData,
+                experience: prevData.experience.map((sk, j) =>
+                  j === index
+                    ? {
+                        ...sk,
+                        more: sk.more.map((more, k) =>
+                          k === fieldIndex ? e.target.value : more
+                        ),
+                      }
+                    : sk
+                ),
+              }))
+            }
+          />
+        ))}
+                   <Flex
+          onClick={() =>
+            setData((prevData) => ({
+              ...prevData,
+              experience: prevData.experience.map((experience, i) =>
+                i === index
+                  ? { ...experience, more: [...experience.more, ""] }
+                  : experience
+              ),
+            }))
+          }
+          cursor={'pointer'}
+          justifyContent={'center'}
+          borderRadius={'1rem'}
+          backgroundColor={'gray.600'}
+          alignItems={'center'}
+          gap={'0.2rem'}
+        >
+          <Text>Add More</Text> <IoAdd />
+        </Flex>
+
+                 </Flex>
                   {/* Delete button for experience */}
                   <Box>
                     <AiFillDelete
@@ -734,6 +844,7 @@ const EditResume = () => {
               </Button>
             </Box>
           )}
+        </Box>
 
           <Flex
             cursor={"pointer"}
@@ -997,6 +1108,7 @@ const EditResume = () => {
              setProjects = {setProjects}
              fontSizes={fontSizes}
              selectedFont={selectedFont}
+             order = {order}
 
            />
          }
@@ -1012,6 +1124,7 @@ const EditResume = () => {
              setEducation={setEducation}
              setProjects = {setProjects}
              selectedFont={selectedFont}
+             order = {order}
            />
          }
    
