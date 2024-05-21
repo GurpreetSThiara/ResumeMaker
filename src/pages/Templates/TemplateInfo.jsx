@@ -19,7 +19,7 @@ const TemplateInfo = () => {
         modern:`A modern resume focuses on establishing an effective first impression. It's designed to be clear and simple to read, with an emphasis on highlighting your significant accomplishments and talents. Rather than simply stating work duties, it emphasizes what you've accomplished in each function, typically with quantifiable outcomes. Modern resumes frequently include links to your professional portfolio or LinkedIn profile, which gives employers a more complete picture of your work. Tailoring your resume to the relevant job description helps it pass through Applicant Tracking Systems (ATS), ensuring it is discovered. This method demonstrates not only what you've done, but also that you're current with industry standards and job market trends.`
     }
   return (
-    <Box  p={'1rem'}>
+    <Box bg={'black'}  p={'1rem'}>
        <Flex alignItems={{base:'center',md:'flex-start'}}  flexDirection={{base:'column',md:'row'}} w={'full'} gap={'1rem'} justifyContent={'center'}>
        <Heading display={{base:'flex' , md:'none'}} textAlign={'center'} color={'gray'} as={'h1'}>{name.toUpperCase()}</Heading>
 

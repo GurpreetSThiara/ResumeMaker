@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image, Text, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import { useNavigate } from 'react-router'
 import ATSBold from '../../components/Resumes/ATSBold/ATSBold'
@@ -15,14 +15,18 @@ const Templates = () => {
         { path: modernResume, key: 'modern' },
       ];    const navigate = useNavigate()
   return (
-     <Box bgGradient={gradientColor} h={'100vh'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
+     <Box bgGradient={gradientColor} h={{md:'100vh'}} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
         <Heading as={'h1'} color={'gray'}>SELECT</Heading>
-        <Heading as={'h2'} color={'gray'}>a best template for your resume</Heading>
+        <Heading textAlign={'center'} as={'h2'} color={'gray'}>a best template for your resume</Heading>
 
-<Flex justifyContent={{sm:'center',md:'center'}} p={'16px'} flexWrap={'wrap'} gap={'2rem'} w={'full'} h={'full'} >
+<Flex justifyContent={{base:'center',md:'center'}} p={'16px'} flexWrap={'wrap'} gap={'2rem'} w={'full'} h={'full'} >
         {paths.map((item , index)=>{
-            return <Box border={'1px solid #616161'}  borderRadius={'0.5rem'} p={'0.5rem'}  boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"  cursor={'pointer'} onClick={()=>navigate(`/templates/${item.key}`,{state:{imageSrc:item.path}})} w={'200px'} h={'300px'} key={index}>
+            return <Box key={index}>
+                <Box overflow={'hidden'} border={'1px solid #616161'}  borderRadius={'0.5rem'} p={'0.5rem'}  boxShadow="0px 4px 10px rgba(0, 0, 0, 0.1)"  cursor={'pointer'} onClick={()=>navigate(`/templates/${item.key}`,{state:{imageSrc:item.path}})} w={{base:'',md:'200px'}} h={{base:'',md:'300px'}} >
+                      <Text>{item.key}</Text>
                   <Image borderRadius="8px"  objectFit={'contain'} h={'full'} w={'full'} src={item.path}/>
+             
+            </Box>
             </Box>
         })}
 
