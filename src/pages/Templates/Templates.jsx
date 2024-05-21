@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import ATSBold from '../../components/Resumes/ATSBold/ATSBold'
 import ModernResume from '../../components/Resumes/ModernResume/ModernResume'
 import atsResume from './../../assets/Screenshot 2024-05-17 013214.png';
+import modernResume from './../../assets/modres.png';
 
 
 const Templates = () => {
@@ -11,7 +12,7 @@ const Templates = () => {
 
     const paths = [
         { path: atsResume, key: 'atsbold' },
-        { path: 'src/assets/modres.png', key: 'modern' },
+        { path: modernResume, key: 'modern' },
       ];    const navigate = useNavigate()
   return (
      <Box bgGradient={gradientColor} h={'100vh'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'}>
