@@ -4,6 +4,9 @@ body{
     font-size: 0.9rem;
    
 }
+.justify{
+    text-align: justify;
+}
 .ATSBold-page ul{
     list-style-type: none;
 }

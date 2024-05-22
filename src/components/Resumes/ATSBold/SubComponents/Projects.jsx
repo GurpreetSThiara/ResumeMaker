@@ -32,7 +32,7 @@ const Projects = ({state, fontSizes,data,setProjects}) => {
                           <p style={{fontSize:fontSizes.description}}>{project.description}</p>
                         </div>
                         <div className="">
-                          <p style={{fontSize:fontSizes.description}}>Technologies: {project.technologies.join(", ")}</p>
+                          <p style={{fontSize:fontSizes.description}}>Technologies: {project.technologies}</p>
                         </div>
                         <div className="">
                           <a

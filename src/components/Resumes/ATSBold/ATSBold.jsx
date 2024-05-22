@@ -12,6 +12,7 @@ import Projects from "./SubComponents/Projects";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { reorderSections } from "../../../redux/features/resumeSectionsSlice";
+import Links from "./SubComponents/Links";
 
 const ATSBold = ({
   data,
@@ -22,23 +23,18 @@ const ATSBold = ({
   setProjects,
   selectedFont,
   fontSizes,
-  order
+  order:propOrder
 }) => {
-  console.log("orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-  console.log(order)
-  console.log("orderrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-  const secs = useSelector((state)=>state.resumeSections.sections);
-  const dispatch = useDispatch();
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) return; // Drop outside the list
+  const [order, setOrder] = useState(propOrder); // Initialize order state with prop value
+  console.log(propOrder);
+  
+  useEffect(() => {
+    // Update order state when prop changes
+    setOrder(propOrder);
+  }, [propOrder]);
 
-    const items = Array.from(data.education);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setEducation(items);
-  };
+  const [anything , setAnything] = useState(0);
 
   const z = [
     { component: <Profile data={data} state={state} />, key: 1 },
@@ -91,96 +87,11 @@ const ATSBold = ({
       key: 5,
     },
   ]
-const keys = [1,2,3,4,5,6,7,8,9,10]
-  const [x , setX] = useState([
-    <Profile key={1} data={data} state={state} />,
-    <Projects
-    key={5}
-    data={data}
-    state={state}
-    fontSizes={fontSizes}
-    setProjects={setProjects}
-  />,  <Skill
-  key={4}
-  data={data}
-  state={state}
-  fontSizes={fontSizes}
-  setDataSkills={setDataSkills}
-/>,<Education
-          key={3}
-          data={data}
-          state={state}
-          fontSizes={fontSizes}
-          setEducation={setEducation}
-        />,  <Experience
-        key={2}
-        data={data}
-        state={state}
-        fontSizes={fontSizes}
-        setExperience={setExperience}
-      />,])
 
-  const [sections, setSections] = useState([
-    { component: <Profile data={data} state={state} />, key: 1 },
-    {
-      component: (
-        <Experience
-          key={2}
-          data={data}
-          state={state}
-          fontSizes={fontSizes}
-          setExperience={setExperience}
-        />
-      ),
-      key: 2,
-    },
-    {
-      component: (
-        <Education
-          key={3}
-          data={data}
-          state={state}
-          fontSizes={fontSizes}
-          setEducation={setEducation}
-        />
-      ),
-      key: 3,
-    },
-    {
-      component: (
-        <Skill
-          key={4}
-          data={data}
-          state={state}
-          fontSizes={fontSizes}
-          setDataSkills={setDataSkills}
-        />
-      ),
-      key: 4,
-    },
-    {
-      component:  <div className="">
-        <Projects
-      key={5}
-      data={data}
-      state={state}
-      fontSizes={fontSizes}
-      setProjects={setProjects}
-    />
-      </div>,
-      key: 5,
-    },
-  ]);
-  const buttonNames = ['First', 'Second', 'Third', 'Fourth'];
-  const [checkedStates, setCheckedStates] = useState([false, false, false, false]);
+useEffect(()=>{
+  setAnything(1);
+},[order])
 
-  const handleCheckboxChange = (index) => (event) => {
-    const newCheckedStates = [...checkedStates];
-    newCheckedStates[index] = event.target.checked;
-    setCheckedStates(newCheckedStates);
-  };
-
- // const [reorderSections, setReorderSections] = useState(true);
 
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
@@ -197,9 +108,11 @@ const keys = [1,2,3,4,5,6,7,8,9,10]
             color: #000;
             font-weight: bold;
             font-size: 0.8rem;
-       
            
         }
+        .justify{
+          text-align: justify;
+      }
 
         .flexgap{
             display: flex;
@@ -345,49 +258,37 @@ const keys = [1,2,3,4,5,6,7,8,9,10]
       }
     }
   };
+  const componentMap = {
+    2: <Profile data={data} state={state} fontSizes={fontSizes} />,
+    3: <Experience key={2} data={data} state={state} fontSizes={fontSizes} setExperience={setExperience} />,
+    4: <Education key={3} data={data} state={state} fontSizes={fontSizes} setEducation={setEducation} />,
+    5: <Skill key={4} data={data} state={state} fontSizes={fontSizes} setDataSkills={setDataSkills} />,
+    6: <Projects key={5} data={data} state={state} fontSizes={fontSizes} setProjects={setProjects} />,
+    7:<Links/>
+  };
+  
 
-  const reOrder = (list)=>{
-    dispatch(reorderSections(list));
-  }
 
-useEffect(()=>{
-  dispatch(reorderSections(z));
-},[])
   return (
     <div className="">
     <Flex wrap={'wrap'} gap={'0.5rem'} py={'0.5rem'} justifyContent={'end'}>
-    {/* {buttonNames.map((name, index) => (
-          <Button key={index} colorScheme="teal" >
-            <Checkbox
-              isChecked={checkedStates[index]}
-              onChange={handleCheckboxChange(index)}
-              size="lg"
-              colorScheme="teal"
-              mr={2}
-            />
-            {checkedStates[index] ? `${name}` : `${name}`}
-          </Button>
-        ))} */}
+  
          <Button onClick={save}>Save as PDF</Button>
       </Flex>
      
-      {/* <ResumeControls
-        save={save}
-        selectedFont={selectedFont}
-        setSelectedFont={setSelectedFont}
-      /> */}
+  
 
       <div
-        className="ATSBold-page"
+        className="ATSBold-page "
         id="ATSBold-page"
         style={{ fontFamily: selectedFont }}
       >
-        <div className="ATSBold">
+        <div className="ATSBold justify">
           <div className="ATSBold-header">
             <h1 className="" style={{ fontSize: fontSizes.name }}>
               {data.name.toUpperCase()}
             </h1>
-            <h3>{data.role}</h3>
+            <h3 >{data.role}</h3>
             {state.Contact && (
               <div className="ATSBold-header-contact-section">
                 <div className="address">
@@ -416,251 +317,46 @@ useEffect(()=>{
               </div>
             )}
           </div>
-{/* 
-          <Box>
-            <Reorder.Group axis="y" values={z} onReorder={(list)=>{reOrder(list)}}>
-              {secs.map((item) => (
-                <Reorder.Item key={item.key} value={item}>
-                  <Box p={4} color="white" borderRadius="md" cursor="pointer">
+       <div className="flexgap">
+       {propOrder && propOrder.map((orderIndex) => (
+      <div key={orderIndex} className="">
+        {componentMap[orderIndex]?componentMap[orderIndex]:null}
+      </div>
+    ))}
+       </div>
+          {/* <Box>
+            {propOrder && propOrder.map((orderIndex, index) => {
+              const item = z.find((zItem) => zItem.key === orderIndex);
+              if(item)
+              return (
+                <div key={item.key} className="">
                   {item.component}
-                  </Box>
-                </Reorder.Item>
-              ))}
-            </Reorder.Group>
+                </div>
+              );
+            })}
           </Box> */}
+
           <Box
          
        
           >
-            {/* {reorderSections && (
-              <Reorder.Group values={x} onReorder={setX}>
-                {x.map((item, index) => (
-                  <Reorder.Item key={item} value={item} style={{}}>
-                    <Box p={4} color="white" borderRadius="md" cursor="pointer">
-                      {item.key === 4 ? (
-                        <Skill
-                          data={data}
-                          state={state}
-                          fontSizes={fontSizes}
-                          setDataSkills={setDataSkills}
-                        />
-                      ) : item.key === 555 ? (
-                        <Projects
-                          key={5}
-                          data={data}
-                          state={state}
-                          fontSizes={fontSizes}
-                          setProjects={setProjects}
-                        />
-                      ) : item.key === 435345 ? (
-                        <Experience
-                          key={2}
-                          data={data}
-                          state={state}
-                          fontSizes={fontSizes}
-                          setExperience={setExperience}
-                        />
-                      ) : (
-                        item
-                      )}
-                    </Box>
-                  </Reorder.Item>
-                ))}
-              </Reorder.Group>
-            )} */}
-
+     
+{/* 
             {(
               <>
-                {z.map((item) => {
+                {order && z.map((item, index) => {
                   return (
                     <div key={item} className="">
-                      {item.component}
+                      {z[order[index]]?.component}
                     </div>
                   );
                 })}
               </>
-            )}
+            )} */}
           </Box>
 
 
-          {/* {state.Profile && (
-            <div className="ATSBold-profile">{data.profileDescription}</div>
-          )}
-
-          {
-            state.Experience && (
-              <div className="ATSBold-experience">
-                <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Experience</div>
-                <div className="flexgap">
-                <List
-                className="flexgap"
-                as={Reorder.Group}
-                values={data.experience}
-                onReorder={(experience) => {
-                  console.log("reorder");
-                  setExperience(experience);
-                }}
-              >
-                {data.experience.map((experience, i) => {
-                  return (
-                    <ListItem
-                      key={experience.description}
-                      as={Reorder.Item}
-                      value={experience}
-                      className=""
-                    >
-                        <div key={i} className="">
-                        <div className="">
-                          <h4  style={{fontSize:fontSizes.subheading}}>{experience.role}</h4>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>
-                            from {experience.from} to {experience.to}
-                          </p>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>{experience.description}</p>
-                        </div>
-                      </div>
-                    </ListItem>
-                  );
-                })}
-              </List>
-                 
-                </div>
-              </div>
-            )
-       
-          }
-          {state.Education && (
-            <div className="ATSBold-education">
-              <div className="ATSBold-subheading " style={{fontSize:fontSizes.header}}>Education</div>
-              <div className="ATSBold-education-content ">
-           
-
-                {data.education.map((education, i) => {
-                  return (
-                    <div key={i} className="">
-                      <div className="">
-                        <h4  style={{fontSize:fontSizes.subheading}}>{education.institution}</h4>
-                      </div>
-                      <div className="">
-                        <p style={{fontSize:fontSizes.description}}>{education.degree}</p>
-                      </div>
-                      <div className="">
-                        <p style={{fontSize:fontSizes.description}}>Graduation year: {education.graduationYear}</p>
-                      </div>
-                      <div className="">
-                        <p style={{fontSize:fontSizes.description}}>gpa: {education.gpa}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {state.Skills && (
-            <div className="ATSBold-skills">
-              <div className="ATSBold-subheading " style={{fontSize:fontSizes.header}}>Skills</div>
-              <List
-                  className="flexgap"
-                as={Reorder.Group}
-                values={data.skills}
-                onReorder={(skills) => {
-                  console.log("reorder");
-                  setDataSkills(skills);
-                }}
-              >
-                {data.skills.map((skill, i) => {
-                  return (
-                    <ListItem
-                      key={skill.title}
-                      as={Reorder.Item}
-                      value={skill}
-                      className=""
-                    >
-                      <div className="">
-                        <h4  style={{fontSize:fontSizes.subheading}}>{skill.title}</h4>
-                      </div>
-                      <div className="">
-                        <p style={{fontSize:fontSizes.description}}>{skill.content}</p>
-                      </div>
-                      <div style={{fontSize:fontSizes.description}} className="">{skill.more.map((more,index)=>{
-                        return <div key={more} className="">{more}</div>
-                      })}</div>
-                    </ListItem>
-                  );
-                })}
-              </List>
-              {/* <ul className="flexgap">{
-                data.skills.map((skill,i)=>{
-                    return <li key={i} className="">
-                 
-                        <div className=""><h4>{skill.title}</h4></div>
-                        <div className=""><p style={{fontSize:fontSizes.description}}>{skill.content}</p></div>
-       
-                    </li>
-                })
-            }</ul> 
-            </div>
-          )}
-          {state.Projects && (
-            <div className="ATSBold-projects">
-              <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Projects</div>
-              <List
-                  className="flexgap"
-                as={Reorder.Group}
-                values={data.projects}
-                onReorder={(projects) => {
-                  setProjects(projects);
-                }}
-              >
-                {data.projects.map((project, i) => {
-                  return (
-                    <ListItem
-                      key={project.title}
-                      as={Reorder.Item}
-                      value={project}
-                      className=""
-                    >
-                      <div key={project.title} className="">
-                        <div className="">
-                          <h4  style={{fontSize:fontSizes.subheading}}>{project.title}</h4>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>{project.description}</p>
-                        </div>
-                        <div className="">
-                          <p style={{fontSize:fontSizes.description}}>Technologies: {project.technologies.join(", ")}</p>
-                        </div>
-                        <div className="">
-                          <a
-                            href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Project Link
-                          </a>
-                        </div>
-                      </div>
-                    </ListItem>
-                  );
-                })}
-              </List>
-              {/* <div className="flexgap">{
-            data.projects.map((project, i) => (
-              <div key={i} className="">
-                <div className=""><h4>{project.title}</h4></div>
-                <div className=""><p style={{fontSize:fontSizes.description}}>{project.description}</p></div>
-                <div className=""><p style={{fontSize:fontSizes.description}}>Technologies: {project.technologies.join(', ')}</p></div>
-                <div className=""><a href={project.link} target="_blank" rel="noopener noreferrer">Project Link</a></div>
-              </div>
-            ))
-          }</div> 
-            </div>
-          )}
-           */}
+     
 
           {data.custom.map((section, index) => (
             <div key={index} className="custom-section">

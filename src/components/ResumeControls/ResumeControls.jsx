@@ -22,15 +22,38 @@ const ResumeControls = ({ save, setSelectedFont, selectedFont, setFontSizes, fon
 
   const fontSizeDescription = [
     { label: '0.5rem', value: '0.5rem' },
+    { label: '0.55rem', value: '0.55rem' },
+    { label: '0.6rem', value: '0.6rem' },
+    { label: '0.65rem', value: '0.65rem' },
+    { label: '0.7rem', value: '0.7rem' },
     { label: '0.75rem', value: '0.75rem' },
+    { label: '0.8rem', value: '0.8rem' },
+    { label: '0.85rem', value: '0.85rem' },
+    { label: '0.9rem', value: '0.9rem' },
+    { label: '0.95rem', value: '0.95rem' },
     { label: '1rem', value: '1rem' },
+    { label: '1.05rem', value: '1.05rem' },
+    { label: '1.1rem', value: '1.1rem' },
+    { label: '1.15rem', value: '1.15rem' },
+    { label: '1.2rem', value: '1.2rem' },
     { label: '1.25rem', value: '1.25rem' },
+    { label: '1.3rem', value: '1.3rem' },
+    { label: '1.35rem', value: '1.35rem' },
+    { label: '1.4rem', value: '1.4rem' },
+    { label: '1.45rem', value: '1.45rem' },
     { label: '1.5rem', value: '1.5rem' },
+    { label: '1.55rem', value: '1.55rem' },
+    { label: '1.6rem', value: '1.6rem' },
+    { label: '1.65rem', value: '1.65rem' },
+    { label: '1.7rem', value: '1.7rem' },
     { label: '1.75rem', value: '1.75rem' },
-    { label: '2rem', value: '2rem' },
-    { label: '2.25rem', value: '2.25rem' },
-    { label: '2.5rem', value: '2.5rem' },
+    { label: '1.8rem', value: '1.8rem' },
+    { label: '1.85rem', value: '1.85rem' },
+    { label: '1.9rem', value: '1.9rem' },
+    { label: '1.95rem', value: '1.95rem' },
+    { label: '2rem', value: '2rem' }
   ];
+  
 
   const fontSizeName = [
     { label: '1', value: '2rem' },
