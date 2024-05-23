@@ -33,6 +33,7 @@ const App = () => {
     <Route path='/about' element={<About/>}/>
     <Route path='/templates' element={<Templates/>}/>
     <Route path='templates/:type' element={<TemplateInfo/>}/>
+    <></>
    
 
   
