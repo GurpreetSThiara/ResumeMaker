@@ -10,6 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 import About from './pages/About/About';
 import Templates from './pages/Templates/Templates';
 import TemplateInfo from './pages/Templates/TemplateInfo';
+import './App.css'
 
 
 
