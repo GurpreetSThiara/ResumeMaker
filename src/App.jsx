@@ -11,7 +11,10 @@ import About from './pages/About/About';
 import Templates from './pages/Templates/Templates';
 import TemplateInfo from './pages/Templates/TemplateInfo';
 import './App.css'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98bd2678948093845aa346c293b62a1d28ac9e91
 
 
 
