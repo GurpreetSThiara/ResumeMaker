@@ -40,9 +40,12 @@ const Projects = ({state, fontSizes,data,setProjects}) => {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            Project Link
+                            {project.link}
                           </a>
                         </div>
+                        {project.more.map((more, index) => (
+                      <div key={more} className="">{more}</div>
+                    ))}
                       </div>
                     </ListItem>
                   );

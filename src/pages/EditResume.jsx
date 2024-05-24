@@ -136,16 +136,15 @@ const EditResume = () => {
       },
    
     ],
-    links:{
-      github: "https://github.com/johndoe",
-      twitter: "https://twitter.com/johndoe",
-  
-      medium: "https://medium.com/@johndoe"
-    },
+    links:[
+       {key:"github",value:"https://github.com/johndoe", more: []},
+     {key:"twitter",value:"https://twitter.com/johndoe", more: []},
+     {key:"medium",value: "https://medium.com/@johndoe", more: []}
+    ],
     custom: [],
     customLeft: [],
   });
-  //console.log(data)
+  console.log(data)
   const [state, setState] = useState({
     Image: image,
     Contact: true,
@@ -322,6 +321,10 @@ const EditResume = () => {
     setData({ ...data, experience: experience });
   };
 
+  const setLinks = (links)=>{
+    setData({ ...data, links: links });
+
+  }
   const setProjects = (projects) => {
     setData({ ...data, projects: projects });
   };
@@ -561,6 +564,9 @@ const EditResume = () => {
         
 
           <Box mb="2rem">
+          <Text as="h5" mb="">
+            name
+          </Text>
             <Input
               value={data.name}
               placeholder="Name"
@@ -569,6 +575,9 @@ const EditResume = () => {
           </Box>
 
           <Box mb="2rem">
+          <Text as="h5" mb="">
+            job role
+          </Text>
             <Input
               value={data.role}
               placeholder="Role"
@@ -576,7 +585,8 @@ const EditResume = () => {
             />
           </Box>
 
-          <Text as="h3" mb="1rem">
+       <Box>
+       <Text as="h5" mb="">
             Profile Description
           </Text>
           <Textarea
@@ -586,15 +596,16 @@ const EditResume = () => {
             value={data.profileDescription}
             mb="2rem"
           />
+       </Box>
 
-          <Box    bgGradient="linear(to-r,black,blue.900)" border={"1px solid #616161"} p={"0.5rem"} borderRadius={"1rem"}>
+          <Box  px={'0.5rem'}  bgGradient="linear(to-r,black,blue.900)"  borderRadius={"0.7rem"}>
             <Flex
               cursor={"pointer"}
               p={"8px"}
               borderRadius={"10px"}
               w={"full"}
               justify={"space-between"}
-              align="center"
+              alignItems="center"
               mb="1rem"
               onClick={toggleSkillsExpand}
             >
@@ -617,6 +628,7 @@ const EditResume = () => {
                     w={"full"}
                   >
                     <Flex
+                     bgGradient="linear(to-r,black,blue.900)" boxShadow={'lg'} p={"0.5rem"}
                       flexDirection={"column"}
                       gap={"0.3rem"}
                       w={"full"}
@@ -713,7 +725,7 @@ const EditResume = () => {
               </Box>
             )}
           </Box>
-          <Box    bgGradient="linear(to-r,black,blue.900)" border={"1px solid #616161"} p={"0.5rem"} borderRadius={"1rem"}>
+          <Box    bgGradient="linear(to-r,black,blue.900)" border={"3px solid #132744"} p={"0.5rem"} borderRadius={"0.7rem"}>
             <Flex
               cursor={"pointer"}
               p={"8px"}
@@ -742,7 +754,7 @@ const EditResume = () => {
               <Box>
                 {data.experience.map((item, index) => (
                   <Flex key={index} mb="1rem" alignItems="center">
-                    <Flex flexDirection={"column"} gap={"0.5rem"} w={"full"}>
+                    <Flex boxShadow='md'   borderRadius={'0.2rem'} p={'0.4rem'} bgGradient="linear(to-r, gray.900,black,blue.900)" flexDirection={"column"} gap={"0.5rem"} w={"full"} >
                       {/* Input for experience role */}
                       <Input
                         value={item.role}
@@ -877,13 +889,13 @@ const EditResume = () => {
             )}
           </Box>
        
-         <Box    bgGradient="linear(to-r,black,blue.900)">
+         <Box         px={'0.5rem'}  bgGradient="linear(to-r,black,blue.900)" borderRadius={"0.7rem"}>
 
          <Flex
             cursor={"pointer"}
             p={"8px"}
-            borderRadius={"10px"}
-            border={"1px solid gray"}
+            
+           
             w={"full"}
             justify={"space-between"}
             align="center"
@@ -956,7 +968,7 @@ const EditResume = () => {
           </AnimatePresence>
          </Box>
 
-        <Box  bgGradient="linear(to-r,black,blue.900)">
+        <Box        px={'0.5rem'} bgGradient="linear(to-r,black,blue.900)"  borderRadius={"0.7rem"}>
         <Flex
             cursor={"pointer"}
             p={"8px"}
@@ -1063,8 +1075,9 @@ const EditResume = () => {
   borderRadius={'0.5rem'} padding={'0.5rem'}>
             <Flex
             cursor={"pointer"}
-            p={"8px"}
-            borderRadius={"10px"}
+         
+            borderRadius={"0.7rem"}
+            px={'0.5rem'}
             
            
             w={"full"}
@@ -1146,8 +1159,59 @@ const EditResume = () => {
                     value={project.link}
                 
                     placeholder="project link"
-                   
+                    onChange={
+                      (e)=>{
+                        const newProjects = [...data.projects]
+                        newProjects[index].link = e.target.value;
+                          setData( (prevState)=>({
+                            ...prevState,
+                            projects:newProjects
+                           }))
+                    }}
                   />
+                    {project.more.map((field, fieldIndex) => (
+                        <Input
+                          key={fieldIndex}
+                          value={field}
+                          placeholder="More info"
+                          onChange={(e) =>
+                            setData((prevData) => ({
+                              ...prevData,
+                              projects: prevData.projects.map((sk, j) =>
+                                j === index
+                                  ? {
+                                      ...sk,
+                                      more: sk.more.map((more, k) =>
+                                        k === fieldIndex ? e.target.value : more
+                                      ),
+                                    }
+                                  : sk
+                              ),
+                            }))
+                          }
+                        />
+                      ))}
+                     <Flex
+                        onClick={() =>
+                          setData((prevData) => ({
+                            ...prevData,
+                            projects: prevData.projects.map((project, i) =>
+                              i === index
+                                ? { ...project, more: [...project.more, ""] }
+                                : project
+                            ),
+                          }))
+                        }
+                        cursor={"pointer"}
+                        justifyContent={"center"}
+                        borderRadius={"1rem"}
+                        backgroundColor={"gray.600"}
+                        alignItems={"center"}
+                        gap={"0.2rem"}
+                        w={'full'}
+                      >
+                        <Text>Add More</Text> <IoAdd />
+                      </Flex>
                   {/* Delete button for education */}
               
                 </Flex>
@@ -1164,20 +1228,165 @@ const EditResume = () => {
                 onClick={() =>
                   setData({
                     ...data,
-                    education: [
-                      ...data.education,
-                      { institution: "", degree: "", graduationYear: "" },
+                    projects: [
+                      ...data.projects,
+                      { technologies: "", title: "", description: "" , more:[],link:"" },
                     ],
                   })
                 }
                 mb="2rem"
               >
-                Add New Education
+                Add New Project
               </Button>
             </Box>
           )}
           
           </Box>
+
+          
+          <Box             bgGradient="linear(to-r,black,blue.900)"
+  borderRadius={'0.5rem'} padding={'0.5rem'}>
+            <Flex
+            cursor={"pointer"}
+         
+            borderRadius={"0.7rem"}
+            px={'0.5rem'}
+            
+           
+            w={"full"}
+            justify={"space-between"}
+            align="center"
+            mb="1rem"
+            onClick={toggleProjectsExpand}
+          >
+            <Text as="h3" mr="1rem">
+              Links
+            </Text>
+            {isProjectsExpanded ? (
+              <AiOutlineUp onClick={toggleProjectsExpand} cursor="pointer" />
+            ) : (
+              <AiOutlineDown onClick={toggleProjectsExpand} cursor="pointer" />
+            )}
+          </Flex>
+          {isProjectsExpanded && (
+            <Box
+            >
+              {data.links.map((link, index) => (
+                <Flex key={index}>
+                <Flex        boxShadow='md'   borderRadius={'0.2rem'} p={'0.4rem'} bgGradient="linear(to-r, gray.900,black,blue.900)" gap={'0.5rem'} w={'full'}  mb="1rem" alignItems="center" flexDirection={'column'}>
+                  {/* Input for education institution */}
+                  <Input
+                  onChange={
+                    (e)=>{
+                      const newLinks = [...data.links]
+                      newLinks[index].key = e.target.value;
+                        setData( (prevState)=>({
+                          ...prevState,
+                          projects:newLinks
+                         }))
+                  }
+                  
+                  }
+                    value={link.key}
+                
+                    placeholder="link title"
+                  
+                  />
+                  {/* Input for education degree */}
+                  <Input
+                     onChange={
+                      (e)=>{
+                        const newLinks = [...data.links]
+                        newLinks[index].value = e.target.value;
+                          setData( (prevState)=>({
+                            ...prevState,
+                            projects:newLinks
+                           }))
+                    }
+                    
+                    }
+                    value={link.value}
+                
+                    placeholder="description"
+                   
+                  />
+                  {/* Input for education graduation year */}
+                
+                  
+                    {link.more.map((field, fieldIndex) => (
+                        <Input
+                          key={fieldIndex}
+                          value={field}
+                          placeholder="More info"
+                          onChange={(e) =>
+                            setData((prevData) => ({
+                              ...prevData,
+                              links: prevData.links.map((sk, j) =>
+                                j === index
+                                  ? {
+                                      ...sk,
+                                      more: sk.more.map((more, k) =>
+                                        k === fieldIndex ? e.target.value : more
+                                      ),
+                                    }
+                                  : sk
+                              ),
+                            }))
+                          }
+                        />
+                      ))}
+                     <Flex
+                        onClick={() =>
+                          setData((prevData) => ({
+                            ...prevData,
+                            projects: prevData.links.map((link, i) =>
+                              i === index
+                                ? { ...link, more: [...link.more, ""] }
+                                : link
+                            ),
+                          }))
+                        }
+                        cursor={"pointer"}
+                        justifyContent={"center"}
+                        borderRadius={"1rem"}
+                        backgroundColor={"gray.600"}
+                        alignItems={"center"}
+                        gap={"0.2rem"}
+                        w={'full'}
+                      >
+                        <Text>Add More</Text> <IoAdd />
+                      </Flex>
+                  {/* Delete button for education */}
+              
+                </Flex>
+                    <Box>
+                    <AiFillDelete
+                      size={24}
+                    
+                      cursor="pointer"
+                    />
+                  </Box>
+                  </Flex>
+              ))}
+              <Button
+                onClick={() =>
+                  setData({
+                    ...data,
+                    links: [
+                      ...data.links,
+                      {key:"",value:"",more:[] },
+                    ],
+                  })
+                }
+                mb="2rem"
+              >
+                Add New Link
+              </Button>
+            </Box>
+          )}
+          
+          </Box>
+          
           
 
           {/* custom section */}
@@ -1269,6 +1478,7 @@ const EditResume = () => {
                 fontSizes={fontSizes}
                 selectedFont={selectedFont}
                 order={order}
+                setLinks={setLinks}
               />
             )}
 
@@ -1284,6 +1494,7 @@ const EditResume = () => {
                 setProjects={setProjects}
                 selectedFont={selectedFont}
                 order={order}
+                setLinks
               />
             )}
           </Box>
