@@ -23,6 +23,7 @@ const ATSBold = ({
   setProjects,
   selectedFont,
   fontSizes,
+  setLinks,
   order:propOrder
 }) => {
 
@@ -264,7 +265,7 @@ useEffect(()=>{
     4: <Education key={3} data={data} state={state} fontSizes={fontSizes} setEducation={setEducation} />,
     5: <Skill key={4} data={data} state={state} fontSizes={fontSizes} setDataSkills={setDataSkills} />,
     6: <Projects key={5} data={data} state={state} fontSizes={fontSizes} setProjects={setProjects} />,
-    7:<Links/>
+    7:<Links links={data.links} state={state} fontSizes={fontSizes} setLinks={setLinks}/>
   };
   
 

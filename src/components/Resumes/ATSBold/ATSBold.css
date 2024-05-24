@@ -16,6 +16,14 @@ body{
     padding: 0px;
 }
 
+.gap-1{
+    gap: 1rem;
+
+}
+.items-center{
+    align-items: center;
+}
+
 .flexgap{
     display: flex;
     flex-direction: column;
