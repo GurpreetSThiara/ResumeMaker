@@ -10,6 +10,8 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                 <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Experience</div>
                 <div className="flexgap">
                 <List
+                 m={'0'}
+                 p={'0'}
                 className="flexgap"
                 as={Reorder.Group}
                 values={data.experience}
@@ -25,6 +27,8 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                       as={Reorder.Item}
                       value={experience}
                       className=""
+                      m={'0'}
+                      p={'0'}
                     >
                         <div key={i} className="">
                         <div className="">

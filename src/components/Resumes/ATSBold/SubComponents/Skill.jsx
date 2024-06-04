@@ -9,6 +9,8 @@ const Skill = ({ state, data, fontSizes, setDataSkills }) => {
         <div className="ATSBold-skills">
           <div className="ATSBold-subheading" style={{ fontSize: fontSizes.header }}>Skills</div>
           <Reorder.Group
+          style={{padding:'0'}}
+          
             className="flexgap"
             axis="y"
             values={data.skills}

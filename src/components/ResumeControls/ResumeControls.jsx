@@ -137,7 +137,7 @@ const ResumeControls = ({ save, setSelectedFont, selectedFont, setFontSizes, fon
         ))}
       </Select>
   </Box>
-      <Button onClick={save}>Save as PDF</Button>
+  
     </Flex>
   )
 }

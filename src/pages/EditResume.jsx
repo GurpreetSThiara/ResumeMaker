@@ -1339,7 +1339,7 @@ const EditResume = () => {
                         onClick={() =>
                           setData((prevData) => ({
                             ...prevData,
-                            projects: prevData.links.map((link, i) =>
+                            links: prevData.links.map((link, i) =>
                               i === index
                                 ? { ...link, more: [...link.more, ""] }
                                 : link

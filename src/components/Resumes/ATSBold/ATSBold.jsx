@@ -114,6 +114,13 @@ useEffect(()=>{
         .justify{
           text-align: justify;
       }
+      .gap-1{
+        gap: 1rem;
+    
+    }
+    .items-center{
+        align-items: center;
+    }
 
         .flexgap{
             display: flex;
@@ -128,6 +135,7 @@ useEffect(()=>{
         p{
             margin:0.5px;
             padding:0.5px
+            font-weight: bold;
         }
         .ATSBold-page h1,
 .ATSBold-page h2,
@@ -241,11 +249,12 @@ useEffect(()=>{
         
        
           `}</style></head><body>${html}</body></html>`;
+          console.log(htmlWithStyle)
 
       try {
         const response = await axios.post(
           "http://localhost:3000/convertToPdf",
-          { htmlContent: htmlWithStyle },
+          { htm: htmlWithStyle },
           { responseType: "blob" }
         );
         const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -265,8 +274,58 @@ useEffect(()=>{
     4: <Education key={3} data={data} state={state} fontSizes={fontSizes} setEducation={setEducation} />,
     5: <Skill key={4} data={data} state={state} fontSizes={fontSizes} setDataSkills={setDataSkills} />,
     6: <Projects key={5} data={data} state={state} fontSizes={fontSizes} setProjects={setProjects} />,
-    7:<Links links={data.links} state={state} fontSizes={fontSizes} setLinks={setLinks}/>
-  };
+    7:<Links links={data.links} state={state} fontSizes={fontSizes} setLinks={setLinks}/>,
+
+  }
+
+
+  // useEffect(()=>{
+  //   setComponentMap({...componentMap,
+
+  //     data.custom.map((section, index) => (
+  //       <div key={index} className="custom-section">
+  //         {state.customKeys.map((item) => {
+  //           if (JSON.stringify(item.key) === JSON.stringify(section.key)) {
+  //             if (
+  //               item.value &&
+  //               JSON.stringify("R") === JSON.stringify(section.side)
+  //             ) {
+  //               return (
+  //                 <div key={index} className="">
+  //                   <div
+  //                     style={{ fontSize: fontSizes.header }}
+  //                     className="ATSBold-subheading"
+  //                   >
+  //                     {section.key}
+  //                   </div>
+
+  //                   {section.values.map((item, index) => {
+  //                     return (
+  //                       <div key={index}>
+  //                         <div className="">
+  //                           <h4 style={{ fontSize: fontSizes.subheading }}>
+  //                             {item.subheading}
+  //                           </h4>
+  //                         </div>
+
+  //                         <p
+  //                           style={{ fontSize: fontSizes.description }}
+  //                           className=""
+  //                         >
+  //                           {item.description}
+  //                         </p>
+  //                       </div>
+  //                     );
+  //                   })}
+  //                 </div>
+  //               );
+  //             }
+  //           }
+  //         })}
+  //       </div>
+  //     ))
+  //   })
+  // },[])
   
 
 
