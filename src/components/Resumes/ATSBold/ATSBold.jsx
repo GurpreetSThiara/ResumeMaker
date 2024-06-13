@@ -256,7 +256,7 @@ useEffect(()=>{
         const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
 
         const response = await axios.post(
-          apiUrl,
+          `${apiUrl}`,
           { htm: htmlWithStyle }, // Request body
           {
             headers: {
