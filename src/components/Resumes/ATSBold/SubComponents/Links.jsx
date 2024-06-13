@@ -9,6 +9,8 @@ const Links = ({links,state,fontSizes,setLinks}) => {
     <div className="ATSBold-projects">
       <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Links</div>
       <List
+       m={'0'}
+       p={'0'}
           className="flexgap"
         as={Reorder.Group}
         values={links}
@@ -30,12 +32,13 @@ const Links = ({links,state,fontSizes,setLinks}) => {
                 </div>
                 <div className="">
                   <p style={{fontSize:fontSizes.description}}>{<a href={link.value}>{link.value}</a>}</p>
+                  {link.more.map((more, index) => (
+              <div key={more} className="">{more}</div>
+            ))}
                 </div>
                 
            
-                {link.more.map((more, index) => (
-              <div key={more} className="">{more}</div>
-            ))}
+               
               </div>
             </ListItem>
           );

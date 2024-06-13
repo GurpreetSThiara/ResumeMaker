@@ -32,7 +32,8 @@ body{
 }
 .ATSBold-page  p{
     margin:0.5px;
-    padding:0.5px
+    padding:0.5px;
+    font-weight: bold;
 }
 .ATSBold-page h1,
 .ATSBold-page h2,

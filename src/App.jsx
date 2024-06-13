@@ -11,11 +11,15 @@ import About from './pages/About/About';
 import Templates from './pages/Templates/Templates';
 import TemplateInfo from './pages/Templates/TemplateInfo';
 import './App.css'
+import DemoRes from './components/demoRes/DemoRes';
+import ConvertImages from './pages/ConvertImages/ConvertImages';
 
 
 
 
 const App = () => {
+
+
   
 
   return (
@@ -29,10 +33,11 @@ const App = () => {
 
     <Route path='/modern' element={<ModernResume/>}/>
     <Route path='templates/:type/create' element={<EditResume/>}/>
-    <Route path='/res' element={<DL/>}/>
+    <Route path='/res' element={<DemoRes/>}/>
     <Route path='/about' element={<About/>}/>
     <Route path='/templates' element={<Templates/>}/>
     <Route path='templates/:type' element={<TemplateInfo/>}/>
+    <Route path='/convert' element={<ConvertImages/>}/>
     <></>
    
 

@@ -39,6 +39,7 @@ import bgImage from './../../assets/top-view-agendas-succlent-plant.jpg';
 import IntroModal from '../../components/IntroSlider';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import GoogleAd from '../../components/ads/GoogleAd';
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -105,7 +106,9 @@ const HomePage = () => {
       <StatisticsSection />
       
       <PricingSection />
+      <Box id="faq">
       <FAQSection />
+      </Box>
       <BlogSection />
       <SupportSection />
       <Footer />
@@ -317,8 +320,9 @@ const BlogSection = () => {
       <Heading as="h2" size="xl" mb="4">Latest from Our Blog</Heading>
       <Stack spacing="8" direction={{ base: "column", md: "row" }} justify="center">
         <BlogCard title="10 Tips for Writing a Winning Resume" />
-        <BlogCard title="The Importance of Tailoring Your Resume" />
-        <BlogCard title="How to Ace...How to Ace Your Job Interview" />
+        <GoogleAd/>
+        {/* <BlogCard title="The Importance of Tailoring Your Resume" /> */}
+        <BlogCard title="How to Ace...How to Ace Your Job Intecvdvrview" />
       </Stack>
     </Box>
   );

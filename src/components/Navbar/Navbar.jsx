@@ -120,6 +120,27 @@ const toggleMenu = () => {
           Services
         </Link>
         <Link
+          href="faq"
+       
+          color={linkColor}
+          fontSize="lg"
+          fontWeight="bold"
+          transition="all 0.3s"
+          _hover={{
+            color: hoverColor,
+            transform: 'scale(1.1)',
+            textDecoration: 'none',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          }}
+          p={3}
+          borderRadius="md"
+          _focus={{
+            boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.6)',
+          }}
+        >
+          FAQ
+        </Link>
+        <Link
           href="#"
           color={linkColor}
           fontSize="lg"

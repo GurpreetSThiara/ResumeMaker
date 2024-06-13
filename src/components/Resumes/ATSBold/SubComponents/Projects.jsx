@@ -9,6 +9,8 @@ const Projects = ({state, fontSizes,data,setProjects}) => {
             <div className="ATSBold-projects">
               <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Projects</div>
               <List
+               m={'0'}
+               p={'0'}
                   className="flexgap"
                 as={Reorder.Group}
                 values={data.projects}
