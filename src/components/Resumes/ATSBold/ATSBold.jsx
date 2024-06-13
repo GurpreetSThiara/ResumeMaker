@@ -252,10 +252,19 @@ useEffect(()=>{
           console.log(htmlWithStyle)
 
       try {
+        const apiUrl = import.meta.env.VITE_URL; // Ensure VITE_URL is correctly set in your .env file
+        const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
+
         const response = await axios.post(
-          "http://localhost:3000/convertToPdf",
-          { htm: htmlWithStyle },
-          { responseType: "blob" }
+          apiUrl,
+          { htm: htmlWithStyle }, // Request body
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': apiKey
+            },
+            responseType: 'blob' // Ensure response type is blob for downloading files
+          }
         );
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
@@ -370,9 +379,10 @@ useEffect(()=>{
                 </div>
                 <div className="seperator" />
                 <div className="linkedin">
-                  <p style={{ fontSize: fontSizes.description }}>
-                    {data.contact.linkedin}
-                  </p>
+                  <a href={data.contact.linkedin} style={{ fontSize: fontSizes.description }}>
+                    linkedin
+                    
+                  </a>
                 </div>
               </div>
             )}
