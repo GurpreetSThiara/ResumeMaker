@@ -13,7 +13,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { reorderSections } from "../../../redux/features/resumeSectionsSlice";
 import Links from "./SubComponents/Links";
+import convertHtmlToPdf from "../../../utils/generatePdf";
+import { PDFDownloadLink, Document, Page, View, StyleSheet } from '@react-pdf/renderer';
+import HtmlToReact from 'html-to-react';
 
+const htmlToReactParser = new HtmlToReact.Parser();
 const ATSBold = ({
   data,
   state,
@@ -28,6 +32,7 @@ const ATSBold = ({
 }) => {
 
   const [order, setOrder] = useState(propOrder); // Initialize order state with prop value
+  const [htmlContent, setHtmlContent] = useState('<div>xssss</div>'); // Initialize order state with prop value
   console.log(propOrder);
   
   useEffect(() => {
@@ -92,14 +97,35 @@ const ATSBold = ({
 useEffect(()=>{
   setAnything(1);
 },[order])
+const handleDownloadPdf = () => {
+  convertHtmlToPdf('ATSBold-page', 'software_engineer_resume');
+};
 
+function formatHtmlString(htmlString) {
+  const lines = htmlString.split('\n');
+  let formattedHtml = '';
+  let level = 0;
+
+  lines.forEach(line => {
+      line = line.trim();
+      if (line.startsWith('</')) {
+          level--;
+      }
+      formattedHtml += '    '.repeat(level) + line + '\n';
+      if (line.startsWith('<') && !line.startsWith('</') && !line.endsWith('/>')) {
+          level++;
+      }
+  });
+
+  return formattedHtml;
+}
 
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
     if (element) {
       const html = element.outerHTML;
 
-      const htmlWithStyle = `<!DOCTYPE html><html><head><style>${`
+      const htmlWithStyle = `<!DOCTYPE html><html><head><style>
           @page {
             margin-top: 20px;
             margin-bottom: 20px; 
@@ -248,8 +274,16 @@ useEffect(()=>{
         }
         
        
-          `}</style></head><body>${html}</body></html>`;
-          console.log(htmlWithStyle)
+          </style></head><body>${html}</body></html>`;
+
+       
+ 
+          setHtmlContent(htmlWithStyle);
+
+          const javaValid = htmlWithStyle.replace(/\n/g, '');;
+          console.log(javaValid)
+          
+
 
       try {
         const apiUrl = import.meta.env.VITE_URL; // Ensure VITE_URL is correctly set in your .env file
@@ -257,7 +291,7 @@ useEffect(()=>{
 
         const response = await axios.post(
           `${apiUrl}`,
-          { htm: htmlWithStyle }, // Request body
+          {htm:htmlWithStyle}, // Request body
           {
             headers: {
               'Content-Type': 'application/json',
@@ -343,7 +377,11 @@ useEffect(()=>{
     <Flex wrap={'wrap'} gap={'0.5rem'} py={'0.5rem'} justifyContent={'end'}>
   
          <Button onClick={save}>Save as PDF</Button>
+         {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
+      {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
+    </PDFDownloadLink> */}
       </Flex>
+
      
   
 

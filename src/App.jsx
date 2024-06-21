@@ -13,6 +13,7 @@ import TemplateInfo from './pages/Templates/TemplateInfo';
 import './App.css'
 import DemoRes from './components/demoRes/DemoRes';
 import ConvertImages from './pages/ConvertImages/ConvertImages';
+import PDF from './pages/PDFConverter';
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
     <Route path='/templates' element={<Templates/>}/>
     <Route path='templates/:type' element={<TemplateInfo/>}/>
     <Route path='/convert' element={<ConvertImages/>}/>
+    <Route path='/pdf' element={<PDF/>}/>
     <></>
    
 

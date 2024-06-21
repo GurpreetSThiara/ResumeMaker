@@ -1,169 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Resume</title>
-  <style>
-    /* Internal CSS styles */
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      width: 210mm;
-      height: 297mm;
-      border: 1px solid gray;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header {
-      background: url("https://img.freepik.com/free-vector/v915_53876-174949.jpg?t=st=1714915412~exp=1714919012~hmac=4b9c2aeb3e1c41dd9768244dd875844912108679c457af7df5f13fbdf4c835b9&w=1060");
-      background-color: gray;
-      height: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
-      padding: 20px;
-    }
-
-    .avatar {
-      height: 10rem;
-      width: 10rem;
-      border-radius: 50%;
-    }
-
-    .profile-info {
-      margin-left: 20px;
-    }
-
-    .name {
-      font-weight: 800;
-      color: black;
-      font-size: 3rem;
-    }
-
-    .role {
-      color: black;
-      font-size: 1.5rem;
-    }
-
-    .content {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px;
-    }
-
-    .section {
-      width: 34%;
-    }
-
-    .section-content {
-      padding: 20px;
-    }
-
-    .skills,
-    .experience {
-      width: 66%;
-      background-color: #f2f4f7;
-      padding: 20px;
-    }
-
-    .section-heading {
-      color: #aab0b1;
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 0.3rem;
-      white-space: pre-line;
-    }
-
-    .divider {
-      width: 35%;
-      height: 0.5rem;
-      background-color: gray;
-      margin: 0.4rem 0;
-    }
-
-    .sub-heading {
-      font-weight: bold;
-      color: black;
-    }
-
-    .description {
-      color: #656565;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .contact-icon {
-      background-color: black;
-      border-radius: 50%;
-      padding: 0.5rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Engineer Resume</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img class="avatar" src="https://img.freepik.com/free-photo/cheerful-indian-businessman-smiling-closeup-portrait-jobs-career-campaign_53876-129417.jpg?t=st=1714915681~exp=1714919281~hmac=b729b711ae6017314dd8b875cbd6574a883b78066d5c954945f431bae840e3e4&w=1060" alt="Avatar">
-      <div class="profile-info">
-        <h1 class="name">John Doe</h1>
-        <p class="role">Full Stack Developer</p>
-      </div>
-    </div>
-    <div class="content">
-      <div class="section">
-        <div class="section-content">
-          <h2 class="section-heading">PROFILE</h2>
-          <div class="divider"></div>
-          <p class="description">Results-driven Full Stack Developer with [X years] of experience in designing, developing, and implementing scalable web applications. Proficient in both front-end and back-end technologies, with a strong focus on delivering high-quality code and intuitive user experiences.</p>
-        </div>
-      </div>
-      <div class="skills">
-        <h2 class="section-heading">SKILLS</h2>
-        <div class="divider"></div>
-        <ul class="skills-list">
-          <li>
-            <p class="sub-heading">frontEndDevelopment</p>
-            <p class="description">Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.</p>
-          </li>
-          <li>
-            <p class="sub-heading">backEndDevelopment</p>
-            <p class="description">Skilled in server-side languages such as Node.js and frameworks like Express.js. Knowledge of RESTful API design.</p>
-          </li>
-          <li>
-            <p class="sub-heading">databaseManagement</p>
-            <p class="description">Familiarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.</p>
-          </li>
-          <li>
-            <p class="sub-heading">versionControl</p>
-            <p class="description">Proficient in using Git and GitHub for version control and collaboration with other developers.</p>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="experience">
-      <h2 class="section-heading">EXPERIENCE</h2>
-      <div class="divider"></div>
-      <ul class="experience-list">
-        <li>
-          <p class="sub-heading">Front-end Developer at Company X</p>
-          <p class="description">Developed user interfaces using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs. Utilized React.js to create interactive and dynamic web applications.</p>
-        </li>
-        <li>
-          <p class="sub-heading">Back-end Developer at Company Y</p>
-          <p class="description">Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.</p>
-        </li>
-      </ul>
-    </div>
-  </div>
+<button onclick="generateResume()">Download Resume PDF</button>
+
+<script>
+  function generateResume() {
+    // Wait for the script to be fully loaded
+    if (window.jspdf) {
+      const { jsPDF } = window.jspdf;
+
+      var pdf = new jsPDF();
+
+      // Add Personal Information
+      pdf.setFontSize(16);
+      pdf.text("John Doe", 15, 20);
+      pdf.setFontSize(12);
+      pdf.text("Software Engineer", 15, 30);
+      pdf.text("123 Main Street, Anytown, USA", 15, 40);
+      pdf.text("john.doe@email.com | (123) 456-7890", 15, 50);
+      
+      // Add Horizontal Line
+      pdf.setLineWidth(0.5);
+      pdf.line(15, 60, 195, 60);
+
+      // Add Experience Section
+      pdf.setFontSize(16);
+      pdf.text("Experience", 15, 70);
+      pdf.setFontSize(12);
+      
+      var experience = [
+          {
+              title: "Senior Software Engineer",
+              company: "ABC Technologies",
+              location: "Anytown, USA",
+              duration: "2019 - Present",
+              description: "Lead a team of developers in designing and implementing web applications. Collaborated with stakeholders to gather requirements and define project scope."
+          },
+          {
+              title: "Software Engineer",
+              company: "XYZ Corporation",
+              location: "Anytown, USA",
+              duration: "2017 - 2019",
+              description: "Developed front-end and back-end solutions for various projects. Participated in code reviews and provided technical guidance to junior developers."
+          }
+      ];
+
+      let yPosition = 80;
+      experience.forEach(exp => {
+          pdf.text(exp.title, 15, yPosition);
+          pdf.text(exp.company + ", " + exp.location, 15, yPosition + 10);
+          pdf.text(exp.duration, 15, yPosition + 20);
+          pdf.text(exp.description, 15, yPosition + 30);
+          yPosition += 50;
+      });
+
+      // Add Skills Section
+      pdf.setFontSize(16);
+      pdf.text("Skills", 15, yPosition + 10);
+      pdf.setFontSize(12);
+
+      var skills = [
+          "JavaScript",
+          "HTML/CSS",
+          "React",
+          "Node.js",
+          "Java",
+          "Python",
+          "SQL",
+          "Git",
+          "Agile Methodologies"
+      ];
+
+      yPosition += 20;
+      skills.forEach(skill => {
+          pdf.text(skill, 15, yPosition);
+          yPosition += 10;
+      });
+
+      // Add Projects Section
+      pdf.setFontSize(16);
+      pdf.text("Projects", 15, yPosition + 20);
+      pdf.setFontSize(12);
+
+      var projects = [
+          {
+              title: "E-commerce Website",
+              description: "Designed and developed a fully functional e-commerce website using React for the frontend and Node.js for the backend. Integrated payment gateway and order management system."
+          },
+          {
+              title: "Inventory Management System",
+              description: "Built an inventory management system using Java and MySQL. Implemented features for tracking inventory levels, generating reports, and managing suppliers."
+          }
+      ];
+
+      yPosition += 30;
+      projects.forEach(proj => {
+          pdf.text(proj.title, 15, yPosition);
+          pdf.text(proj.description, 15, yPosition + 10);
+          yPosition += 30;
+      });
+
+      // Add Education Section
+      pdf.setFontSize(16);
+      pdf.text("Education", 15, yPosition + 20);
+      pdf.setFontSize(12);
+      pdf.text("Bachelor of Science in Computer Science", 15, yPosition + 30);
+      pdf.text("Anytown University, Anytown, USA", 15, yPosition + 40);
+      pdf.text("Graduated: 2017", 15, yPosition + 50);
+
+      // Add Certifications Section
+      pdf.setFontSize(16);
+      pdf.text("Certifications", 15, yPosition + 60);
+      pdf.setFontSize(12);
+      pdf.text("AWS Certified Developer - Associate", 15, yPosition + 70);
+      pdf.text("Certified ScrumMaster (CSM)", 15, yPosition + 80);
+
+      // Save the PDF
+      pdf.save('software_engineer_resume.pdf');
+    } else {
+      console.error('jsPDF library is not loaded yet.');
+    }
+  }
+</script>
 </body>
 </html>
