@@ -248,16 +248,32 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
     
       `}</style></head><body>${html}</body></html>`;
 
+
+
+    
       try {
-        const response = await axios.post('http://localhost:3000/convertToPdf', { htmlContent:htmlWithStyle }, { responseType: 'blob' });
+        const apiUrl = import.meta.env.VITE_URL; // Ensure VITE_URL is correctly set in your .env file
+        const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
+
+        const response = await axios.post(
+          `${apiUrl}`,
+          {htm:htmlWithStyle}, // Request body
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': apiKey
+            },
+            responseType: 'blob' // Ensure response type is blob for downloading files
+          }
+        );
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', 'converted_document.pdf');
+        link.setAttribute("download", "converted_document.pdf");
         document.body.appendChild(link);
         link.click();
       } catch (error) {
-        console.error('Error converting HTML to PDF:', error);
+        console.error("Error converting HTML to PDF:", error);
       }
      
     }
@@ -271,7 +287,9 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
 
   return (
    <Flex padding={'0.5rem'} flexDirection={'column'} gap={'0.5rem'} className="">
+      <Button onClick={save}>Save as PDF</Button>
      <Flex justifyContent={'end'} gap={'0.5rem'}>
+
    
      </Flex>
      <div style={{fontFamily:selectedFont?selectedFont:''}} id="modern_resume" className="resumee flex ">
