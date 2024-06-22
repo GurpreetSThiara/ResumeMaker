@@ -432,6 +432,7 @@ const EditResume = () => {
             <Button
               onClick={() => setIsReordering(true)}
               borderRadius={"1.5rem"}
+              bg={'#1A202C'}
             >
               {" "}
               <Flex alignItems={"center"} gap={"0.4rem"}>
@@ -446,7 +447,9 @@ const EditResume = () => {
               <ModalHeader>Add Custom Section</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Input
+             <Input
+                         border={'1px solid #1D1D1D'}
+
                   value={customKey}
                   onChange={(e) => setCustomKey(e.target.value)}
                   placeholder="Enter custom key"
@@ -567,7 +570,10 @@ const EditResume = () => {
           <Text as="h5" mb="">
             name
           </Text>
-            <Input
+         <Input
+                     border={'1px solid #1D1D1D'}
+
+        
               value={data.name}
               placeholder="Name"
               onChange={(e) => setData({ ...data, name: e.target.value })}
@@ -578,7 +584,9 @@ const EditResume = () => {
           <Text as="h5" mb="">
             job role
           </Text>
-            <Input
+         <Input
+                     border={'1px solid #1D1D1D'}
+
               value={data.role}
               placeholder="Role"
               onChange={(e) => setData({ ...data, role: e.target.value })}
@@ -635,7 +643,9 @@ const EditResume = () => {
                       px={"0.5rem"}
                     >
                       {/* Input for skill title */}
-                      <Input
+                   <Input
+                               border={'1px solid #1D1D1D'}
+
                         value={item.title}
                         onChange={(e) =>
                           setData({
@@ -651,7 +661,9 @@ const EditResume = () => {
                         mr="1rem"
                       />
                       {/* Input for skill description */}
-                      <Input
+                   <Input
+                               border={'1px solid #1D1D1D'}
+
                         value={item.content}
                         onChange={(e) =>
                           setData({
@@ -667,7 +679,9 @@ const EditResume = () => {
                         mr="1rem"
                       />
                       {item.more.map((field, fieldIndex) => (
-                        <Input
+                     <Input
+                                 border={'1px solid #1D1D1D'}
+
                           key={fieldIndex}
                           value={field}
                           placeholder="More info"
@@ -756,7 +770,9 @@ const EditResume = () => {
                   <Flex key={index} mb="1rem" alignItems="center">
                     <Flex boxShadow='md'   borderRadius={'0.2rem'} p={'0.4rem'} bgGradient="linear(to-r, gray.900,black,blue.900)" flexDirection={"column"} gap={"0.5rem"} w={"full"} >
                       {/* Input for experience role */}
-                      <Input
+                   <Input
+                               border={'1px solid #1D1D1D'}
+
                         value={item.role}
                         onChange={(e) =>
                           setData({
@@ -772,7 +788,9 @@ const EditResume = () => {
                         mr="1rem"
                       />
                       {/* Input for experience description */}
-                      <Input
+                   <Input
+                               border={'1px solid #1D1D1D'}
+
                         value={item.description}
                         onChange={(e) =>
                           setData({
@@ -787,7 +805,9 @@ const EditResume = () => {
                         placeholder="Description"
                         mr="1rem"
                       />
-                      <Input      placeholder="from"
+                   <Input
+                               border={'1px solid #1D1D1D'}
+      placeholder="from"
 
                         value={item.from}
                         onChange={(e) =>
@@ -798,7 +818,9 @@ const EditResume = () => {
                           })
                         }
                       />
-                      <Input
+                   <Input
+                               border={'1px solid #1D1D1D'}
+
                       placeholder="to"
                         value={item.to}
                         onChange={(e) =>
@@ -810,7 +832,9 @@ const EditResume = () => {
                         }
                       />
                       {item.more.map((field, fieldIndex) => (
-                        <Input
+                     <Input
+                                 border={'1px solid #1D1D1D'}
+
                           key={fieldIndex}
                           value={field}
                           placeholder="More info"
@@ -915,7 +939,9 @@ const EditResume = () => {
             {isContactExpanded && (
               <Collapse in={isContactExpanded} key="contact">
                 <>
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     w="full"
                     value={data.contact.address}
                     onChange={(e) =>
@@ -927,7 +953,9 @@ const EditResume = () => {
                     placeholder="Address"
                     mb="1rem"
                   />
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     w="full"
                     value={data.contact.email}
                     onChange={(e) =>
@@ -939,7 +967,9 @@ const EditResume = () => {
                     placeholder="Email"
                     mb="1rem"
                   />
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     w="full"
                     value={data.contact.phone}
                     onChange={(e) =>
@@ -951,7 +981,9 @@ const EditResume = () => {
                     placeholder="Phone"
                     mb="1rem"
                   />
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     w="full"
                     value={data.contact.linkedin}
                     onChange={(e) =>
@@ -994,7 +1026,9 @@ const EditResume = () => {
               {data.education.map((item, index) => (
                 <Flex key={index} mb="1rem" alignItems="center">
                   {/* Input for education institution */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     value={item.institution}
                     onChange={(e) =>
                       setData({
@@ -1010,7 +1044,9 @@ const EditResume = () => {
                     mr="1rem"
                   />
                   {/* Input for education degree */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     value={item.degree}
                     onChange={(e) =>
                       setData({
@@ -1024,7 +1060,9 @@ const EditResume = () => {
                     mr="1rem"
                   />
                   {/* Input for education graduation year */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     value={item.graduationYear}
                     onChange={(e) =>
                       setData({
@@ -1102,7 +1140,9 @@ const EditResume = () => {
                 <Flex key={index}>
                 <Flex        boxShadow='md'   borderRadius={'0.2rem'} p={'0.4rem'} bgGradient="linear(to-r, gray.900,black,blue.900)" gap={'0.5rem'} w={'full'}  mb="1rem" alignItems="center" flexDirection={'column'}>
                   {/* Input for education institution */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                   onChange={
                     (e)=>{
                       const newProjects = [...data.projects]
@@ -1120,7 +1160,9 @@ const EditResume = () => {
                   
                   />
                   {/* Input for education degree */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                      onChange={
                       (e)=>{
                         const newProjects = [...data.projects]
@@ -1138,7 +1180,9 @@ const EditResume = () => {
                    
                   />
                   {/* Input for education graduation year */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     value={project.technologies}
                     onChange={
                       (e)=>{
@@ -1155,7 +1199,9 @@ const EditResume = () => {
                     placeholder="technologies coma separated"
                    
                   />
-                     <Input
+                  <Input
+                              border={'1px solid #1D1D1D'}
+
                     value={project.link}
                 
                     placeholder="project link"
@@ -1170,7 +1216,9 @@ const EditResume = () => {
                     }}
                   />
                     {project.more.map((field, fieldIndex) => (
-                        <Input
+                     <Input
+                                 border={'1px solid #1D1D1D'}
+
                           key={fieldIndex}
                           value={field}
                           placeholder="More info"
@@ -1275,7 +1323,9 @@ const EditResume = () => {
                 <Flex key={index}>
                 <Flex        boxShadow='md'   borderRadius={'0.2rem'} p={'0.4rem'} bgGradient="linear(to-r, gray.900,black,blue.900)" gap={'0.5rem'} w={'full'}  mb="1rem" alignItems="center" flexDirection={'column'}>
                   {/* Input for education institution */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                   onChange={
                     (e)=>{
                       const newLinks = [...data.links]
@@ -1293,7 +1343,9 @@ const EditResume = () => {
                   
                   />
                   {/* Input for education degree */}
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                      onChange={
                       (e)=>{
                         const newLinks = [...data.links]
@@ -1314,7 +1366,9 @@ const EditResume = () => {
                 
                   
                     {link.more.map((field, fieldIndex) => (
-                        <Input
+                     <Input
+                                 border={'1px solid #1D1D1D'}
+
                           key={fieldIndex}
                           value={field}
                           placeholder="More info"
@@ -1392,7 +1446,9 @@ const EditResume = () => {
           {/* custom section */}
           {data.custom.map((customItem, customIndex) => (
             <Box key={customIndex} mb="2rem">
-              <Input
+           <Input
+                       border={'1px solid #1D1D1D'}
+
                 value={customItem.key}
                 onChange={(e) => {
                   const updatedCustom = [...data.custom];
@@ -1416,7 +1472,9 @@ const EditResume = () => {
               />
               {customItem.values.map((valueItem, valueIndex) => (
                 <Box key={valueIndex} mb="1rem">
-                  <Input
+               <Input
+                           border={'1px solid #1D1D1D'}
+
                     value={valueItem.subheading}
                     onChange={(e) => {
                       const updatedCustom = [...data.custom];

@@ -6,6 +6,9 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
 }
+body{
+  background-color: #1A202C;
+}
 
 
 /* #root {

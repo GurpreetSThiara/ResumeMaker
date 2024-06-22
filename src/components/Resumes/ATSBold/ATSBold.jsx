@@ -421,8 +421,8 @@ const generatePDF = () => {
     <div className="">
     <Flex wrap={'wrap'} gap={'0.5rem'} py={'0.5rem'} justifyContent={'end'}>
   
-         <Button onClick={generatePDF}>Save as PDF</Button>
-         <Button onClick={save}>Save as doc</Button>
+         <Button bg={'#1A202C'} onClick={generatePDF}>Save as PDF</Button>
+         <Button bg={'#1A202C'} onClick={save}>Save as doc</Button>
          {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
       {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
     </PDFDownloadLink> */}
