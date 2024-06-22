@@ -347,7 +347,7 @@ const EditResume = () => {
               if (key !== "customKeys") {
                 return (
                   <Flex
-                    border={"1px solid #ccc"}
+                  border={"1px solid #6B7280"}
                     boxShadow={
                       "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
                     }
@@ -379,7 +379,7 @@ const EditResume = () => {
             })}
             {state.customKeys.map((item, index) => (
               <Flex
-                border={"1px solid #ccc"}
+                border={"1px solid #6B7280"}
                 boxShadow={
                   "0 8px 12px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -2px rgba(0, 0, 0, 0.06)"
                 }
@@ -399,6 +399,7 @@ const EditResume = () => {
                   isChecked={item.value}
                   onChange={() => handleCheckboxChange(item.key)}
                   colorScheme="teal"
+                  color={'black'}
                   size="lg"
                 />
                 <Text ml={3} fontWeight={item.value ? "bold" : "normal"}>
@@ -433,6 +434,10 @@ const EditResume = () => {
               onClick={() => setIsReordering(true)}
               borderRadius={"1.5rem"}
               bg={'#1A202C'}
+              color={'white'}
+              _hover={{
+                bg:'#002244'
+              }}
             >
               {" "}
               <Flex alignItems={"center"} gap={"0.4rem"}>
