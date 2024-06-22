@@ -355,7 +355,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
                 {state.customKeys.map((item)=>{
                   if(JSON.stringify(item.key) === JSON.stringify(section.key)){
                     if(item.value && JSON.stringify("L") === JSON.stringify(section.side)){
-                      return   <div key={index} className="">porn
+                      return   <div key={index} className="">
                       <HeadingText text={section.key || 'Custom Section'} />
                        <Divider />
                        {
