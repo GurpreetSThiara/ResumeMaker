@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ModernResume.css'; // Import your CSS file
 import { MdEmail, MdLocationOn, MdPerson, MdPhone } from 'react-icons/md';
 import axios from 'axios';
@@ -6,11 +6,14 @@ import { Button, Flex, Select } from '@chakra-ui/react';
 import { Reorder } from "framer-motion";
 import { Center, ChakraProvider, List, ListItem } from "@chakra-ui/react";
 import ResumeControls from '../../ResumeControls/ResumeControls';
+import jsPDF from 'jspdf';
 
 const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontSizes}) => {
 
     const [resHtml , setResHtml] = useState();
     const [selectedFont, setSelectedFont] = useState('Arial, sans-serif');
+    const contentRef = useRef();
+
 
   
 
@@ -19,13 +22,13 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
   };
 
   const Divider = () => {
-    return <div className="divider"></div>;
+    return <div className=""/>;
   };
 
   const ContactItem = ({ icon, text }) => {
     return (
-      <div className="contact-item flex ml-0">
-        <div className="icon">{icon}</div>
+      <div className="contact-item  ml-0">
+      
         <div style={{fontSize:fontSizes.description}} className="textsmall"><p style={{fontSize:fontSizes.description}}>{text}</p></div>
       </div>
     );
@@ -67,7 +70,17 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
     ]
   )
 
-
+  const generatePDF = () => {
+    const doc = new jsPDF('p', 'pt', 'a4');
+    doc.html(contentRef.current, {
+      callback: (doc) => {
+        doc.save('document.pdf');
+      },
+      margin:5,
+   
+      html2canvas: { scale: 0.745 }, // Optional: adjust this based on your needs
+    });
+  };
 
 
   const save =async ()=>{
@@ -287,12 +300,12 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
 
   return (
    <Flex padding={'0.5rem'} flexDirection={'column'} gap={'0.5rem'} className="">
-      <Button onClick={save}>Save as PDF</Button>
+      <Button onClick={generatePDF}>Save as PDF</Button>
      <Flex justifyContent={'end'} gap={'0.5rem'}>
 
    
      </Flex>
-     <div style={{fontFamily:selectedFont?selectedFont:''}} id="modern_resume" className="resumee flex ">
+     <div ref={contentRef} style={{fontFamily:selectedFont?selectedFont:'',color:'black'}} id="modern_resume" className="resumee flex ">
       <div className="left-section"  >
         {state.Image && <div className="profile-image-container">
             <img className='profile-image' src={"https://img.freepik.com/free-photo/cheerful-indian-businessman-smiling-closeup-portrait-jobs-career-campaign_53876-129417.jpg?t=st=1714915681~exp=1714919281~hmac=b729b711ae6017314dd8b875cbd6574a883b78066d5c954945f431bae840e3e4&w=1060"} alt="" />
@@ -339,6 +352,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
       }}
     
     >
+      kjhjkgjhfhj
        {data.education.map((edu, index) => (
            <ListItem
            as={Reorder.Item}
@@ -351,20 +365,14 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
           
             <div key={edu.graduationYear} className="">
                 <SubHeading className='textsmall' text={edu.degree}/>
-                <p style={{fontSize:fontSizes.description}} className='textsmall'>{edu.institution}</p>
+                <p style={{fontSize:fontSizes.description,color:'black'}} className='textsmall'>{edu.institution}</p>
                 <p style={{fontSize:fontSizes.description}} className='textsmall'>passing year: {edu.graduationYear}</p>
             </div>
             </ListItem>
           ))}
    
     </List>
-      {/* {data.education.map((edu , index)=>{
-            return <div key={index} className="">
-                <SubHeading className='textsmall' text={edu.degree}/>
-                <p className='textsmall'>{edu.institution}</p>
-                <p className='textsmall'>passing year: {edu.graduationYear}</p>
-            </div>
-        })} */}
+ 
       </div>
 
     </div>}
@@ -438,12 +446,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
           ))}
    
     </List>
-        {/* {data.experience.map((exp, index) => (
-            <div key={index} className=" flex col experience-item mingap">
-              <SubHeading text={exp.role}/>
-              <p className='textcolor'>{exp.description}</p>
-            </div>
-          ))} */}
+     
         </div>
         </div>}
        {/* Skills */}
@@ -479,14 +482,7 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
           ))}
    
     </List>
-       {/* {data.skills.map((skill, index) => (
-            <div key={index} className="skill-item flex col mingap">
-       
-              <SubHeading text={skill.title}/>
 
-              <p  className='textcolor'>{skill.content}</p>
-            </div>
-          ))} */}
        </div>
         </div>
        }

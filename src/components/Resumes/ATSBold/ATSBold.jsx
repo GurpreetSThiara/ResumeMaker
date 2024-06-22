@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import "./ATSBold.css";
 import axios from "axios";
 import ResumeControls from "../../ResumeControls/ResumeControls";
 import { Reorder, motion } from "framer-motion";
-import { Box, Button, Checkbox, Flex, List, ListIcon, ListItem, Stack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Heading, List, ListIcon, ListItem, Stack } from "@chakra-ui/react";
 import Profile from "./SubComponents/Profile";
 import Experience from "./SubComponents/Experience";
 import Education from "./SubComponents/Education";
@@ -16,8 +16,9 @@ import Links from "./SubComponents/Links";
 import convertHtmlToPdf from "../../../utils/generatePdf";
 import { PDFDownloadLink, Document, Page, View, StyleSheet } from '@react-pdf/renderer';
 import HtmlToReact from 'html-to-react';
+import jsPDF from "jspdf";
 
-const htmlToReactParser = new HtmlToReact.Parser();
+import { saveAs } from 'file-saver';
 const ATSBold = ({
   data,
   state,
@@ -120,17 +121,34 @@ function formatHtmlString(htmlString) {
   return formattedHtml;
 }
 
+const contentRef = useRef();
+
+const generatePDF = () => {
+  const doc = new jsPDF('p', 'pt', 'a4');
+  doc.html(contentRef.current, {
+    callback: (doc) => {
+      doc.save('document.pdf');
+    },
+    margin:5,
+ 
+    html2canvas: { scale: 0.745 }, // Optional: adjust this based on your needs
+  });
+};
+
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
     if (element) {
-      const html = element.outerHTML;
+       const htmlx = element.outerHTML;
 
-      const htmlWithStyle = `<!DOCTYPE html><html><head><style>
+     const html = `<!DOCTYPE html><htmlxmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><style>
           @page {
             margin-top: 20px;
             margin-bottom: 20px; 
             font-family: Arial, sans-serif;
+               size: A4;
+                margin: 20mm 15mm; /* Adjust margins as needed */
           }
+              
           body{
             color: #000;
             font-weight: bold;
@@ -274,42 +292,69 @@ function formatHtmlString(htmlString) {
         }
         
        
-          </style></head><body>${html}</body></html>`;
+         </style></head><body>${htmlx}</body></html>`;
 
-       
- 
-          setHtmlContent(htmlWithStyle);
-
-          const javaValid = htmlWithStyle.replace(/\n/g, '');;
-          console.log(javaValid)
-          
+  
 
 
       try {
-        const apiUrl = import.meta.env.VITE_URL; // Ensure VITE_URL is correctly set in your .env file
-        const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
+        // const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
 
-        const response = await axios.post(
-          `${apiUrl}`,
-          {htm:htmlWithStyle}, // Request body
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': apiKey
-            },
-            responseType: 'blob' // Ensure response type is blob for downloading files
-          }
-        );
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "converted_document.pdf");
-        document.body.appendChild(link);
-        link.click();
+
+        // const response = await axios.post(
+        //   `${apiUrl}`,
+        //   {htm:htmlWithStyle}, // Request body
+        //   {
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'x-api-key': apiKey
+        //     },
+        //     responseType: 'blob' // Ensure response type is blob for downloading files
+        //   }
+        // );
+        // const url = window.URL.createObjectURL(new Blob([response.data]));
+        // const link = document.createElement("a");
+        // link.href = url;
+        // link.setAttribute("download", "converted_document.pdf");
+        // document.body.appendChild(link);
+        // link.click();
+        // var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        // var postHtml = "</body></html>";
+        // var html = preHtml+document.getElementById("ATSBold-page").innerHTML+postHtml;
+
+        var blob = new Blob(['\ufeff', html], {
+          type: 'application/msword'
+      });
+      
+      // Specify link url
+      var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+      
+      // Specify file name
+     let filename = 'document.doc';
+      
+      // Create download link element
+      var downloadLink = document.createElement("a");
+  
+      document.body.appendChild(downloadLink);
+      
+      if(navigator.msSaveOrOpenBlob ){
+          navigator.msSaveOrOpenBlob(blob, filename);
+      }else{
+          // Create a link to the file
+          downloadLink.href = url;
+          
+          // Setting the file name
+          downloadLink.download = filename;
+          
+          //triggering the function
+          downloadLink.click();
+      }
+      
+      document.body.removeChild(downloadLink);
       } catch (error) {
         console.error("Error converting HTML to PDF:", error);
-      }
-    }
+      }}
+
   };
   const componentMap = {
     2: <Profile data={data} state={state} fontSizes={fontSizes} />,
@@ -376,7 +421,8 @@ function formatHtmlString(htmlString) {
     <div className="">
     <Flex wrap={'wrap'} gap={'0.5rem'} py={'0.5rem'} justifyContent={'end'}>
   
-         <Button onClick={save}>Save as PDF</Button>
+         <Button onClick={generatePDF}>Save as PDF</Button>
+         <Button onClick={save}>Save as doc</Button>
          {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
       {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
     </PDFDownloadLink> */}
@@ -388,7 +434,8 @@ function formatHtmlString(htmlString) {
       <div
         className="ATSBold-page "
         id="ATSBold-page"
-        style={{ fontFamily: selectedFont }}
+        style={{ fontFamily: selectedFont,display:'flex',alignItems:'center',justifyContent:'center' }}
+        ref={contentRef}
       >
         <div className="ATSBold justify">
           <div className="ATSBold-header">
@@ -397,25 +444,26 @@ function formatHtmlString(htmlString) {
             </h1>
             <h3 >{data.role}</h3>
             {state.Contact && (
-              <div className="ATSBold-header-contact-section">
+              <div className="ATSBold-header-contact-section" style={{display:'flex'}}>
                 <div className="address">
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.address}
                   </p>
                 </div>
-                <div className="seperator" />
+               |
                 <div className="contact">
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.phone}
                   </p>
                 </div>
-                <div className="seperator" />
+                |
+                {/* <div className="seperator" /> */}
                 <div className="email">
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.email}
                   </p>
                 </div>
-                <div className="seperator" />
+               |
                 <div className="linkedin">
                   <a href={data.contact.linkedin} style={{ fontSize: fontSizes.description }}>
                     linkedin
