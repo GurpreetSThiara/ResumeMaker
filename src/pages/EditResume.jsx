@@ -46,104 +46,202 @@ const EditResume = () => {
   const location = useLocation();
   const { image, single } = location.state;
 
-  const [data, setData] = useState({
-    name: "John Doe",
-    role: "Full Stack Developer",
-    profileDescription:
-      "Results-driven Full Stack Developer with [X years] of experience in designing, developing, and implementing scalable web applications. Proficient in both front-end and back-end technologies, with a strong focus on delivering high-quality code and intuitive user experiences.",
-    contact: {
-      address: "512 Moore Street, Indigo Valley, California",
-      email: "johndoe@email.com",
-      phone: "872-234-3355",
-      linkedin: "linkedin of johndoe",
-    },
-    skills: [
-      {
-        more: [],
-        title: "Front-end Development",
-        content:
-          "Proficient in HTML, CSS, and JavaScript. Experience with React.js for building interactive user interfaces.",
+  const [data, setData] = useState(
+    {
+      "name": "Gurpreet Singh",
+      "role": "Full Stack Developer",
+      "profileDescription": "Creative problem solver with in-depth knowledge of front-end technologies (HTML5, CSS3, JavaScript, React.js) and back-end technologies (Node.js, Express.js, Java, SQL). Proficient in designing, developing, and maintaining websites and web tools. Experienced in collaborating with cross-functional teams and taking the lead on new innovations and projects.",
+      "contact": {
+          "address": "Address: Hoshiarpur, Punjab 146113",
+          "email": "email: gurpreetthiara221098@gmail.com",
+          "phone": "Mobile: 8872269487",
+          "linkedin": "https://www.linkedin.com/in/gurpreetsthiara"
       },
-      {
-        more: [],
-        title: "Back-end Development",
-        content:
-          "Skilled in server-side languages such as Node.js and frameworks like Express.js. Knowledge of RESTful API design.",
-      },
-      {
-        more: [],
-        title: "Database Management",
-        content:
-          "Familiarity with database systems such as MongoDB and SQL databases like PostgreSQL or MySQL.",
-      },
-      {
-        more: [],
-        title: "Version Control",
-        content:
-          "Proficient in using Git and GitHub for version control and collaboration with other developers.",
-      },
-    ],
-    experience: [
-      {
-        more: [],
-        from: "12 march 2022",
-        to: "14 march 2024",
-        role: "Front-end Developer at Company X",
-        description:
-          "Developed user interfaces using HTML, CSS, and JavaScript. Collaborated with designers to implement responsive designs. Utilized React.js to create interactive and dynamic web applications.",
-      },
-      {
-        more: [],
-        from: "12 march 2022",
-        to: "14 march 2024",
-        role: "Back-end Developer at Company Y",
-        description:
-          "Implemented server-side logic using Node.js and Express.js. Designed and maintained RESTful APIs for data exchange between front-end and back-end systems. Managed database systems including MongoDB and MySQL.",
-      },
-    ],
-    education: [
-      {
-        more: [],
-        institution: "University XYZ",
-        degree: "Bachelor of Science in Computer Science",
-        graduationYear: "201X",
-        gpa: "3.8/4.0",
-      },
-      {
-        more: [],
-        institution: "ABC College",
-        degree: "Master of Science in Software Engineering",
-        graduationYear: "201Y",
-        gpa: "3.8/4.0",
-      },
-    ],
-    projects: [
-      {
-        more: [],
-        title: "AI Chatbot",
-        description:
-          "Developed an AI-based chatbot for a capstone project, resulting in a 15% increase in customer satisfaction.",
-        technologies: "Python, TensorFlow, NLTK",
-        link: "https://github.com/johndoe/aichatbot",
-      },
-      {
-        more: [],
-        title: "E-commerce Platform",
-        description:
-          "Designed and implemented a scalable e-commerce platform using MERN stack.",
-        technologies: "MongoDB, Express.js, React.js, Node.js",
-        link: "https://github.com/johndoe/ecommerce-platform",
-      },
-   
-    ],
-    links:[
-       {key:"github",value:"https://github.com/johndoe", more: []},
-     {key:"twitter",value:"https://twitter.com/johndoe", more: []},
-     {key:"medium",value: "https://medium.com/@johndoe", more: []}
-    ],
-    custom: [],
-    customLeft: [],
-  });
+      "skills": [
+          {
+              "title": "Front-end Development",
+              "content": "HTML5, CSS3, JavaScript, React.js, Flutter",
+              "more": []
+          },
+          {
+              "title": "Back-end Development",
+              "content": "Express.js, Java Spring Boot, Node.js",
+              "more": []
+          },
+          {
+              "title": "Database Management",
+              "content": "MongoDB, Firebase, MySQL",
+              "more": []
+          },
+          {
+              "title": "DevOps",
+              "content": "Git and GitHub basics, Docker basics",
+              "more": []
+          }
+      ],
+      "experience": [
+          {
+              "role": "Full Stack Developer",
+              "company": "Kreativan Technologies, Chandigarh",
+              "from": "March 2022",
+              "to": "Present",
+              "description":  "Implemented server-side logic using Node.js and Express.js.",
+              "more": [
+               
+                "Designed and maintained RESTful APIs for data exchange between front-end and back-end systems",
+                "Managed databases including MySQL and MongoDB, writing complex queries, optimizing database performance, and ensuring data integrity and security.",
+                " Monitored and improved application performance, achieving high availability and scalability.",
+                "Assisted in implementing security protocols to protect data and systems from breaches and vulnerabilities.",
+                "Collaborated with front-end developers and other team members to ensure seamless integration and project delivery.",
+                "Conducted unit testing and debugging to maintain high-quality code and application reliability.",
+                "Currently working on Kreativan's CRM app for managing all companies' leads, relationships, and enhancing customer interactions with advanced analytics and personalized communication features."
+              ]
+          }
+      ],
+      "education": [
+          {
+              "institution": "Dav University",
+              "degree": "B.Tech in Computer Science",
+              "graduationYear": "2022",
+              "gpa": "7.86/10.0",
+              "more": []
+          },
+          {
+              "institution": "Chitkara University",
+              "degree": "M.Tech in Computer Science",
+              "graduationYear": "2024",
+              "gpa": "9.6/10",
+              "more": []
+          }
+      ],
+      "projects": [
+          {
+              "title": "Free Resume Builder",
+              "description": "Developed a user-friendly interface for creating resumes with real-time previews, drag-and-drop functionality, and responsive design. Utilized React.js, Chakra UI, and JavaScript. Ensured cross-browser compatibility and print-ready PDF exports. Deployed on Vercel and also deployed with Docker on Render.com.",
+              "technologies": "React.js, Chakra UI, JavaScript",
+              "link": "https://freeresumebuilder.vercel.app",
+              "more": [
+                "User-friendly interface for creating resumes",
+                "Customizable templates with various design options",
+                "Real-time preview of the resume during editing",
+                "Drag-and-drop functionality for easy content arrangement",
+                "Support for multiple sections including personal details, education, work experience, skills, and more",
+                "Ability to add, edit, and delete sections and entries",
+                "Responsive design ensuring compatibility across different devices",
+               
+                "Export resumes as PDF with selectable text using jsPDF",
+            
+              
+                "Print-ready PDF export with professional formatting",
+                "Cross-browser compatibility ensuring consistent performance",
+              ]
+          },
+          {
+              "title": "ShopSphere E-commerce Platform",
+              "description": "Created a platform for users to open online shops, with features like OpenStreetMap integration and Razorpay payment processing. Developed a comprehensive admin dashboard for managing products, orders, and user engagements. Utilized Java Spring Boot, React.js, and MySQL.",
+              "technologies": "Java Spring Boot, React.js, MySQL",
+              "link": "https://github.com/GurpreetSThiara/ShopSphere-backend",
+              "more": [
+                'Users can open their online shops on this platform.',
+                'Nearby users can access the shops and view shop details and available products.',
+                'OpenStreetMap integration for viewing nearby shops.',
+                'Sellers have the option to temporarily shut down their shops.',
+                'Comprehensive admin dashboard for easy management, including CRUD operations for products, orders, and user engagements.',
+                'Integration with Razorpay for payment processing.'
+              ]
+          }
+      ],
+      "certifications": [
+          {
+              "title": "AWS Certified Cloud Practitioner",
+              "more": []
+          },
+          {
+              "title": "Certified Kubernetes Application Developer (CKAD)",
+              "more": []
+          }
+      ],
+      "technicalProficiencies": [
+          {
+              "title": "Languages",
+              "content": "Java, Python, Node.js, SQL",
+              "more": []
+          },
+          {
+              "title": "Frameworks",
+              "content": "Express, Spring Boot, React.js, Flutter",
+              "more": []
+          },
+          {
+              "title": "Databases",
+              "content": "MySQL, PostgreSQL, MongoDB, Firebase",
+              "more": []
+          },
+          {
+              "title": "Tools",
+              "content": "Git, Docker, Kubernetes",
+              "more": []
+          },
+          {
+              "title": "Cloud Services",
+              "content": "AWS, Azure, Google Cloud",
+              "more": []
+          }
+      ],
+      "professionalDevelopment": [
+          {
+              "title": "Courses",
+              "content": "Completed online courses on advanced database management and cloud computing.",
+              "more": []
+          },
+          {
+              "title": "Workshops",
+              "content": "Attended workshops on secure coding practices and application performance optimization.",
+              "more": []
+          }
+      ],
+      "additionalInformation": [
+          {
+              "title": "Relocation and Remote Work",
+              "content": "Open to relocation and remote work options.",
+              "more": []
+          },
+          {
+              "title": "Languages",
+              "content": "Fluent in English and Punjabi.",
+              "more": []
+          }
+      ],
+      "references": [
+          {
+              "title": "References",
+              "content": "Available upon request.",
+              "more": []
+          }
+      ],
+      "links": [
+          {
+              "key": "Portfolio",
+              "value": "https://gurpreetthiara-portfolio.vercel.app",
+              "more": []
+          },
+          {
+            "key": "Linkedin",
+            "value": "https://www.linkedin.com/in/gurpreetsthiara /",
+            "more": []
+        },  {
+          "key": "Github",
+          "value": "https://github.com/GurpreetSThiara",
+          "more": []
+      }
+          
+      ],
+      "custom": [],
+      "customLeft": []
+  }
+  
+  
+);
   console.log(data)
   const [state, setState] = useState({
     Image: image,
@@ -1337,7 +1435,7 @@ const EditResume = () => {
                       newLinks[index].key = e.target.value;
                         setData( (prevState)=>({
                           ...prevState,
-                          projects:newLinks
+                          links:newLinks
                          }))
                   }
                   
@@ -1357,7 +1455,7 @@ const EditResume = () => {
                         newLinks[index].value = e.target.value;
                           setData( (prevState)=>({
                             ...prevState,
-                            projects:newLinks
+                            links:newLinks
                            }))
                     }
                     

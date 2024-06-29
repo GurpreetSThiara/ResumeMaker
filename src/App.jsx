@@ -15,6 +15,7 @@ import DemoRes from './components/demoRes/DemoRes';
 import ConvertImages from './pages/ConvertImages/ConvertImages';
 import PDF from './pages/PDFConverter';
 import CreativeCanvas from './components/Resumes/CreativeCanvas/CreativeCanvas';
+import Invoice from './pages/invoice/Invoice';
 
 
 
@@ -41,6 +42,7 @@ const App = () => {
     <Route path='templates/:type' element={<TemplateInfo/>}/>
     <Route path='/convert' element={<ConvertImages/>}/>
     <Route path='/pdf' element={<CreativeCanvas/>}/>
+    <Route path='/invoice' element={<Invoice/>}/>
     <></>
    
 

@@ -10,6 +10,7 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                 <div className="ATSBold-subheading" style={{fontSize:fontSizes.header}}>Experience</div>
                 <div className="flexgap">
                 <List
+                
                  m={'0'}
                  p={'0'}
                 className="flexgap"
@@ -23,12 +24,13 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                 {data.experience.map((experience, i) => {
                   return (
                     <ListItem
+                   
+                   
                       key={experience.description}
                       as={Reorder.Item}
                       value={experience}
                       className=""
-                      m={'0'}
-                      p={'0'}
+                 
                     >
                         <div key={i} className="">
                         <div className="">
@@ -44,9 +46,13 @@ const Experience = ({data,state,fontSizes,setExperience}) => {
                         </div>
 
                         <div style={{ fontSize: fontSizes.description }} className="">
-                    {experience.more.map((more, index) => (
-                      <div key={more} className="">{more}</div>
+                   <ul >
+                   {experience.more.map((more, index) => (
+                     <li style={{ marginBottom:'0.5rem'}} key={more}>
+                     {more}
+                     </li>
                     ))}
+                   </ul>
                   </div>
                       </div>
                     </ListItem>

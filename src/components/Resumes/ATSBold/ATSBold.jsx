@@ -17,8 +17,12 @@ import convertHtmlToPdf from "../../../utils/generatePdf";
 import { PDFDownloadLink, Document, Page, View, StyleSheet } from '@react-pdf/renderer';
 import HtmlToReact from 'html-to-react';
 import jsPDF from "jspdf";
-
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import htmlToPdfmake from 'html-to-pdfmake';
 import { saveAs } from 'file-saver';
+import { pdfFromReact } from "generate-pdf-from-react-html";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const ATSBold = ({
   data,
   state,
@@ -134,6 +138,244 @@ const generatePDF = () => {
     html2canvas: { scale: 0.745 }, // Optional: adjust this based on your needs
   });
 };
+const convertToInlineStyles = (htmlWithStyle) => {
+  // Create a div element to hold the parsed HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = htmlWithStyle;
+
+  // Find all style elements within the div
+  const styleElements = tempDiv.getElementsByTagName('style');
+
+  // Iterate over each style element and extract its CSS rules
+  Array.from(styleElements).forEach((styleElement) => {
+    const cssText = styleElement.textContent || styleElement.innerText;
+
+    // Create a temporary element to apply the styles and extract computed styles
+    const tempElement = document.createElement('div');
+    tempElement.style.display = 'none'; // Hide the element
+    tempElement.innerHTML = '<p></p>'; // Add some content to ensure style application
+
+    // Append the temporary element to the body to apply the styles
+    document.body.appendChild(tempElement);
+
+    // Apply the extracted CSS rules to the temporary element
+    tempElement.firstChild.setAttribute('style', cssText);
+
+    // Get computed styles and convert them into inline styles
+    const computedStyles = window.getComputedStyle(tempElement.firstChild);
+    const inlineStyles = Array.from(computedStyles).reduce((acc, styleName) => {
+      const styleValue = computedStyles.getPropertyValue(styleName);
+      // Convert camelCase styleName to kebab-case
+      const kebabCaseStyleName = styleName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      return `${acc}${kebabCaseStyleName}: ${styleValue}; `;
+    }, '');
+
+    // Replace the <style> tag content with inline styles
+    tempDiv.innerHTML = tempDiv.innerHTML.replace(`<style>${cssText}</style>`, `<p style="${inlineStyles}"></p>`);
+
+    // Remove the temporary element from the body
+    document.body.removeChild(tempElement);
+  });
+
+  // Return the modified HTML with inline styles
+  return tempDiv.innerHTML;
+};
+
+const generatePDF2 = () => {
+  const element = document.getElementById("ATSBold-page");
+  const htmlx = element.outerHTML;
+  const contentHtml = contentRef.current.outerHTML;
+  const html = `<!DOCTYPE html><html><head><meta charset='utf-8'><style>
+  .hi{
+  font-size:200px;
+  }
+  @page {
+    margin-top: 20rem;
+    margin-bottom: 20px; 
+    font-family: Arial, sans-serif;
+       size: A4;
+        margin: 20mm 15mm; /* Adjust margins as needed */
+  }
+      
+  body{
+    color: #000;
+    font-weight: bold;
+    font-size: 0.8rem;
+   
+}
+.justify{
+  text-align: justify;
+}
+.gap-1{
+gap: 1rem;
+
+}
+.items-center{
+align-items: center;
+}
+
+.flexgap{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+}
+.ATSBold-page li{
+    margin: 0px;
+    padding: 0px;
+}
+p{
+    margin:0.5px;
+    padding:0.5px
+    font-weight: bold;
+}
+.ATSBold-page h1,
+.ATSBold-page h2,
+.ATSBold-page h3,
+.ATSBold-page h4,
+.ATSBold-page h5,
+.ATSBold-page h6 {
+margin: 0.4px;
+padding:0.5px
+}
+
+.flex{
+    display: flex;
+}
+.ATSBold p {
+    color: #000;
+}
+.ATSBold div {
+    color: #000;
+}
+h4{
+    font-size: 1.2rem;
+}
+
+.ATSBold-page{
+    display: flex;
+    flex-direction: column;
+    gap:0px;
+    padding: 2rem;
+    width: 210mm;
+  
+    align-items: center;
+    overflow: auto;
+    background-color: white;
+}
+
+.ATSBold{
+   
+
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+   overflow: auto;
+   
+
+
+}
+.ATSBold-page {
+   
+    margin: 0px;
+    padding: 0px;
+}
+
+.ATSBold-header{
+    text-align: center;
+}
+
+.ATSBold-header h1{
+    font-size: 4rem;
+    font-weight: bold;
+    color: black;
+
+}
+.ATSBold-header h3{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+}
+
+.ATSBold-header-contact-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+.seperator{
+    width: 0.15rem;
+    height: 1.1rem;
+
+    background-color: black;
+}
+
+.ATSBold-subheading {
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+.ATSBold-education-content{
+    display: flex;
+    flex-wrap: wrap;
+    gap:1rem
+ 
+}
+
+.ATSBold-projects {
+    margin-top: 1rem;
+}
+
+.ATSBold-projects h4 {
+    font-size: 1.2rem;
+}
+
+.ATSBold-projects p {
+    margin: 0.5rem 0;
+}
+
+.ATSBold-projects a {
+    color: blue;
+    text-decoration: underline;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+  background-color:#002244;
+}
+
+ 
+</style></head><body><div>
+<div style="display:flex;">
+hi
+<table style="background-color:#002244;">
+  <tr>
+    <td>content</td>
+    <td>content</td>
+    <td>content</td>
+  </tr>
+</table>
+</div>
+</div></body></html>`;
+
+const htm = convertToInlineStyles(html);
+
+
+ const pdfContent = htmlToPdfmake(htm);
+
+ console.log(htm)
+
+ const docDefinition = {
+   content: pdfContent,
+   defaultStyle: {
+     font: 'Roboto',
+
+   }
+ };
+
+ pdfMake.createPdf(docDefinition).download('example.pdf');
+  pdfMake.createPdf(docDefinition).download('example.pdf');
+};
 
   const save = async () => {
     const element = document.getElementById("ATSBold-page");
@@ -227,8 +469,8 @@ const generatePDF = () => {
         
         
         }
-        .ATSBold-page ul{
-            list-style-type: none;
+        .ATSBold-page {
+           
             margin: 0px;
             padding: 0px;
         }
@@ -298,59 +540,32 @@ const generatePDF = () => {
 
 
       try {
-        // const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
+        const apiKey = import.meta.env.VITE_API_KEY; // Ensure VITE_URL is correctly set in your .env file
+        const api_url = import.meta.env.VITE_URL; // Ensure VITE_URL is correctly set in your .env file
 
 
-        // const response = await axios.post(
-        //   `${apiUrl}`,
-        //   {htm:htmlWithStyle}, // Request body
-        //   {
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       'x-api-key': apiKey
-        //     },
-        //     responseType: 'blob' // Ensure response type is blob for downloading files
-        //   }
-        // );
-        // const url = window.URL.createObjectURL(new Blob([response.data]));
-        // const link = document.createElement("a");
-        // link.href = url;
-        // link.setAttribute("download", "converted_document.pdf");
-        // document.body.appendChild(link);
-        // link.click();
-        // var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
-        // var postHtml = "</body></html>";
-        // var html = preHtml+document.getElementById("ATSBold-page").innerHTML+postHtml;
+        const response = await axios.post(
+          `${api_url}`,
+          {htm:html}, // Request body
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': apiKey
+            },
+            responseType: 'blob' // Ensure response type is blob for downloading files
+          }
+        );
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "converted_document.pdf");
+        document.body.appendChild(link);
+        link.click();
+       
 
-        var blob = new Blob(['\ufeff', html], {
-          type: 'application/msword'
-      });
+     
       
-      // Specify link url
-      var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
-      
-      // Specify file name
-     let filename = 'document.doc';
-      
-      // Create download link element
-      var downloadLink = document.createElement("a");
-  
-      document.body.appendChild(downloadLink);
-      
-      if(navigator.msSaveOrOpenBlob ){
-          navigator.msSaveOrOpenBlob(blob, filename);
-      }else{
-          // Create a link to the file
-          downloadLink.href = url;
-          
-          // Setting the file name
-          downloadLink.download = filename;
-          
-          //triggering the function
-          downloadLink.click();
-      }
-      
-      document.body.removeChild(downloadLink);
+   
       } catch (error) {
         console.error("Error converting HTML to PDF:", error);
       }}
@@ -425,10 +640,13 @@ const generatePDF = () => {
               _hover={{
                 bg:'#002244'
               }} bg={'#1A202C'} onClick={generatePDF}>Save as PDF</Button>
+              
+
          <Button    color={'white'}
               _hover={{
                 bg:'#002244'
               }} bg={'#1A202C'} onClick={save}>Save as doc</Button>
+
          {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
       {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
     </PDFDownloadLink> */}
@@ -451,31 +669,31 @@ const generatePDF = () => {
             <h3 >{data.role}</h3>
             {state.Contact && (
               <div className="ATSBold-header-contact-section" style={{display:'flex'}}>
-                <div className="address">
+                <div className="address" style={{ display: 'inline-block' }}>
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.address}
                   </p>
                 </div>
                |
-                <div className="contact">
+                <div className="contact" style={{ display: 'inline-block' }}>
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.phone}
                   </p>
                 </div>
                 |
                 {/* <div className="seperator" /> */}
-                <div className="email">
+                <div className="email" style={{ display: 'inline-block' }}>
                   <p style={{ fontSize: fontSizes.description }}>
                     {data.contact.email}
                   </p>
                 </div>
-               |
+               {/* |
                 <div className="linkedin">
-                  <a href={data.contact.linkedin} style={{ fontSize: fontSizes.description }}>
+                  <a href={data.contact.linkedin} >
                     linkedin
                     
                   </a>
-                </div>
+                </div> */}
               </div>
             )}
           </div>

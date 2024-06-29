@@ -126,11 +126,11 @@ const HeroSection = () => {
 
       {/* Content */}
       <Box zIndex="10" position="relative" >
-        <Image src="/resugen-logo.png" alt="ResuGen Logo" width="200px" mx="auto" />
+        {/* <Image src="/resugen-logo.png" alt="ResuGen Logo" width="200px" mx="auto" /> */}
         <Heading color={'gray'} as="h1" size="2xl" mt="4" mb="2">
           Your Free Online Resume Builder
         </Heading>
-        <Text as={'h2'} fontSize="xl" mb="4">
+        <Text as={'h2'} fontSize="xl" mb="4" border={'none'}>
           Create professional resumes effortlessly!
         </Text>
         <Button onClick={()=>navigate('/templates')} colorScheme="blue" size="lg" mb="4">
@@ -193,7 +193,7 @@ const FeatureItem = ({ icon, text }) => {
 const StatisticsSection = () => {
   return (
     <Box mt="12" textAlign="center">
-      <Heading as="h2" size="xl" mb="4">Our Statistics</Heading>
+      <Heading border={'none'} as="h2" size="xl" mb="4">Our Statistics</Heading>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing="8">
         <StatisticCard value="100K+" label="Resumes Created" />
         <StatisticCard value="95%" label="Satisfied Users" />
@@ -224,8 +224,8 @@ const TestimonialsSection = () => {
 const PricingSection = () => {
   return (
     <Box mt="12" textAlign="center">
-      <Heading as="h2" size="xl" mb="4">Our Pricing Plans</Heading>
-      <Text fontSize="lg" mb="4">Hooray! No Pricing Plans Here - Everything's Free!</Text>
+      <Heading border={"none"} as="h2" size="xl" mb="4">Our Pricing Plans</Heading>
+      <Text fontSize="lg" mb="4">{"Hooray! No Pricing Plans Here - Everything's Free!"}</Text>
       <SimpleGrid columns={{ base: 1, md: 4 }} spacing="8">
         <FunnyEmptyBox message="Nothing to Pay!" />
         <FunnyEmptyBox message="Absolutely Zero Dollars!" />
@@ -317,7 +317,7 @@ const FAQItem = ({ question, answer }) => {
 const BlogSection = () => {
   return (
     <Box mt="12" textAlign="center">
-      <Heading as="h2" size="xl" mb="4">Latest from Our Blog</Heading>
+      <Heading border={"none"} as="h2" size="xl" mb="4">Latest from Our Blog</Heading>
       <Stack spacing="8" direction={{ base: "column", md: "row" }} justify="center">
         <BlogCard title="10 Tips for Writing a Winning Resume" />
         <GoogleAd/>
@@ -341,7 +341,7 @@ const BlogCard = ({ title }) => {
 const SupportSection = () => {
   return (
     <Box mt="12" textAlign="center">
-      <Heading as="h2" size="xl" mb="4">Customer Support</Heading>
+      <Heading border={"none"} as="h2" size="xl" mb="4">Customer Support</Heading>
       <Text fontSize="lg" mb="4">Need help or have questions? Our support team is here to assist you!</Text>
       <Button colorScheme="blue" size="lg" mb="4">Contact Support</Button>
     </Box>

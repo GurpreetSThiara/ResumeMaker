@@ -1,12 +1,35 @@
 /* src/components/Resume.css */
+.flex{
+    display: flex;
+}
+.col{
+    flex-direction: column;
+}
+
+.border{
+    border: 1px solid black;
+}
+.center{
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.header-gtemp{
+    color: black;
+}
 .resume-container {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-  width: 152mm;
+
     margin: 0 auto;
     padding: 40px;
     background-color: #f9f9f9;
     color: #333;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 210mm;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 header {

@@ -4,12 +4,13 @@ body{
     font-size: 0.9rem;
    
 }
+
+
 .justify{
     text-align: justify;
 }
-.ATSBold-page ul{
-    list-style-type: none;
-}
+
+
 
 .ATSBold-page li{
     margin: 0px;
@@ -74,6 +75,8 @@ h4{
     padding-left: 2rem;
     padding-right: 2rem;
     width: 210mm;
+
+    
   
     align-items: center;
     overflow: auto;

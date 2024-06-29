@@ -22,12 +22,14 @@ const Skill = ({ state, data, fontSizes, setDataSkills }) => {
             {data.skills.map((skill, i) => (
               <Reorder.Item key={skill.title} value={skill}>
               
-                  <div className="">
+                 <div className="flex items-center gap-1">
+                 <div className="">
                     <h4 style={{ fontSize: fontSizes.subheading }}>{skill.title}</h4>
                   </div>
                   <div className="">
                     <p style={{ fontSize: fontSizes.description }}>{skill.content}</p>
                   </div>
+                 </div>
                   <div style={{ fontSize: fontSizes.description }} className="">
                     {skill.more.map((more, index) => (
                       <div key={more} className="">{more}</div>

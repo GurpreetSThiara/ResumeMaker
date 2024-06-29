@@ -33,6 +33,13 @@ const Projects = ({state, fontSizes,data,setProjects}) => {
                         <div className="">
                           <p style={{fontSize:fontSizes.description}}>{project.description}</p>
                         </div>
+                        <ul>
+                      {project.more.map((more, index) => (
+                     <li key={more}>
+                       <div  className="">{more}</div>
+                     </li>
+                    ))}
+                      </ul>
                         <div className="">
                           <p style={{fontSize:fontSizes.description}}>Technologies: {project.technologies}</p>
                         </div>
@@ -45,9 +52,7 @@ const Projects = ({state, fontSizes,data,setProjects}) => {
                             {project.link}
                           </a>
                         </div>
-                        {project.more.map((more, index) => (
-                      <div key={more} className="">{more}</div>
-                    ))}
+                    
                       </div>
                     </ListItem>
                   );

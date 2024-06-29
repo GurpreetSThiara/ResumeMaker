@@ -21,6 +21,8 @@
     "dotenv": "^16.4.5",
     "file-saver": "^2.0.5",
     "framer-motion": "^11.1.7",
+    "generate-pdf-from-react-html": "^1.0.5",
+    "html-to-pdfmake": "^2.5.10",
     "html-to-react": "^1.7.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.9.0",

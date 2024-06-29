@@ -31,7 +31,7 @@ const toggleMenu = () => {
     >
      <Flex>
      <Flex align="center" >
-        <Image src="/resugen-logo.png" alt="ResuGen Logo" width="100px" />
+        {/* <Image src="/resugen-logo.png" alt="ResuGen Logo" width="100px" /> */}
       </Flex>
       <Text p={'0.5rem'} borderRadius={'50%'} as={'h1'} bgGradient="linear(to-r, black, blue.900)"  fontSize={{base:'1.4rem',md:'2rem'}} fontWeight={'bold'} color={'gray.200'}>
         Free Resume Builder
@@ -79,6 +79,27 @@ const toggleMenu = () => {
         >
           Home
         </Link>
+
+        <Link
+             to={'/invoice'}
+          color={linkColor}
+          fontSize="lg"
+          fontWeight="bold"
+          transition="all 0.3s"
+          _hover={{
+            color: hoverColor,
+            transform: 'scale(1.1)',
+            textDecoration: 'none',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          }}
+          p={3}
+          borderRadius="md"
+          _focus={{
+            boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.6)',
+          }}
+        >
+          Invoice
+        </Link>
         <Link
           to={'/about'}
           color={linkColor}
@@ -99,7 +120,7 @@ const toggleMenu = () => {
         >
           About
         </Link>
-        <Link
+        {/* <Link
           href="#"
           color={linkColor}
           fontSize="lg"
@@ -139,7 +160,7 @@ const toggleMenu = () => {
           }}
         >
           FAQ
-        </Link>
+        </Link> */}
         <Link
           href="#"
           color={linkColor}

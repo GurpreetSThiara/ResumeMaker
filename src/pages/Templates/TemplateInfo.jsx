@@ -33,7 +33,7 @@ const TemplateInfo = () => {
         }
     }
   return (
-    <Box bg={'black'}  p={'1rem'}>
+    <Box bg={'black'} h={{md:'100vh'}}  p={'1rem'} >
        <Flex alignItems={{base:'center',md:'flex-start'}}  flexDirection={{base:'column',md:'row'}} w={'full'} gap={'1rem'} justifyContent={'center'}>
        <Heading display={{base:'flex' , md:'none'}} textAlign={'center'} color={'gray'} as={'h1'}>{name.toUpperCase()}</Heading>
 
