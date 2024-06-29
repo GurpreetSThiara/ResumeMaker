@@ -18,11 +18,11 @@ import { PDFDownloadLink, Document, Page, View, StyleSheet } from '@react-pdf/re
 import HtmlToReact from 'html-to-react';
 import jsPDF from "jspdf";
 import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
+
 import htmlToPdfmake from 'html-to-pdfmake';
 import { saveAs } from 'file-saver';
 import { pdfFromReact } from "generate-pdf-from-react-html";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 const ATSBold = ({
   data,
   state,

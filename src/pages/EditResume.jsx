@@ -48,138 +48,132 @@ const EditResume = () => {
 
   const [data, setData] = useState(
     {
-      "name": "Gurpreet Singh",
-      "role": "Full Stack Developer",
-      "profileDescription": "Creative problem solver with in-depth knowledge of front-end technologies (HTML5, CSS3, JavaScript, React.js) and back-end technologies (Node.js, Express.js, Java, SQL). Proficient in designing, developing, and maintaining websites and web tools. Experienced in collaborating with cross-functional teams and taking the lead on new innovations and projects.",
+      "name": "John Doe",
+      "role": "Software Engineer",
+      "profileDescription": "Passionate software engineer with extensive experience in developing scalable web applications and software solutions. Skilled in a variety of programming languages and frameworks, with a strong focus on user-centric design and robust back-end architecture. Proven ability to lead projects and work effectively in team environments.",
       "contact": {
-          "address": "Address: Hoshiarpur, Punjab 146113",
-          "email": "email: gurpreetthiara221098@gmail.com",
-          "phone": "Mobile: 8872269487",
-          "linkedin": "https://www.linkedin.com/in/gurpreetsthiara"
+          "address": "1234 Elm Street, Springfield, IL 62704",
+          "email": "john.doe@example.com",
+          "phone": "555-123-4567",
+          "linkedin": "https://www.linkedin.com/in/johndoe"
       },
       "skills": [
           {
-              "title": "Front-end Development",
-              "content": "HTML5, CSS3, JavaScript, React.js, Flutter",
+              "title": "Programming Languages",
+              "content": "Python, JavaScript, C++, Java",
               "more": []
           },
           {
-              "title": "Back-end Development",
-              "content": "Express.js, Java Spring Boot, Node.js",
+              "title": "Web Development",
+              "content": "React.js, Angular, Node.js, Django",
               "more": []
           },
           {
               "title": "Database Management",
-              "content": "MongoDB, Firebase, MySQL",
+              "content": "PostgreSQL, MySQL, SQLite",
               "more": []
           },
           {
               "title": "DevOps",
-              "content": "Git and GitHub basics, Docker basics",
+              "content": "AWS, Docker, Jenkins",
               "more": []
           }
       ],
       "experience": [
           {
-              "role": "Full Stack Developer",
-              "company": "Kreativan Technologies, Chandigarh",
-              "from": "March 2022",
+              "role": "Software Engineer",
+              "company": "Tech Solutions Inc., Chicago, IL",
+              "from": "June 2019",
               "to": "Present",
-              "description":  "Implemented server-side logic using Node.js and Express.js.",
+              "description": "Developed and maintained web applications using React.js and Node.js.",
               "more": [
-               
-                "Designed and maintained RESTful APIs for data exchange between front-end and back-end systems",
-                "Managed databases including MySQL and MongoDB, writing complex queries, optimizing database performance, and ensuring data integrity and security.",
-                " Monitored and improved application performance, achieving high availability and scalability.",
-                "Assisted in implementing security protocols to protect data and systems from breaches and vulnerabilities.",
-                "Collaborated with front-end developers and other team members to ensure seamless integration and project delivery.",
-                "Conducted unit testing and debugging to maintain high-quality code and application reliability.",
-                "Currently working on Kreativan's CRM app for managing all companies' leads, relationships, and enhancing customer interactions with advanced analytics and personalized communication features."
+                  "Led a team of 5 developers to design and implement a new customer management system.",
+                  "Improved application performance by optimizing front-end and back-end code.",
+                  "Integrated third-party APIs to enhance application functionality.",
+                  "Conducted code reviews and provided mentorship to junior developers.",
+                  "Implemented continuous integration and deployment pipelines using Jenkins and Docker.",
+                  "Collaborated with cross-functional teams to define project requirements and deliverables."
+              ]
+          },
+          {
+              "role": "Junior Software Developer",
+              "company": "Web Innovations, Boston, MA",
+              "from": "August 2017",
+              "to": "May 2019",
+              "description": "Assisted in the development of e-commerce platforms and content management systems.",
+              "more": [
+                  "Developed front-end components using Angular and integrated with RESTful APIs.",
+                  "Performed database design and optimization for PostgreSQL and MySQL.",
+                  "Participated in daily stand-up meetings and contributed to sprint planning sessions.",
+                  "Wrote unit tests and performed debugging to ensure high code quality.",
+                  "Collaborated with UI/UX designers to create responsive and user-friendly interfaces."
               ]
           }
       ],
       "education": [
           {
-              "institution": "Dav University",
-              "degree": "B.Tech in Computer Science",
-              "graduationYear": "2022",
-              "gpa": "7.86/10.0",
-              "more": []
-          },
-          {
-              "institution": "Chitkara University",
-              "degree": "M.Tech in Computer Science",
-              "graduationYear": "2024",
-              "gpa": "9.6/10",
+              "institution": "State University",
+              "degree": "B.Sc. in Computer Science",
+              "graduationYear": "2017",
+              "gpa": "3.6/4.0",
               "more": []
           }
       ],
       "projects": [
           {
-              "title": "Free Resume Builder",
-              "description": "Developed a user-friendly interface for creating resumes with real-time previews, drag-and-drop functionality, and responsive design. Utilized React.js, Chakra UI, and JavaScript. Ensured cross-browser compatibility and print-ready PDF exports. Deployed on Vercel and also deployed with Docker on Render.com.",
-              "technologies": "React.js, Chakra UI, JavaScript",
-              "link": "https://freeresumebuilder.vercel.app",
+              "title": "Task Management App",
+              "description": "Developed a web-based task management application with real-time collaboration features. Implemented user authentication, task assignment, and progress tracking functionalities.",
+              "technologies": "React.js, Node.js, MongoDB",
+              "link": "https://github.com/johndoe/task-manager",
               "more": [
-                "User-friendly interface for creating resumes",
-                "Customizable templates with various design options",
-                "Real-time preview of the resume during editing",
-                "Drag-and-drop functionality for easy content arrangement",
-                "Support for multiple sections including personal details, education, work experience, skills, and more",
-                "Ability to add, edit, and delete sections and entries",
-                "Responsive design ensuring compatibility across different devices",
-               
-                "Export resumes as PDF with selectable text using jsPDF",
-            
-              
-                "Print-ready PDF export with professional formatting",
-                "Cross-browser compatibility ensuring consistent performance",
+                  "Real-time collaboration features using WebSocket.",
+                  "User authentication and authorization.",
+                  "Task assignment and progress tracking.",
+                  "Responsive design for mobile and desktop platforms."
               ]
           },
           {
-              "title": "ShopSphere E-commerce Platform",
-              "description": "Created a platform for users to open online shops, with features like OpenStreetMap integration and Razorpay payment processing. Developed a comprehensive admin dashboard for managing products, orders, and user engagements. Utilized Java Spring Boot, React.js, and MySQL.",
-              "technologies": "Java Spring Boot, React.js, MySQL",
-              "link": "https://github.com/GurpreetSThiara/ShopSphere-backend",
+              "title": "Weather Forecasting App",
+              "description": "Created a weather forecasting application that provides real-time weather updates and alerts. Integrated with third-party weather APIs and implemented a user-friendly interface.",
+              "technologies": "Angular, Express.js, SQLite",
+              "link": "https://github.com/johndoe/weather-app",
               "more": [
-                'Users can open their online shops on this platform.',
-                'Nearby users can access the shops and view shop details and available products.',
-                'OpenStreetMap integration for viewing nearby shops.',
-                'Sellers have the option to temporarily shut down their shops.',
-                'Comprehensive admin dashboard for easy management, including CRUD operations for products, orders, and user engagements.',
-                'Integration with Razorpay for payment processing.'
+                  "Integration with third-party weather APIs.",
+                  "Real-time weather updates and alerts.",
+                  "User-friendly interface with responsive design.",
+                  "Data caching and offline access using service workers."
               ]
           }
       ],
       "certifications": [
           {
-              "title": "AWS Certified Cloud Practitioner",
+              "title": "Certified Scrum Master (CSM)",
               "more": []
           },
           {
-              "title": "Certified Kubernetes Application Developer (CKAD)",
+              "title": "AWS Certified Solutions Architect",
               "more": []
           }
       ],
       "technicalProficiencies": [
           {
               "title": "Languages",
-              "content": "Java, Python, Node.js, SQL",
+              "content": "Python, JavaScript, C++, Java",
               "more": []
           },
           {
               "title": "Frameworks",
-              "content": "Express, Spring Boot, React.js, Flutter",
+              "content": "React.js, Angular, Django, Express.js",
               "more": []
           },
           {
               "title": "Databases",
-              "content": "MySQL, PostgreSQL, MongoDB, Firebase",
+              "content": "PostgreSQL, MySQL, SQLite, MongoDB",
               "more": []
           },
           {
               "title": "Tools",
-              "content": "Git, Docker, Kubernetes",
+              "content": "Git, Docker, Jenkins, Kubernetes",
               "more": []
           },
           {
@@ -191,12 +185,12 @@ const EditResume = () => {
       "professionalDevelopment": [
           {
               "title": "Courses",
-              "content": "Completed online courses on advanced database management and cloud computing.",
+              "content": "Completed online courses on machine learning and cloud computing.",
               "more": []
           },
           {
               "title": "Workshops",
-              "content": "Attended workshops on secure coding practices and application performance optimization.",
+              "content": "Attended workshops on microservices architecture and serverless computing.",
               "more": []
           }
       ],
@@ -208,7 +202,7 @@ const EditResume = () => {
           },
           {
               "title": "Languages",
-              "content": "Fluent in English and Punjabi.",
+              "content": "Fluent in English and Spanish.",
               "more": []
           }
       ],
@@ -222,19 +216,19 @@ const EditResume = () => {
       "links": [
           {
               "key": "Portfolio",
-              "value": "https://gurpreetthiara-portfolio.vercel.app",
+              "value": "https://johndoe-portfolio.com",
               "more": []
           },
           {
-            "key": "Linkedin",
-            "value": "https://www.linkedin.com/in/gurpreetsthiara /",
-            "more": []
-        },  {
-          "key": "Github",
-          "value": "https://github.com/GurpreetSThiara",
-          "more": []
-      }
-          
+              "key": "LinkedIn",
+              "value": "https://www.linkedin.com/in/johndoe",
+              "more": []
+          },
+          {
+              "key": "GitHub",
+              "value": "https://github.com/johndoe",
+              "more": []
+          }
       ],
       "custom": [],
       "customLeft": []
