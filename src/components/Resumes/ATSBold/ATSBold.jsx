@@ -642,10 +642,10 @@ const htm = convertToInlineStyles(html);
               }} bg={'#1A202C'} onClick={generatePDF}>Save as PDF</Button>
               
 
-         <Button    color={'white'}
+         {/* <Button    color={'white'}
               _hover={{
                 bg:'#002244'
-              }} bg={'#1A202C'} onClick={save}>Save as doc</Button>
+              }} bg={'#1A202C'} onClick={save}>Save as doc</Button> */}
 
          {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
       {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}

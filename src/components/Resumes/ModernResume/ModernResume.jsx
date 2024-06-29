@@ -300,11 +300,27 @@ const ModernResume = ({state,data,setDataSkills,setEducation,setExperience,fontS
 
   return (
    <Flex padding={'0.5rem'} flexDirection={'column'} gap={'0.5rem'} className="">
-      <Button onClick={generatePDF}>Save as PDF</Button>
-     <Flex justifyContent={'end'} gap={'0.5rem'}>
+        <Flex wrap={'wrap'} gap={'0.5rem'}  justifyContent={'end'}>
+  
+  <Button    color={'white'}
+       _hover={{
+         bg:'#002244'
+       }} bg={'#1A202C'} onClick={generatePDF}>Save as PDF</Button>
+       
+
+  {/* <Button    color={'white'}
+       _hover={{
+         bg:'#002244'
+       }} bg={'#1A202C'} onClick={save}>Save as doc</Button> */}
+
+  {/* <PDFDownloadLink document={<MyDocument htmlContent={htmlContent} />} fileName="document.pdf">
+{({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
+</PDFDownloadLink> */}
+</Flex>
+    
 
    
-     </Flex>
+  
      <div ref={contentRef} style={{fontFamily:selectedFont?selectedFont:'',color:'black'}} id="modern_resume" className="resumee flex ">
       <div className="left-section"  >
         {state.Image && <div className="profile-image-container">
