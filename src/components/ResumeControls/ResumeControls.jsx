@@ -103,35 +103,61 @@ const ResumeControls = ({ save, setSelectedFont, selectedFont, setFontSizes, fon
   return (
     <Flex borderRadius={'10px'} m={'0.5rem'} p={'0.5rem'} bg={'blue.900'} mb={'0.3rem'} w={'full'} justifyContent={'center'} gap={'0.5rem'} flexWrap="wrap">
      <Box bg={'black'} borderRadius={'15px'}>
-     <Select   bgGradient="linear(to-r, black,black, blue.900)"    border={"1px solid #002244"} borderRadius={'15px'} value={selectedFont} onChange={handleFontChange} placeholder="Select Font Family">
+
+     <Select bg={"black"}   sx={{
+    option: {
+      backgroundColor: "black",
+      color: "white"
+    }
+  }} border={"1px solid #002244"} borderRadius={'15px'} value={selectedFont} onChange={handleFontChange} placeholder="Select Font Family">
         {fontOptions.map((font, index) => (
           <option key={index} value={font.value}>{font.label}</option>
         ))}
       </Select>
      </Box>
     <Box  borderRadius={'15px'}  bgGradient="linear(to-r, black,black,black, blue.900)">
-    <Select   bgGradient="linear(to-r, black,black, blue.900)"  border={"1px solid #002244"}  borderRadius={'15px'}  value={"header"} onChange={(e) => handleFontSizeChange(e, 'header')} placeholder="Header Font Size">
+    <Select  sx={{
+    option: {
+      backgroundColor: "black",
+      color: "white"
+    }
+  }}  bgGradient="linear(to-r, black,black, blue.900)"  border={"1px solid #002244"}  borderRadius={'15px'}  value={"header"} onChange={(e) => handleFontSizeChange(e, 'header')} placeholder="Header Font Size">
         {fontSizeHeader.map((size, index) => (
           <option key={index} value={size.value}>{size.label}</option>
         ))}
       </Select>
     </Box>
    <Box borderRadius={'15px'}  bgGradient="linear(to-r, black,black, blue.900)">
-   <Select  bgGradient="linear(to-r, black,black, blue.900)"  border={"1px solid #002244"}  borderRadius={'15px'}  value={"subheader"} onChange={(e) => handleFontSizeChange(e, 'subheading')} placeholder="Subheading Font Size">
+   <Select  sx={{
+    option: {
+      backgroundColor: "black",
+      color: "white"
+    }
+  }} bgGradient="linear(to-r, black,black, blue.900)"  border={"1px solid #002244"}  borderRadius={'15px'}  value={"subheader"} onChange={(e) => handleFontSizeChange(e, 'subheading')} placeholder="Subheading Font Size">
         {fontSizeSubheading.map((size, index) => (
           <option key={index} value={size.value}>{size.label}</option>
         ))}
       </Select>
    </Box>
    <Box borderRadius={'15px'}   bgGradient="linear(to-r, black, blue.900)">
-   <Select   bgGradient="linear(to-r, black,black, blue.900)" border={"1px solid #002244"}  borderRadius={'15px'} value={"name"} onChange={(e) => handleFontSizeChange(e, 'name')} placeholder="Name Font Size">
+   <Select  sx={{
+    option: {
+      backgroundColor: "black",
+      color: "white"
+    }
+  }}   bgGradient="linear(to-r, black,black, blue.900)" border={"1px solid #002244"}  borderRadius={'15px'} value={"name"} onChange={(e) => handleFontSizeChange(e, 'name')} placeholder="Name Font Size">
         {fontSizeName.map((size, index) => (
           <option key={index} value={size.value}>{size.label}</option>
         ))}
       </Select>
    </Box>
   <Box borderRadius={'15px'} bg={'blue.900'}>
-  <Select  bgGradient="linear(to-r, black,black, blue.900)" border={"1px solid #002244"}  borderRadius={'15px'}  value={"description"} onChange={(e) => handleFontSizeChange(e, 'description')} placeholder="Description Font Size">
+  <Select  sx={{
+    option: {
+      backgroundColor: "black",
+      color: "white"
+    }
+  }} bgGradient="linear(to-r, black,black, blue.900)" border={"1px solid #002244"}  borderRadius={'15px'}  value={"description"} onChange={(e) => handleFontSizeChange(e, 'description')} placeholder="Description Font Size">
         {fontSizeDescription.map((size, index) => (
           <option key={index} value={size.value}>{size.label}</option>
         ))}

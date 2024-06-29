@@ -238,7 +238,7 @@ const EditResume = () => {
 );
   console.log(data)
   const [state, setState] = useState({
-    Image: image,
+    Image: false,
     Contact: true,
     Profile: true,
     Experience: true,
