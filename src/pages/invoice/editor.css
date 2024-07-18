@@ -1,0 +1,39 @@
+.editor-container{
+ display: flex;
+ gap: 1rem;
+ justify-content: space-between;
+}
+
+.canvas{
+  width: 100%;
+}
+
+/* Dark mode styles for the toolbar */
+.toolbar-dark-mode {
+  background-color: #222; /* Dark background for toolbar */
+  padding: 10px; /* Padding for spacing inside the toolbar */
+  border-radius: 4px; /* Rounded corners for the toolbar */
+  display: flex; /* Flexbox for horizontal alignment */
+  flex-direction: column;
+  gap: 10px; /* Spacing between buttons */
+}
+
+/* Dark mode styles for toolbar buttons */
+.toolbar-dark-mode button {
+  background-color: #444; /* Dark background for buttons */
+  color: #fff; /* Light text color */
+  border: 1px solid #555; /* Border color */
+  border-radius: 4px; /* Rounded corners for buttons */
+  padding: 8px 12px; /* Padding for better spacing inside buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.toolbar-dark-mode button:hover {
+  background-color: #555; /* Slightly lighter background on hover */
+}
+
+.toolbar-dark-mode button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px #888; /* Custom focus outline */
+}

@@ -1,0 +1,68 @@
+.element-editor {
+    width: 300px;
+    padding: 10px;
+    border-left: 1px solid #444;
+    background: #222;
+    color: #fff;
+  }
+  
+  .element-editor h3 {
+    margin-top: 0;
+  }
+  
+  .style-editor label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .style-editor label span {
+    color: #bbb;
+  }
+  
+  .style-editor input[type="color"] {
+    vertical-align: middle;
+  }
+  
+  .add-nested-element button {
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .add-nested-element button:hover {
+    background: #0056b3;
+  }
+  
+  .select-dark-mode {
+    background-color: #333; /* Dark background */
+    color: #fff; /* Light text color */
+    border: 1px solid #444; /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    padding: 8px; /* Padding for better spacing */
+    font-size: 1rem; /* Font size */
+  }
+  
+  .select-dark-mode option {
+    background-color: #333; /* Dark background for options */
+    color: #fff; /* Light text color for options */
+  }
+
+  /* Dark mode styles for textarea */
+.textarea-dark-mode {
+  background-color: #333; /* Dark background */
+  color: #fff; /* Light text color */
+  border: 1px solid #444; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  padding: 8px; /* Padding for better spacing */
+  font-size: 1rem; /* Font size */
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+.textarea-dark-mode::placeholder {
+  color: #bbb; /* Lighter color for placeholder text */
+}

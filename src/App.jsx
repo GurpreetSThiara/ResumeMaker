@@ -16,6 +16,8 @@ import ConvertImages from './pages/ConvertImages/ConvertImages';
 import PDF from './pages/PDFConverter';
 import CreativeCanvas from './components/Resumes/CreativeCanvas/CreativeCanvas';
 import Invoice from './pages/invoice/Invoice';
+import GResume from './components/Resumes/GoogleRecomended1/Resume';
+import WaveComponent from './components/waves/Waves';
 
 
 
@@ -42,6 +44,8 @@ const App = () => {
     <Route path='templates/:type' element={<TemplateInfo/>}/>
     <Route path='/convert' element={<ConvertImages/>}/>
     <Route path='/pdf' element={<CreativeCanvas/>}/>
+    <Route path='/g' element={<GResume/>}/>
+    <Route path='/wave' element={<WaveComponent/>}/>
     <Route path='/invoice' element={<Invoice/>}/>
     <></>
    
